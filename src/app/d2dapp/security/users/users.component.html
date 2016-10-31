@@ -1,0 +1,67 @@
+    <!-- these two lines are required for Select Modal view-->
+<div *ngIf="modal === 'true'" class="backdrop" [ngStyle]="{'display': modalDisplay}"></div>
+<div class={{modalClass}} [ngStyle]="{'display': allDisplay}">
+
+    <div class="container">
+        <div class="myaccordion">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">{{title}}</a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel-body">
+                                        <form class="form-inline">
+                                            <a *ngIf="mode === 'workwith'" [routerLink]="['/users/add']" class="form-control btn btn-primary active btn-md"><span class="glyphicon glyphicon-user"></span> Add User </a>
+                                            <select class="form-control" (change)="reloadUsers({ profileId: profile.value, languageId: language.value, q: q.value})" #profile>
+                                                <option value="">Select a profile...</option>
+                                                <option *ngFor="let profile of profiles" value="{{ profile.id }}">
+                                                    {{ profile.name }}
+                                                </option>
+                                            </select>
+                                            <select class="form-control" (change)="reloadUsers({  profileId: profile.value, languageId: language.value, q: q.value})" #language>
+                                                <option value="">Select a language...</option>
+                                                <option *ngFor="let language of languages" value="{{ language.id }}">
+                                                    {{ language.name }}
+                                                </option>
+                                            </select>
+                                            <input class="form-control" #criteria type="search" placeholder="Search criteria" #q />
+                                            <button class="form-control btn btn-primary active btn-md" (click)="reloadUsers({  profileId: profile.value, languageId: language.value, q: q.value})">
+                                                <span class="glyphicon glyphicon-search"></span> Search
+                                            </button>
+                                            <button class="form-control btn btn-primary active btn-md" (click)="reLoadPage(profile,language,q)">
+                                                <span class="glyphicon glyphicon-refresh"></span> Reset
+                                            </button>
+                                            <button class="form-control btn btn-primary active btn-md" data-dismiss="modal" (click)="close()">
+                                                <span class="glyphicon glyphicon-off"></span> Close
+                                            </button>
+                                            <spinner [visible]="usersLoading"></spinner>
+                                        </form>
+                                        <pagination [items]="users" (page-changed)="onPageChanged($event)"></pagination>
+                                    </div>
+                                    <div class="table-responsive ">
+                                        <table-simple (OutputButtonSelectClick)="selectandClose($event)"
+                                                      [InputModal]="modal"
+                                                      [InputPreButtons]="preButtons"
+                                                      [InputColumns]="columns"
+                                                      [InputButtons]="buttons"
+                                                      [InputData]="pagedUsers"
+                                                      [InputSort]="sorting">
+                                            Loading table...
+                                        </table-simple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

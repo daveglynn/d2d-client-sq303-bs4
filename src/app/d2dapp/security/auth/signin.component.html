@@ -1,0 +1,73 @@
+﻿<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="container">
+        <div class="row">
+            <div vamiddle class="col-md-8 m-x-auto pull-xs-none">
+                <div class="card-group">
+                    <div class="card p-a-2">
+                        <div class="card-block">
+                            <h1>Login</h1>
+                            <p class="text-muted">Sign In to your account</p>
+                            <div class="input-group m-b-1">
+                                <span class="input-group-addon">
+                                    <i class="icon-user"></i>
+                                </span>
+                                <input #email formControlName="email" type="text" name="email" class="form-control" id="email" placeholder="Email" focus>
+                                <div *ngIf="form.controls.email.touched  && form.controls.email.errors">
+                                    <div *ngIf="form.controls.email.errors.required" class="alert alert-danger">
+                                        Email is required
+                                    </div>
+                                    <div *ngIf="form.controls.email.errors.outOfRange50" class="alert alert-danger">
+                                        Email must not be greater than 50 characters.
+                                    </div>
+                                    <div *ngIf="form.controls.email.errors.containsSpace" class="alert alert-danger">
+                                        Email cannot contain space
+                                    </div>
+                                    <div *ngIf="form.controls.email.errors.invalidEmailAddress" class="alert alert-danger">
+                                        Invalid Email Address
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group m-b-2">
+                                <span class="input-group-addon">
+                                    <i class="icon-lock"></i>
+                                </span>
+                                <input #password formControlName="password" type="password" name="password" class="form-control" id="password" placeholder="Password" focus>
+                                <div *ngIf="form.controls.password.touched  && form.controls.password.errors">
+                                    <div *ngIf="form.controls.password.errors.required" class="alert alert-danger">
+                                        Password is required
+                                    </div>
+                                    <div *ngIf="form.controls.password.errors.containsSpace" class="alert alert-danger">
+                                        Password cannot contain a space
+                                    </div>
+                                    <div *ngIf="form.controls.password.errors.invalidPassword" class="alert alert-danger">
+                                        Must be between 6 to 10 characters containing One Uppercase, One Lowercase and One Digit
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <button class="btn btn-primary p-x-2" [disabled]="!form.valid" type="submit">Sign In</button>
+                                    <spinner [visible]="signingIn"></spinner>
+                                 </div>
+                                <div class="col-xs-6 text-xs-right">
+                                    <button type="button" class="btn btn-link p-x-0">Forgot password?</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-inverse card-primary p-y-3 hidden-md-down" style="width:44%">
+                        <div class="card-block text-xs-center">
+                            <div>
+                                <h2>Sign up</h2>
+                                <p>Welcome to the D2D Demonstration </p>
+                                <button type="button" class="btn btn-primary active m-t-1">Register Now!</button>
+            
+                                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<my-error></my-error>

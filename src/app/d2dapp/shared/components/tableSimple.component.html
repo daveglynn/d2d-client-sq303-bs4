@@ -1,0 +1,59 @@
+﻿<div class="table-responsive">
+    <div style="overflow:auto;height:50%;">
+        <table class="table table-hover table-striped table-sortable">
+            <thead>
+                <tr>
+                    <td style="width: 3%; font-weight: bold;" *ngFor="let button of InputPreButtons">
+                        {{button.display}}
+                    </td>
+                    <th *ngFor="let column of InputColumns" [class]="selectedClass(column.variable)" (click)="changeSorting(column.variable)">
+                        {{column.display}}
+                    </th>
+                    <td style="width: 3%; font-weight: bold;" *ngFor="let button of InputButtons">
+                        {{button.display}}
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let object of InputData | orderBy : convertSorting()">
+                    <td *ngFor="let button of InputPreButtons">
+                        <div *ngIf="button.action == 'select'">
+                            <a class="btn btn-primary" (click)="selectAndClose(object)">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </a>
+                        </div>
+                    </td>
+                    <td *ngFor="let column of InputColumns">
+                        {{object[column.variable] | format : column.filter}}
+                    </td>
+                    <td *ngFor="let button of InputButtons">
+                        <div *ngIf="button.action == 'view'">
+                            <div *ngIf="modal === 'true'">
+                                <a class="btn btn-warning btn-sm fa fa-eye fa-lg m-t-0" (click)="selectUser({ 'id' : object.id, 'modal' :  [modal] })">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </a>
+                            </div>
+                            <div *ngIf="modal != 'true'">
+                                <a class="btn btn-warning btn-sm fa fa-eye fa-lg m-t-0" [routerLink]="[button.router, object.id]">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </a>
+                            </div>
+                        </div>
+                        <div *ngIf="button.action == 'edit'">
+
+                            <a class="btn btn-success btn-sm fa fa-edit fa-lg m-t-0" [routerLink]="[button.router, object.id]">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                        </div>
+                        <div *ngIf="button.action == 'delete'">
+                            <button class="btn btn-danger btn-sm fa fa-remove fa-lg m-t-0" [routerLink]="[button.router, object.id]">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

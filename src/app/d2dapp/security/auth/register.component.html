@@ -1,0 +1,106 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="container">
+        <div class="row">
+            <div vamiddle class="col-md-5 m-x-auto pull-xs-none">
+                <div class="card">
+                    <div class="card-block p-a-2">
+                        <h1>Register</h1>
+                        <p class="text-muted">Create your account</p>
+
+                        <div class="input-group m-b-1">
+                            <span class="input-group-addon">
+                                <i class="icon-user"></i>
+                            </span>
+                            <input #firstName formControlName="firstName" type="text" name="firstName" class="form-control" id="firstName" placeholder="First Name" focus>
+                            <div *ngIf="form.controls.firstName.touched  && form.controls.firstName.errors">
+                                <div *ngIf="form.controls.firstName.errors.required" class="alert alert-danger">
+                                    First name is required
+                                </div>
+                                <div *ngIf="form.controls.firstName.errors.outOfRange50" class="alert alert-danger">
+                                    Cannot be greater than 50 characters.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group m-b-1">
+                            <span class="input-group-addon">
+                                <i class="icon-user"></i>
+                            </span>
+                            <input #lastName formControlName="lastName" type="text" name="lastName" class="form-control" id="lastName" placeholder="Last Name" focus>
+                            <div *ngIf="form.controls.lastName.touched  && form.controls.lastName.errors">
+                                <div *ngIf="form.controls.lastName.errors.required" class="alert alert-danger">
+                                    Last name is required
+                                </div>
+                                <div *ngIf="form.controls.lastName.errors.outOfRange50" class="alert alert-danger">
+                                    Cannot be greater than 50 characters.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group m-b-1">
+                                <span class="input-group-addon">@</span>
+                            <input #email formControlName="email" type="email" name="email" class="form-control" id="email" placeholder="Email" focus>
+                            <div *ngIf="form.controls.email.touched  && form.controls.email.errors">
+                                <div *ngIf="form.controls.email.touched  && form.controls.email.errors.required" class="alert alert-danger">
+                                    Email is required
+                                </div>
+                                <div *ngIf="form.controls.email.errors.outOfRange50" class="alert alert-danger">
+                                    Email must not be greater than 50 characters.
+                                </div>
+                                <div *ngIf="form.controls.email.errors.containsSpace" class="alert alert-danger">
+                                    Email cannot contain space
+                                </div>
+                                <div *ngIf="form.controls.email.errors.invalidEmailAddress" class="alert alert-danger">
+                                    Invalid Email Address
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="input-group m-b-1">
+                            <span class="input-group-addon">
+                                <i class="icon-lock"></i>
+                            </span>
+                            <input #password formControlName="password" type="password" name="password" class="form-control" id="password" placeholder="Required" focus>
+
+                            <div *ngIf="form.controls.password.touched  && form.controls.password.errors">
+                                <div *ngIf="form.controls.password.errors.required" class="alert alert-danger">
+                                    Password is required
+                                </div>
+                                <div *ngIf="form.controls.password.errors.containsSpace" class="alert alert-danger">
+                                    Password cannot contain a space
+                                </div>
+                                <div *ngIf="form.controls.password.errors.invalidPassword" class="alert alert-danger">
+                                    Must be between 6 to 10 characters containing One Uppercase, One Lowercase and One Digit
+                                </div>
+                            </div>
+                        </div>
+
+
+
+ 
+                        <button class="btn btn-block btn-success" [disabled]="!form.valid" type="submit">Sign Up</button>
+                        <spinner [visible]="signingUp"></spinner>
+
+                    </div>
+
+                    <div class="card-footer p-a-2">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button class="btn btn-block btn-facebook" type="button">
+                                    <span>facebook</span>
+                                </button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button class="btn btn-block btn-twitter" type="button">
+                                    <span>twitter</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<my-error></my-error>

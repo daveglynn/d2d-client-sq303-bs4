@@ -5,125 +5,134 @@
     <div class="container">
         <form [formGroup]="form" (ngSubmit)="save()">
 
-            <accordion  [InputTitle]=[user.firstName] 
-                        [InputAllMode]="false">
-                
+            <accordion [InputTitle]=[user.firstName]
+                       [InputAllMode]="false">
+
                 <label></label>
                 <accordion-group heading="Details ">
 
                     <fieldset [disabled]="(action === 'view' || action === 'delete')">
 
-                        <div class="form-group">
-                            <label>User Status</label>
-                            <div class="btn-group btn-group-horizontal" data-toggle="buttons">
-                                <label class="btn active">
-                                    <input type="radio" [checked]="user.active == '1'" formControlName='active' value="true" (change)="user.active=$event.target.value"><i class="fa fa-circle-o fa-1.75x"></i><i class="fa fa-dot-circle-o fa-1.75x"></i> <span>  Active</span>
-                                </label>
-                                <label class="btn active ">
-                                    <input type="radio" [checked]="user.active == '0'" formControlName='active' value="false" (change)="user.active=$event.target.value"><i class="fa fa-circle-o fa-1.75x"></i><i class="fa fa-dot-circle-o fa-1.75x"></i><span> Disabled</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>First Name</label>
-                            <input [(ngModel)]="user.firstName" #firstName formControlName="firstName" type="text" name="firstName" class="form-control" id="firstName" placeholder="Required" [disabled]="firstName_disabled" focus>
-                            <div *ngIf="form.controls.firstName.touched  && form.controls.firstName.errors">
-                                <div *ngIf="form.controls.firstName.errors.required" class="alert alert-danger">
-                                    First name is required
-                                </div>
-                                <div *ngIf="form.controls.firstName.errors.outOfRange50" class="alert alert-danger">
-                                    Cannot be greater than 50 characters.
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label>User Status</label>
+                                <div class="btn-group btn-group-horizontal" data-toggle="buttons">
+                                    <label class="btn active">
+                                        <input type="radio" [checked]="user.active == '1'" formControlName='active' value="true" (change)="user.active=$event.target.value"><i class="fa fa-circle-o fa-1.75x"></i><i class="fa fa-dot-circle-o fa-1.75x"></i> <span>  Active</span>
+                                    </label>
+                                    <label class="btn active ">
+                                        <input type="radio" [checked]="user.active == '0'" formControlName='active' value="false" (change)="user.active=$event.target.value"><i class="fa fa-circle-o fa-1.75x"></i><i class="fa fa-dot-circle-o fa-1.75x"></i><span> Disabled</span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label>Last Name</label>
-                            <input [(ngModel)]="user.lastName" #lastName formControlName="lastName" type="text" name="lastName" class="form-control" id="lastName" placeholder="Required" [disabled]="lastName_disabled" focus>
-                            <div *ngIf="form.controls.lastName.touched  && form.controls.lastName.errors">
-                                <div *ngIf="form.controls.lastName.errors.required" class="alert alert-danger">
-                                    Last name is required
-                                </div>
-                                <div *ngIf="form.controls.lastName.errors.outOfRange50" class="alert alert-danger">
-                                    Cannot be greater than 50 characters.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input [(ngModel)]="user.email" #email formControlName="email" type="text" name="email" class="form-control" id="email" placeholder="Required" [disabled]="email_disabled" focus>
-                            <div *ngIf="form.controls.email.touched  && form.controls.email.errors">
-                                <div *ngIf="form.controls.email.errors.required" class="alert alert-danger">
-                                    Email is required
-                                </div>
-                                <div *ngIf="form.controls.email.errors.outOfRange50" class="alert alert-danger">
-                                    Email must not be greater than 50 characters.
-                                </div>
-                                <div *ngIf="form.controls.email.errors.containsSpace" class="alert alert-danger">
-                                    Email cannot contain space
-                                </div>
-                                <div *ngIf="form.controls.email.errors.invalidEmailAddress" class="alert alert-danger">
-                                    Invalid Email Address
-                                </div>
-                            </div>
-                        </div>
-
-                        <div *ngIf="action === 'add'">
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input [(ngModel)]="user.password" #password formControlName="password" type="password" name="password" class="form-control" id="password" placeholder="Required" [disabled]="password_disabled" focus>
-                                <div *ngIf="form.controls.password.touched  && form.controls.password.errors">
-                                    <div *ngIf="form.controls.password.errors.required" class="alert alert-danger">
-                                        Password is required
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label>First Name</label>
+                                <input [(ngModel)]="user.firstName" #firstName formControlName="firstName" type="text" name="firstName" class="form-control" id="firstName" placeholder="Required" [disabled]="firstName_disabled" focus>
+                                <div *ngIf="form.controls.firstName.touched  && form.controls.firstName.errors">
+                                    <div *ngIf="form.controls.firstName.errors.required" class="alert alert-danger">
+                                        First name is required
                                     </div>
-                                    <div *ngIf="form.controls.password.errors.containsSpace" class="alert alert-danger">
-                                        Password cannot contain a space
-                                    </div>
-                                    <div *ngIf="form.controls.password.errors.invalidPassword" class="alert alert-danger">
-                                        Must be between 6 to 10 characters containing One Uppercase, One Lowercase and One Digit
+                                    <div *ngIf="form.controls.firstName.errors.outOfRange50" class="alert alert-danger">
+                                        Cannot be greater than 50 characters.
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <label>Last Name</label>
+                                <input [(ngModel)]="user.lastName" #lastName formControlName="lastName" type="text" name="lastName" class="form-control" id="lastName" placeholder="Required" [disabled]="lastName_disabled" focus>
+                                <div *ngIf="form.controls.lastName.touched  && form.controls.lastName.errors">
+                                    <div *ngIf="form.controls.lastName.errors.required" class="alert alert-danger">
+                                        Last name is required
+                                    </div>
+                                    <div *ngIf="form.controls.lastName.errors.outOfRange50" class="alert alert-danger">
+                                        Cannot be greater than 50 characters.
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="form-group">
-                            <label>Language</label>
-                            <select [(ngModel)]="user.languageId" #languageId formControlName="languageId" type="text" name="languageId" class="form-control" id="languageId" placeholder="Required" [disabled]="languageId_disabled" (focus)="loadLanguages()" focus>
-                                <option *ngFor="let language of languages" value="{{ language.id }}">
-                                    {{ language.name }}
-                                </option>
-                            </select>
-                            <div *ngIf="(languageId.touched || languageId.dirty  || !languageId.pristine ) && languageId.errors" class="alert alert-danger">
-                                <div *ngIf="form.controls.languageId.touched  && form.controls.languageId.errors">
-                                    <div *ngIf="languageId.errors.required || languageId.errors.isEmpty" class="alert alert-danger">
-                                        Language is required
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="email">Email</label>
+                                <input [(ngModel)]="user.email" #email formControlName="email" type="text" name="email" class="form-control" id="email" placeholder="Required" [disabled]="email_disabled" focus>
+                                <div *ngIf="form.controls.email.touched  && form.controls.email.errors">
+                                    <div *ngIf="form.controls.email.errors.required" class="alert alert-danger">
+                                        Email is required
                                     </div>
-                                    <div *ngIf="form.controls.languageId.errors.dropDownNotSelected" class="alert alert-danger">
-                                        Language cannot be (None).
+                                    <div *ngIf="form.controls.email.errors.outOfRange50" class="alert alert-danger">
+                                        Email must not be greater than 50 characters.
+                                    </div>
+                                    <div *ngIf="form.controls.email.errors.containsSpace" class="alert alert-danger">
+                                        Email cannot contain space
+                                    </div>
+                                    <div *ngIf="form.controls.email.errors.invalidEmailAddress" class="alert alert-danger">
+                                        Invalid Email Address
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div *ngIf="action === 'add'">
+                                    <label>Password</label>
+                                    <input [(ngModel)]="user.password" #password formControlName="password" type="password" name="password" class="form-control" id="password" placeholder="Required" [disabled]="password_disabled" focus>
+                                    <div *ngIf="form.controls.password.touched  && form.controls.password.errors">
+                                        <div *ngIf="form.controls.password.errors.required" class="alert alert-danger">
+                                            Password is required
+                                        </div>
+                                        <div *ngIf="form.controls.password.errors.containsSpace" class="alert alert-danger">
+                                            Password cannot contain a space
+                                        </div>
+                                        <div *ngIf="form.controls.password.errors.invalidPassword" class="alert alert-danger">
+                                            Must be between 6 to 10 characters containing One Uppercase, One Lowercase and One Digit
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label>Phone</label>
-                            <input [(ngModel)]="user.phone" #lastName formControlName="phone" type="text" name="phone" class="form-control" id="phone" placeholder="Required" [disabled]="phone_disabled" focus>
-                            <div *ngIf="form.controls.phone.touched  && form.controls.phone.errors">
-                                <div *ngIf="form.controls.phone.errors.outOfRange50" class="alert alert-danger">
-                                    Last name must not be greater than 50 characters.
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label>Language</label>
+                                <select [(ngModel)]="user.languageId" #languageId formControlName="languageId" type="text" name="languageId" class="form-control" id="languageId" placeholder="Required" [disabled]="languageId_disabled" (focus)="loadLanguages()" focus>
+                                    <option *ngFor="let language of languages" value="{{ language.id }}">
+                                        {{ language.name }}
+                                    </option>
+                                </select>
+                                <div *ngIf="(languageId.touched || languageId.dirty  || !languageId.pristine ) && languageId.errors" class="alert alert-danger">
+                                    <div *ngIf="form.controls.languageId.touched  && form.controls.languageId.errors">
+                                        <div *ngIf="languageId.errors.required || languageId.errors.isEmpty" class="alert alert-danger">
+                                            Language is required
+                                        </div>
+                                        <div *ngIf="form.controls.languageId.errors.dropDownNotSelected" class="alert alert-danger">
+                                            Language cannot be (None).
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <label>Phone</label>
+                                <input [(ngModel)]="user.phone" #lastName formControlName="phone" type="text" name="phone" class="form-control" id="phone" placeholder="Required" [disabled]="phone_disabled" focus>
+                                <div *ngIf="form.controls.phone.touched  && form.controls.phone.errors">
+                                    <div *ngIf="form.controls.phone.errors.outOfRange50" class="alert alert-danger">
+                                        Last name must not be greater than 50 characters.
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="form-group">
-                            <label>Enabled From</label>
-                            <input [(ngModel)]="user.enabledFrom" #enabledFrom formControlName="enabledFrom" type="datetime-local" name="enabledFrom" class="form-control" id="enabledFrom" placeholder="Required" [disabled]="enabledFrom_disabled" focus>
-                        </div>
-                        <div class="form-group">
-                            <label>Enabled To</label>
-                            <input [(ngModel)]="user.enabledTo" #enabledTo formControlName="enabledTo" type="datetime-local" name="enabledTo" class="form-control" id="enabledTo" placeholder="Required" [disabled]="enabledTo_disabled" focus>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label>Enabled From</label>
+                                <input [(ngModel)]="user.enabledFrom" #enabledFrom formControlName="enabledFrom" type="datetime-local" name="enabledFrom" class="form-control" id="enabledFrom" placeholder="Required" [disabled]="enabledFrom_disabled" focus>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Enabled To</label>
+                                <input [(ngModel)]="user.enabledTo" #enabledTo formControlName="enabledTo" type="datetime-local" name="enabledTo" class="form-control" id="enabledTo" placeholder="Required" [disabled]="enabledTo_disabled" focus>
+                            </div>
                         </div>
 
                     </fieldset>
@@ -135,43 +144,44 @@
 
                     <fieldset [disabled]="(action === 'view' || action === 'delete')">
 
-                        <legend>Address</legend>
-                        <div class="form-group">
-                            <label>Address Line1</label>
-                            <input [(ngModel)]="user.addressLine1" #addressLine1 formControlName="addressLine1" type="text" name="addressLine1" class="form-control" id="addressLine1" placeholder="Required" [disabled]="addressLine1_disabled" focus>
-                            <div *ngIf="form.controls.addressLine1.touched  && form.controls.addressLine1.errors">
-                                <div *ngIf="form.controls.addressLine1.errors.outOfRange50" class="alert alert-danger">
-                                    Cannot be greater than 50 characters.
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label>Address Line1</label>
+                                <input [(ngModel)]="user.addressLine1" #addressLine1 formControlName="addressLine1" type="text" name="addressLine1" class="form-control" id="addressLine1" placeholder="" [disabled]="addressLine1_disabled" focus>
+                                <div *ngIf="form.controls.addressLine1.touched  && form.controls.addressLine1.errors">
+                                    <div *ngIf="form.controls.addressLine1.errors.outOfRange50" class="alert alert-danger">
+                                        Cannot be greater than 50 characters.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Address Line2</label>
+                                <input [(ngModel)]="user.addressLine2" #addressLine2 formControlName="addressLine2" type="text" name="addressLine2" class="form-control" id="addressLine2" placeholder="" [disabled]="addressLine2_disabled" focus>
+                                <div *ngIf="form.controls.addressLine2.touched  && form.controls.addressLine2.errors">
+                                    <div *ngIf="form.controls.addressLine2.errors.outOfRange50" class="alert alert-danger">
+                                        Cannot be greater than 50 characters.
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label>Address Line2</label>
-                            <input [(ngModel)]="user.addressLine2" #addressLine2 formControlName="addressLine2" type="text" name="addressLine2" class="form-control" id="addressLine2" placeholder="Required" [disabled]="addressLine2_disabled" focus>
-                            <div *ngIf="form.controls.addressLine2.touched  && form.controls.addressLine2.errors">
-                                <div *ngIf="form.controls.addressLine2.errors.outOfRange50" class="alert alert-danger">
-                                    Cannot be greater than 50 characters.
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label>Address Line3</label>
+                                <input [(ngModel)]="user.addressLine3" #addressLine3 formControlName="addressLine3" type="text" name="addressLine3" class="form-control" id="addressLine3" placeholder="" [disabled]="addressLine3_disabled" focus>
+                                <div *ngIf="form.controls.addressLine3.touched  && form.controls.addressLine3.errors">
+                                    <div *ngIf="form.controls.addressLine3.errors.outOfRange50" class="alert alert-danger">
+                                        Cannot be greater than 50 characters.
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Address Line3</label>
-                            <input [(ngModel)]="user.addressLine3" #addressLine3 formControlName="addressLine3" type="text" name="addressLine3" class="form-control" id="addressLine3" placeholder="Required" [disabled]="addressLine3_disabled" focus>
-                            <div *ngIf="form.controls.addressLine3.touched  && form.controls.addressLine3.errors">
-                                <div *ngIf="form.controls.addressLine3.errors.outOfRange50" class="alert alert-danger">
-                                    Cannot be greater than 50 characters.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Address Line4</label>
-                            <input [(ngModel)]="user.addressLine4" #addressLine4 formControlName="addressLine4" type="text" name="addressLine4" class="form-control" id="addressLine4" placeholder="Required" [disabled]="addressLine4_disabled" focus>
-                            <div *ngIf="form.controls.addressLine4.touched  && form.controls.addressLine4.errors">
-                                <div *ngIf="form.controls.addressLine4.errors.outOfRange50" class="alert alert-danger">
-                                    Cannot be greater than 50 characters.
+                            <div class="col-md-6">
+                                <label>Address Line4</label>
+                                <input [(ngModel)]="user.addressLine4" #addressLine4 formControlName="addressLine4" type="text" name="addressLine4" class="form-control" id="addressLine4" placeholder="" [disabled]="addressLine4_disabled" focus>
+                                <div *ngIf="form.controls.addressLine4.touched  && form.controls.addressLine4.errors">
+                                    <div *ngIf="form.controls.addressLine4.errors.outOfRange50" class="alert alert-danger">
+                                        Cannot be greater than 50 characters.
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -179,6 +189,8 @@
                     </fieldset>
 
                 </accordion-group>
+
+                <label></label>
 
                 <div class="card-footer">
                     <div *ngIf="(action === 'add')">
@@ -219,9 +231,9 @@
                         <spinner [visible]="userLoading"></spinner>
                     </div>
                 </div>
-            
+
             </accordion>
 
         </form>
     </div>
-    </div>
+</div>

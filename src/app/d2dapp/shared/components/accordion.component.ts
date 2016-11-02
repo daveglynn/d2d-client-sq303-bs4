@@ -6,16 +6,17 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
-                <div class="card-header" role="tab">
-                    <i class="fa fa-edit"></i><span>{{InputTitle}}</span>
+                <div class="card-header card-info" role="tablist">
+                    <i class="fa fa-edit"></i><strong>{{InputTitle}}</strong>
                     <div class="card-actions">
                         <a (click)="openAllGroups()" class="btn-close"><i class="icon-arrow-down"></i></a>
                         <a (click)="closeAllGroups()" class="btn-close"><i class="icon-arrow-up"></i></a>
                         <a href="javascript: window.history.back()" class="btn-close"><i class="icon-close"></i></a>
                     </div>
                 </div>   
-
+ 
             <ng-content></ng-content>
+     
         </div>
     </div>
 </div>     `
@@ -78,18 +79,18 @@ export class Accordion implements OnInit{
     selector: 'accordion-group',
     template: `
  
-                <div class="card">
-                  <div class="card-header"   (click)="toggleOpen($event)">
-                    <h5 class="card-title">
-                      <a href tabindex="0"><span>{{heading}}</span></a>
-                    </h5>
+   
+                  <div class="card-header" role="tab"  (click)="toggleOpen($event)">
+ 
+                      <a href tabindex="0"><strong>{{heading}}</strong></a>
+ 
                   </div>
                   <div class="collapsed" [hidden]="!isOpen">
                     <div class="card-block">
                         <ng-content></ng-content>
                     </div>
                   </div>
-                </div>
+    
           `,
 
 })

@@ -18,6 +18,7 @@ import { ErrorService } from "../.././shared/errors/error.service";
 
 export class UserFormComponent implements OnInit {
 
+  
     // interface to other components
     //@Input() InputMode: string;
     @Input() InputModal: string;
@@ -247,6 +248,9 @@ export class UserFormComponent implements OnInit {
         }
     }
 
+    goTo(location: string): void {
+        window.location.hash = location;
+    }
     cancel() {
         this._location.back();
 

@@ -9,7 +9,8 @@ import { User }                from './security/users/user';
 import { UserFormComponent }   from './security/users/user-form.component';
 import { UsersComponent }      from './security/users/users.component';
 import { TableSimpleComponent }    from './shared/components/tableSimple.component';
-
+import { Accordion, AccordionGroup }    from './shared/components/accordion.component';
+ 
 import { ErrorService } from "./shared/errors/error.service";
 import { ProfileService } from './master/profiles/profile.service';
 import { LanguageService } from './master/languages/language.service';
@@ -65,7 +66,9 @@ import { UserService }                           from './security/users/user.ser
         PaginationComponent,
         SpinnerComponent,
         FocusDirective,
-        ErrorComponent
+        ErrorComponent,
+        Accordion,
+        AccordionGroup
     ],
     exports: [
         UserFormComponent,
@@ -85,7 +88,7 @@ import { UserService }                           from './security/users/user.ser
         AuthService,
         UserService,
         CommonService,
-        ConstantsService              
+        ConstantsService        
     ]
 })
 export class D2DAppModule {

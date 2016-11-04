@@ -168,7 +168,7 @@ export class UserFormComponent implements OnInit {
     }
 
     private modalProcessing() {
-        debugger;
+
         this._route.params.subscribe(params => {
             //this.mode = this._commonService.setMode(this.InputMode, params['mode'])
             this.modal = this._commonService.setModal(this.InputModal, params['modal'])

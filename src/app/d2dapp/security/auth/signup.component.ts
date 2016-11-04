@@ -12,7 +12,7 @@ import { User } from "../../security/users/user";
 
 @Component({
     selector: 'my-signup',
-    templateUrl: 'register.component.html'
+    templateUrl: 'signup.component.html'
 })
 
 export class SignupComponent implements OnInit {

@@ -50,6 +50,7 @@ export class UsersComponent implements OnInit {
 	}
 
     ngOnInit() {
+        debugger;
         this.setupForm();
         this.loadProfiles();
         this.loadLanguages();

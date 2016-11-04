@@ -24,7 +24,8 @@
 export class Accordion implements OnInit{
 
     @Input() InputTitle: string;
-    @Input() InputAllMode: boolean;
+    @Input() InputKeepOpenMode: boolean;
+    @Input() InputOpenGroup: number;
 
     groups: Array<AccordionGroup> = [];
 
@@ -42,6 +43,15 @@ export class Accordion implements OnInit{
         });
     }
 
+    openGroup(groupToOpen: number): void {
+        var count = 0;
+        this.groups.forEach((group: AccordionGroup) => {
+            count = count + 1; 
+            if (groupToOpen == count) {
+                 group.isOpen = true;
+            }
+        });
+    }
     openAllGroups(): void {
         this.groups.forEach((group: AccordionGroup) => {
             if (group.isOpen == false) {
@@ -70,7 +80,10 @@ export class Accordion implements OnInit{
 
 
     ngOnInit() {
-    
+
+        if (this.InputOpenGroup != 0) {
+            this.openGroup(this.InputOpenGroup);
+        }
     }
 
 }
@@ -104,7 +117,7 @@ export class AccordionGroup implements OnDestroy {
     set isOpen(value: boolean) {
         this._isOpen = value;
         if (value) {
-            if ((!this.accordion.InputAllMode) && (this._isClickingGroup == true)) {
+            if ((!this.accordion.InputKeepOpenMode) && (this._isClickingGroup == true)) {
                 this.accordion.closeOthers(this);
             }
         }

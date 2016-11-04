@@ -38,11 +38,12 @@ import { LoginComponent }               from './pages/login.component';
 import { RegisterComponent }            from './pages/register.component';
 
 //dgstart
-import { UsersComponent }      from './d2dapp/security/users/users.component';
-import { SignupComponent }     from './d2dapp/security/auth/signup.component';
-import { SigninComponent }     from './d2dapp/security/auth/signin.component';
-import { UserFormComponent }      from './d2dapp/security/users/user-form.component';
-import { PreventUnsavedChangesGuard } from './d2dapp/prevent-unsaved-changes-guard.service';
+import { UsersComponent }               from './d2dapp/security/users/users.component';
+import { SignupComponent }              from './d2dapp/security/auth/signup.component';
+import { SigninComponent }              from './d2dapp/security/auth/signin.component';
+import { UserFormComponent }            from './d2dapp/security/users/user-form.component';
+import { AuthGuard }                    from './d2dapp/security/auth/auth.guard.ts';
+import { PreventUnsavedChangesGuard }   from './d2dapp/prevent-unsaved-changes-guard.service';
 //dgend
 
 const appRoutes: Routes = [
@@ -63,7 +64,8 @@ const appRoutes: Routes = [
                 component: DashboardComponent,
                 data: {
                     title: 'Dashboards'
-                }
+                },
+                canActivate: [AuthGuard],
             },
             {
                 path: 'components',
@@ -75,6 +77,7 @@ const appRoutes: Routes = [
                 data: {
                     title: 'Components'
                 },
+                canActivate: [AuthGuard],
                 children: [
 
                     {
@@ -82,32 +85,38 @@ const appRoutes: Routes = [
                         component: UsersComponent,
                         data: {
                             title: 'Users'
-                        }
+                        },
+                        canActivate: [AuthGuard],
                     },
                     {
                         path: 'users/add',
                         component: UserFormComponent,
-                        canDeactivate: [PreventUnsavedChangesGuard]
+                        canDeactivate: [PreventUnsavedChangesGuard],
+                        canActivate: [AuthGuard],
                     },
                     {
                         path: 'users/edit/:id',
                         component: UserFormComponent,
-                        canDeactivate: [PreventUnsavedChangesGuard]
+                        canDeactivate: [PreventUnsavedChangesGuard],
+                        canActivate: [AuthGuard],
                     },
                     {
                         path: 'users/view/:id',
                         component: UserFormComponent,
-                        canDeactivate: [PreventUnsavedChangesGuard]
+                        canDeactivate: [PreventUnsavedChangesGuard],
+                        canActivate: [AuthGuard],
                     },
                     {
                         path: 'users/edit/:id',
                         component: UserFormComponent,
-                        canDeactivate: [PreventUnsavedChangesGuard]
+                        canDeactivate: [PreventUnsavedChangesGuard],
+                        canActivate: [AuthGuard],
                     },
                     {
                         path: 'users/delete/:id',
                         component: UserFormComponent,
-                        canDeactivate: [PreventUnsavedChangesGuard]
+                        canDeactivate: [PreventUnsavedChangesGuard],
+                        canActivate: [AuthGuard],
                     },
                 ],
             },
@@ -122,7 +131,8 @@ const appRoutes: Routes = [
                         component: NotificationsComponent,
                         data: {
                             title: 'Notifications'
-                        }
+                        },
+                        canActivate: [AuthGuard],
                     }
                 ]
             },
@@ -131,14 +141,16 @@ const appRoutes: Routes = [
                 component: WidgetsComponent,
                 data: {
                     title: 'Widgets'
-                }
+                },
+                canActivate: [AuthGuard],
             },
             {
                 path: 'charts',
                 component: ChartsComponent,
                 data: {
                     title: 'Charts'
-                }
+                },
+                canActivate: [AuthGuard],
             }
         ]
     },

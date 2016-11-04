@@ -6,7 +6,8 @@
         <form [formGroup]="form" (ngSubmit)="save()">
 
             <accordion [InputTitle]=[user.recordDescription]
-                       [InputAllMode]="false">
+                       [InputKeepOpenMode]="false"
+                       [InputOpenGroup] ="1">
 
                 <label></label>
                 <accordion-group heading="Details ">

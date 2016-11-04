@@ -16,7 +16,7 @@ export class CommonService {
     }
 
     setParms(urlParms) {
-        debugger;
+
         let params: URLSearchParams = new URLSearchParams();
         params.set('Auth', localStorage.getItem('token'));
 
@@ -59,7 +59,7 @@ export class CommonService {
 
 
     setMode(componentMode: string, urlMode: string) {
-        debugger;
+
         var runMode = 'display';
 
        // if ((componentMode == 'workwith') || (componentMode == 'display') || (componentMode == 'select')) {
@@ -82,7 +82,7 @@ export class CommonService {
     }
 
     setModal(componentModal: string, urlModal: string) {
-        debugger;
+
         var runModal = 'false';
       //  if ((componentModal == 'true') || (componentModal == 'false')) {
       //      runModal = componentModal;
@@ -109,7 +109,7 @@ export class CommonService {
     }
 
     getAction(path:string) {
-        debugger;
+
 
         if (path.indexOf("add") > 0 ) {
             return "add";

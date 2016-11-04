@@ -39,7 +39,8 @@ import { FocusDirective }    from './shared/directives/focus.directive';
 import { CommonService }    from './shared/helpers/common.service';
 import { ConstantsService }    from './shared/helpers/constants.service';
 
- 
+import { AuthGuard }                    from './security/auth/auth.guard.ts';
+
 import { ErrorComponent } from "./shared/errors/error.component";
 
  
@@ -88,7 +89,8 @@ import { UserService }                           from './security/users/user.ser
         AuthService,
         UserService,
         CommonService,
-        ConstantsService        
+        ConstantsService,
+        AuthGuard        
     ]
 })
 export class D2DAppModule {

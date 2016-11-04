@@ -35,6 +35,7 @@
     <Content Include="src\index.html" />
     <Content Include="src\favicon.ico" />
     <Content Include="src\tsconfig.json" />
+    <TypeScriptCompile Include="src\app\d2dapp\security\auth\auth.guard.ts" />
     <TypeScriptCompile Include="src\app\d2dapp\shared\components\accordion.component.ts" />
     <TypeScriptCompile Include="src\main.ts" />
     <TypeScriptCompile Include="src\polyfills.ts" />
@@ -389,9 +390,8 @@
     <TypeScriptCompile Include="src\app\d2dapp\master\rulebooks\ruleBook.service.ts" />
     <TypeScriptCompile Include="src\app\d2dapp\master\rulebooks\ruleBook.ts" />
     <Content Include="src\app\d2dapp\security\auth\logout.component.html" />
-    <Content Include="src\app\d2dapp\security\auth\register.component.html" />
-    <Content Include="src\app\d2dapp\security\auth\signin.component.html" />
     <Content Include="src\app\d2dapp\security\auth\signup.component.html" />
+    <Content Include="src\app\d2dapp\security\auth\signin.component.html" />
     <TypeScriptCompile Include="src\app\d2dapp\security\auth\auth.component.ts" />
     <TypeScriptCompile Include="src\app\d2dapp\security\auth\auth.routes.ts" />
     <TypeScriptCompile Include="src\app\d2dapp\security\auth\auth.service.ts" />

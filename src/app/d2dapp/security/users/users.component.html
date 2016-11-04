@@ -17,7 +17,7 @@
                                 <div class="col-md-12">
                                     <div class="panel-body">
                                         <form class="form-inline">
-                                            <a *ngIf="mode === 'workwith'" [routerLink]="['/users/add']" class="form-control btn btn-primary active btn-md"><span class="glyphicon glyphicon-user"></span> Add User </a>
+                                            <a *ngIf="mode === 'workwith'" [routerLink]="['/components/users/add']" class="form-control btn btn-primary active btn-md"><span class="glyphicon glyphicon-user"></span> Add User </a>
                                             <select class="form-control" (change)="reloadUsers({ profileId: profile.value, languageId: language.value, q: q.value})" #profile>
                                                 <option value="">Select a profile...</option>
                                                 <option *ngFor="let profile of profiles" value="{{ profile.id }}">

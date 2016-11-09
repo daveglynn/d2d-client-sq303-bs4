@@ -1,0 +1,13 @@
+﻿    <span *ngIf="dependant > 0">
+        <select class="form-control"  [(ngModel)]="selectedParent.name"  (focus)="loadParent(list)" (change)="onSelect($event.target.value)">
+            <option *ngFor="let parent of parents"  value={{parent.parentId}}{{parent.code}}{{parent.ruleBookId}}>{{parent.name}}</option>
+        </select>
+    </span>
+<!--
+    <div *ngIf="dependant > 1">
+        <select class="form-control">
+            <option [(ngModel)]="selectedChild.childId" *ngIf='selectedChild.childId == 0' value="0">--Select--</option>
+            <option *ngFor="let child of children " value={{child.childId}}>{{child.name}}</option>
+        </select>
+    </div>
+-->

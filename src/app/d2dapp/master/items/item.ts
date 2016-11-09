@@ -24,9 +24,9 @@ export class Item {
 		 	,public parentListId?: number
 		  ) { }
 }
-    
+     
 export class DropDownParent {
-    constructor(public parentId: number, public name: string) { }
+    constructor(public parentId: number, public name: string, public code: string, public ruleBookId: number) { }
 }
 export class DropDownChild {
     constructor(public childId: number, public parentId: number, public name: string) { }

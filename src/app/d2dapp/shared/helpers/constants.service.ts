@@ -15,4 +15,10 @@ export class ConstantsService {
      redirectAfterSignup: string = "/security/auth/signin";
      redirectAfterSignin: string = "/"
 
+     listId_DirectionAscDesc: number = 1
+     listId_UserOrderDropDown: number = 2
+     listId_UserOrderDropDown_InputParentSetId: number = 15
+     listId_DirectionAscDesc_InputParentSetId: number = 16
+
+
 }

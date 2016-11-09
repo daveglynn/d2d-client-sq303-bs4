@@ -40,6 +40,8 @@ export class CommonService {
         return params;
     }
 
+   
+    
     getToken() {
         return localStorage.getItem('token');
     }

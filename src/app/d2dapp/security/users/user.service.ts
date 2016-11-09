@@ -46,7 +46,14 @@ export class UserService {
       		if (filter && filter.active) {
              parms['active'] = filter.active;
 		};
-    
+ 
+        if (filter && filter.orderBy) {
+            parms['orderBy'] = filter.orderBy;
+        }  
+        if (filter && filter.orderDir) {
+            parms['orderDir'] = filter.orderDir;
+        }  
+
         const headers = new Headers({ 'Content-Type': 'application/json' });
         return this._http.get(this._url + "/user/all", { search: this._commonService.setParms(parms) })
             .map(res => res.json())

@@ -21,6 +21,7 @@
   <ItemGroup>
     <Content Include="angular-cli.json" />
     <Content Include="package.json" />
+    <Content Include="src\app\d2dapp\shared\components\dropdown.component.html" />
     <Content Include="tslint.json" />
     <Content Include="README.md" />
     <Compile Include="karma.conf.js" />
@@ -37,6 +38,7 @@
     <Content Include="src\tsconfig.json" />
     <TypeScriptCompile Include="src\app\d2dapp\security\auth\auth.guard.ts" />
     <TypeScriptCompile Include="src\app\d2dapp\shared\components\accordion.component.ts" />
+    <TypeScriptCompile Include="src\app\d2dapp\shared\components\dropdown.component.ts" />
     <TypeScriptCompile Include="src\main.ts" />
     <TypeScriptCompile Include="src\polyfills.ts" />
     <TypeScriptCompile Include="src\test.ts" />

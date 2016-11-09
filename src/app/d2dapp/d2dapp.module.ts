@@ -42,6 +42,7 @@ import { ConstantsService }    from './shared/helpers/constants.service';
 import { AuthGuard }                    from './security/auth/auth.guard.ts';
 
 import { ErrorComponent } from "./shared/errors/error.component";
+import { DropDownComponent } from "./shared/components/dropdown.component";
 
  
 import { UserService }                           from './security/users/user.service';
@@ -69,7 +70,8 @@ import { UserService }                           from './security/users/user.ser
         FocusDirective,
         ErrorComponent,
         Accordion,
-        AccordionGroup
+        AccordionGroup,
+        DropDownComponent
     ],
     exports: [
         UserFormComponent,

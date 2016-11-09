@@ -6,6 +6,7 @@ import { LanguageService } from '../../master/languages/language.service';
 import { CommonService } from   '../../shared/helpers/common.service';
 import { Router, ActivatedRoute }                from '@angular/router';
 import { Location } from '@angular/common';
+import { ConstantsService } from   '../../shared/helpers/constants.service';
 import * as _ from 'underscore';
 
 @Component({
@@ -38,6 +39,12 @@ export class UsersComponent implements OnInit {
     buttons: any[] = [];
     sorting: {};
 
+    listId_DirectionAscDesc: number
+    listId_UserOrderDropDown: number
+    listId_UserOrderDropDown_InputParentSetId: number;
+    listId_DirectionAscDesc_InputParentSetId: number;
+ 
+
     constructor(private _userService: UserService,
         private _errorService: ErrorService,
         private _profileService: ProfileService,
@@ -45,12 +52,11 @@ export class UsersComponent implements OnInit {
         private _commonService: CommonService,
         private _router: Router,
         private _route: ActivatedRoute,
- 
-        private _location: Location) {
+        private _location: Location,
+        private _constantsService: ConstantsService) {
 	}
 
     ngOnInit() {
-        debugger;
         this.setupForm();
         this.loadProfiles();
         this.loadLanguages();
@@ -59,9 +65,14 @@ export class UsersComponent implements OnInit {
 
     private setupForm() {
 
-        //set modal
-        this.modalProcessing()
+        //set up constants
+        this.listId_DirectionAscDesc = this._constantsService.listId_DirectionAscDesc
+        this.listId_UserOrderDropDown = this._constantsService.listId_UserOrderDropDown
+        this.listId_UserOrderDropDown_InputParentSetId = this._constantsService.listId_UserOrderDropDown_InputParentSetId
+        this.listId_DirectionAscDesc_InputParentSetId = this._constantsService.listId_DirectionAscDesc_InputParentSetId
 
+               //set modal
+        this.modalProcessing()
         //set default table sort
         this.sorting = {
             column: 'firstName',
@@ -187,16 +198,14 @@ export class UsersComponent implements OnInit {
 
     }
 
-    private reLoadPage(profile, language, q) {
-
-        profile.value = "";
+    private reLoadPage(profile, language, q, orderBy, orderDir) {
+         profile.value = "";
         language.value = "";
         q.value = "";
         this.loadUsers();
     }
 
     private reloadUsers(filter) {
-
         this.loadUsers(filter);
     }
 

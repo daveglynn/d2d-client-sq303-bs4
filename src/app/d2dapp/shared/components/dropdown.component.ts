@@ -149,8 +149,8 @@ export class DropDownComponent implements OnInit {
             debugger;
             //set selected record
             var foundRecord = _.findWhere(this.parents, { parentId: this.InputParentSetId });
-            this.selectedParent = foundRecord;
-            //this.setParentName = foundRecord.name;
+            //this.selectedParent = foundRecord;
+            this.setParentName = foundRecord.name;
 
         }
         if (process === 'getItemsByParentListId') {

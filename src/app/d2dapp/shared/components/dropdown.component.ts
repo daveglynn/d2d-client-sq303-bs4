@@ -22,6 +22,8 @@ export class DropDownComponent implements OnInit {
     //@Input() InputChildName: string;
     setParentName: string;
 
+    public defaultParent: String
+    
     selectedParent: DropDownParent = new DropDownParent( 0, '','',0);
     //selectedChild: DropDownChild = new DropDownChild(0, 0, '');
 
@@ -105,6 +107,8 @@ export class DropDownComponent implements OnInit {
 
     onSelect(parent) {
         debugger;
+        this.selectedParent = JSON.parse(parent);
+
         //set selected record
         //var foundRecord = _.findWhere(this.parents, { parentId: parentId  });
         //this.selectedParent = foundRecord;
@@ -148,9 +152,9 @@ export class DropDownComponent implements OnInit {
 
             debugger;
             //set selected record
-            var foundRecord = _.findWhere(this.parents, { parentId: this.InputParentSetId });
-            //this.selectedParent = foundRecord;
-            this.setParentName = foundRecord.name;
+            //var foundRecord = _.findWhere(this.parents, { parentId: this.InputParentSetId });
+            this.defaultParent = JSON.stringify(_.findWhere(this.parents, { parentId: this.InputParentSetId }))
+            //this.setParentName = foundRecord.name;
 
         }
         if (process === 'getItemsByParentListId') {

@@ -1,16 +1,19 @@
+/***************************************************************************************
+ Import section
+***************************************************************************************/
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute }                from '@angular/router';
-//import { Control } from "@angular/common";
-import { ClientValidators }                       from '../../shared/validators/client.validators';
-import { UserService }                           from './user.service';
-import { User }                                  from './user';
-import { DropDown} from "../../shared/helpers/dropdown";
-import { Location } from '@angular/common';
-import { CommonService } from   '../../shared/helpers/common.service';
-import { ProfileService } from '../../master/profiles/profile.service';
-import { LanguageService } from '../../master/languages/language.service';
-import { ErrorService } from "../.././shared/errors/error.service";
+import { FormBuilder, FormGroup  }  from '@angular/forms';
+import { FormControl, Validators }  from '@angular/forms';
+import { Router, ActivatedRoute }   from '@angular/router';
+import { ClientValidators }         from '../../shared/validators/client.validators';
+import { UserService }              from './user.service';
+import { User }                     from './user';
+import { DropDown}                  from "../../shared/helpers/dropdown";
+import { Location }                 from '@angular/common';
+import { CommonService }            from   '../../shared/helpers/common.service';
+import { ProfileService }           from '../../master/profiles/profile.service';
+import { LanguageService }          from '../../master/languages/language.service';
+import { ErrorService }             from "../.././shared/errors/error.service";
 
 @Component({
     templateUrl: 'user-form.component.html'
@@ -18,12 +21,14 @@ import { ErrorService } from "../.././shared/errors/error.service";
 
 export class UserFormComponent implements OnInit {
 
-  
-    // interface to other components
-    //@Input() InputMode: string;
+    /***************************************************************************************
+     Parameter section
+    ***************************************************************************************/
     @Input() InputModal: string;
 
-    // control template modal
+    /***************************************************************************************
+     Definition section
+    ***************************************************************************************/
     modalClass: string = "";
     modalDisplay: string = "";
     allDisplay: string = "";
@@ -64,8 +69,11 @@ export class UserFormComponent implements OnInit {
     enabledTo_disabled: boolean = false;
 
     // create a new instance 
-    user = new User(null, null, null, null, true, null,null, null, null, null, null, null, null, null, null, null);
+    user = new User(null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null);
 
+    /***************************************************************************************
+     Construtor section
+    ***************************************************************************************/
     constructor(
         fb: FormBuilder,
         private _router: Router,
@@ -77,16 +85,20 @@ export class UserFormComponent implements OnInit {
         private _location: Location,
         private _commonService: CommonService
     ) {
-         this.action = this._commonService.getAction(this._route.snapshot.routeConfig.path);
+        this.action = this._commonService.getAction(this._route.snapshot.routeConfig.path);
         this.setupValidators(fb)
         this.setupForm();
     }
- 
-    ngOnInit() {
 
-        
+    /***************************************************************************************
+     Initialisation section
+    ***************************************************************************************/
+    ngOnInit() {
     }
 
+    /***************************************************************************************
+     Set up section
+    ***************************************************************************************/
     private setupForm() {
 
         this.modalProcessing()
@@ -167,6 +179,9 @@ export class UserFormComponent implements OnInit {
         };
     }
 
+    /***************************************************************************************
+     Modal section
+    ***************************************************************************************/
     private modalProcessing() {
 
         this._route.params.subscribe(params => {
@@ -185,6 +200,9 @@ export class UserFormComponent implements OnInit {
         }
     }
 
+    /***************************************************************************************
+     Component event section
+    ***************************************************************************************/
     routerCanDeactivate() {
 
         if (this.form.dirty)
@@ -224,6 +242,18 @@ export class UserFormComponent implements OnInit {
 
     }
 
+    goTo(location: string): void {
+        window.location.hash = location;
+    }
+
+    cancel() {
+        this._location.back();
+
+    }
+
+    /***************************************************************************************
+     Data loading section
+    ***************************************************************************************/
     private loadProfiles() {
         if (this.profilesLoaded == false) {
             this._profileService.getProfilesAll()
@@ -248,14 +278,9 @@ export class UserFormComponent implements OnInit {
         }
     }
 
-    goTo(location: string): void {
-        window.location.hash = location;
-    }
-    cancel() {
-        this._location.back();
-
-    }
-
+    /***************************************************************************************
+     Api results section
+    ***************************************************************************************/
     handleError(process, error: any) {
 
         this.userLoading = false;

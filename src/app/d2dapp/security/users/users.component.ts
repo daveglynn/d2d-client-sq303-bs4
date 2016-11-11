@@ -1,3 +1,6 @@
+/***************************************************************************************
+ Import section
+***************************************************************************************/
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserService }       from './user.service';
 import { ErrorService } from "../.././shared/errors/error.service";
@@ -13,10 +16,17 @@ import * as _ from 'underscore';
     templateUrl: 'users.component.html'
 })
 export class UsersComponent implements OnInit {
+
+    /***************************************************************************************
+     Parameter section
+    ***************************************************************************************/
     @Input() InputMode: string;
     @Input() InputModal: string;
     @Output() OutputButtonCloseClick = new EventEmitter();
- 
+
+    /***************************************************************************************
+     Definition section
+    ***************************************************************************************/
     users = [];
 
     // control template modal
@@ -28,7 +38,6 @@ export class UsersComponent implements OnInit {
     title: string;
     mode: string;
     modal: string;
-   // users = [];
     pagedUsers = [];
     profiles = [];
     languages = [];
@@ -39,12 +48,15 @@ export class UsersComponent implements OnInit {
     buttons: any[] = [];
     sorting: {};
 
+    // external control constants
     listId_DirectionAscDesc: number
     listId_UserOrderDropDown: number
-    listId_UserOrderDropDown_InputDefaultItemId: number;
-    listId_DirectionAscDesc_InputDefaultItemId: number;
- 
+    listId_UserOrderDropDown_SelectedItemId: number;
+    listId_DirectionAscDesc_SelectedItemId: number;
 
+    /***************************************************************************************
+     Construtor section
+    ***************************************************************************************/
     constructor(private _userService: UserService,
         private _errorService: ErrorService,
         private _profileService: ProfileService,
@@ -54,25 +66,32 @@ export class UsersComponent implements OnInit {
         private _route: ActivatedRoute,
         private _location: Location,
         private _constantsService: ConstantsService) {
-	}
+    }
 
+    /***************************************************************************************
+     Initialisation section
+    ***************************************************************************************/
     ngOnInit() {
         this.setupForm();
         this.loadProfiles();
         this.loadLanguages();
         this.loadUsers();
-    } 
+    }
 
+    /***************************************************************************************
+     Set up section
+    ***************************************************************************************/
     private setupForm() {
 
-        //set up constants
+        //set up external constants
         this.listId_DirectionAscDesc = this._constantsService.listId_DirectionAscDesc
         this.listId_UserOrderDropDown = this._constantsService.listId_UserOrderDropDown
-        this.listId_UserOrderDropDown_InputDefaultItemId = this._constantsService.listId_UserOrderDropDown_InputDefaultItemId
-        this.listId_DirectionAscDesc_InputDefaultItemId = this._constantsService.listId_DirectionAscDesc_InputDefaultItemId
+        this.listId_UserOrderDropDown_SelectedItemId = this._constantsService.listId_UserOrderDropDown_DefaultItemId
+        this.listId_DirectionAscDesc_SelectedItemId = this._constantsService.listId_DirectionAscDesc_DefaultItemId
 
-               //set modal
+        //set modal
         this.modalProcessing()
+
         //set default table sort
         this.sorting = {
             column: 'firstName',
@@ -148,13 +167,16 @@ export class UsersComponent implements OnInit {
 
     }
 
+    /***************************************************************************************
+     Modal section
+    ***************************************************************************************/
     private modalProcessing() {
 
         this._route.queryParams.subscribe(params => {
-                this.mode = this._commonService.setMode(this.InputMode, params['mode'])
-                this.modal = this._commonService.setModal(this.InputModal, params['modal'])
+            this.mode = this._commonService.setMode(this.InputMode, params['mode'])
+            this.modal = this._commonService.setModal(this.InputModal, params['modal'])
         });
-  
+
         if (this.modal === "true") {
             this.modalClass = "modal"
             this.modalDisplay = 'block'
@@ -166,6 +188,39 @@ export class UsersComponent implements OnInit {
         }
     }
 
+    /***************************************************************************************
+     Component event section
+    ***************************************************************************************/
+    private selectandClose(selection) {
+        debugger;
+        this.OutputButtonCloseClick.next(selection);
+    }
+
+    private outputButtonOnChangeDropdownlist(selectedItem) {
+        debugger;
+    }
+
+    private close() {
+        if (_.contains(['true'], this.modal)) {
+            this.OutputButtonCloseClick.next(null);
+        } else {
+            this._location.back();
+        }
+        // if (this.modal.indexOf("true")) {
+        //     this.OutputButtonCloseClick.next(null);
+        // } else {
+        //     this._location.back();
+        // }
+    }
+
+    private onPageChanged(page) {
+        var startIndex = (page - 1) * this.pageSize;
+        this.pagedUsers = _.take(_.rest(this.users, startIndex), this.pageSize);
+    }
+
+    /***************************************************************************************
+     Data loading section
+    ***************************************************************************************/
     private loadProfiles() {
 
         this._profileService.getProfilesAll()
@@ -199,7 +254,7 @@ export class UsersComponent implements OnInit {
     }
 
     private reLoadPage(profile, language, q, orderBy, orderDir) {
-         profile.value = "";
+        profile.value = "";
         language.value = "";
         q.value = "";
         this.loadUsers();
@@ -209,38 +264,10 @@ export class UsersComponent implements OnInit {
         this.loadUsers(filter);
     }
 
-    private selectandClose(selection) {
-        debugger;
-        this.OutputButtonCloseClick.next(selection);
-    }
 
-    private outputButtonOnChangeDropdownlist(selectedItem) {
-
-        debugger;
- 
-    }
-
-    private close() {
-
-        if (_.contains(['true'], this.modal)) {
-            this.OutputButtonCloseClick.next(null);
-        } else {
-            this._location.back();
-        }
-       // if (this.modal.indexOf("true")) {
-       //     this.OutputButtonCloseClick.next(null);
-       // } else {
-       //     this._location.back();
-       // }
-    }
-
-    private onPageChanged(page) {
-
-        var startIndex = (page - 1) * this.pageSize;
-        this.pagedUsers = _.take(_.rest(this.users, startIndex), this.pageSize);
-    }
-
-
+    /***************************************************************************************
+     Api results section
+    ***************************************************************************************/
     private handleError(process, error: any, index, user) {
 
         console.log("handle error");

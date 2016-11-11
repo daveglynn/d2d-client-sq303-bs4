@@ -35,7 +35,7 @@
                                                           [InputDisplay]="true"
                                                           [InputList]=listId_UserOrderDropDown
                                                           [InputEagerLoad]="true"
-                                                          [InputDefaultItemId]=listId_UserOrderDropDown_InputDefaultItemId
+                                                          [InputDefaultItemId]=listId_UserOrderDropDown_SelectedItemId
                                                           [InputPlaceholder]="'Order by'" #orderBy>
                                                 Loading list...
                                             </dropdownlist>
@@ -44,8 +44,8 @@
                                                           [InputDisplay]="true"
                                                           [InputList]=listId_DirectionAscDesc
                                                           [InputEagerLoad]="true"
-                                                          [InputDefaultItemId]=listId_DirectionAscDesc_InputDefaultItemId
-                                                          [InputPlaceholder]="''" #orderDir>
+                                                          [InputDefaultItemId]=listId_DirectionAscDesc_SelectedItemId
+                                                          [InputPlaceholder]="'sort'" #orderDir>
                                                 Loading list...
                                             </dropdownlist>
                                             <input class="form-control" #criteria type="search" placeholder="Search criteria" #q />

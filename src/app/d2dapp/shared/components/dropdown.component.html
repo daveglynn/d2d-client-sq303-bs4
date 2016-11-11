@@ -1,5 +1,6 @@
 ﻿    <span *ngIf="display == true">
         <select class="form-control"  [ngModel]="defaultItem" (focus)="loadList(list)" (change)="onChange($event.target.value)">
+            <option ng-show="!model" value="">{{placeHolder}}</option>
             <option *ngFor="let item of items"  value='{"id":{{item.id}},"listId":{{item.listId}},"parentListId":{{item.parentListId}},"name":"{{item.name}}","code":"{{item.code}}","ruleBookId":{{item.ruleBookId}}}'>{{item.name}}</option>
         </select>
     </span>

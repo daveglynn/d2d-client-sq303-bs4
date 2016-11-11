@@ -85,7 +85,12 @@ export class DropDownComponent implements OnInit {
     onChange(selectedItem) {
 
         debugger;
-        this.selectedItem = JSON.parse(selectedItem);
+        if (selectedItem.trim() != "") {
+            this.selectedItem = JSON.parse(selectedItem);
+        } else {
+            this.selectedItem = selectedItem;
+        }
+
         this.OutputButtonOnChange.next(this.selectedItem);
     }
 

@@ -1,6 +1,6 @@
 ﻿import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core'
 import { ItemService } from "../../master/items/item.service";
-import { DropDownParent } from "../../master/items/item";
+import { DropDownItem } from "../../master/items/item";
 import { ErrorService } from "../errors/error.service";
 import * as _ from 'underscore';
 
@@ -13,26 +13,24 @@ export class DropDownComponent implements OnInit {
     @Input() InputObject: string;
     @Input() InputDisplay: boolean;
     @Input() InputList: number;
-    @Input() InputParentSetId: number;
-    @Input() InputParentPlaceholder: string;
-    @Input() InputParentEagerLoad: boolean;
+    @Input() InputDefaultItemId: number;
+    @Input() InputPlaceholder: string;
+    @Input() InputEagerLoad: boolean;
+    @Output() OutputButtonOnChange = new EventEmitter(); 
+
+    public defaultItem: String = "";
     
+    selectedItem: DropDownItem = new DropDownItem(0, 0, 0, '','',0);
 
-    setParentName: string;
-
-    public defaultParent: String = "";
-    
-    selectedParent: DropDownParent = new DropDownParent( 0, '','',0);
-
-    parents: DropDownParent[];
+    items: DropDownItem[];
 
     object: string;
     display: boolean;
     list: number;
 
-    parentPlaceHolder: string
-    parentEagerLoad: boolean
-    parentsLoaded: boolean = false;
+    placeHolder: string
+    eagerLoad: boolean
+    listLoaded: boolean = false;
 
     dropDownLoading;
 
@@ -44,25 +42,25 @@ export class DropDownComponent implements OnInit {
         this.display = this.InputDisplay;
         this.list = this.InputList;
         this.object = this.InputObject;
-        this.parentPlaceHolder = this.InputParentPlaceholder
-        this.parentEagerLoad = this.InputParentEagerLoad
+        this.placeHolder = this.InputPlaceholder
+        this.eagerLoad = this.InputEagerLoad
 
-        if (this.parentEagerLoad == true) {
-            this.loadParent(this.list)
+        if (this.eagerLoad == true) {
+            this.loadList(this.list)
         }
 
     }
 
-    loadParent(list) {
+    loadList(list) {
         debugger;
-        this.getParent(list)
+        this.getList(list)
     }
 
-    getParent(list) {
+    getList(list) {
 
         if (this.object == 'item') {
-            if (this.parentsLoaded == false) {
-                this.parentsLoaded = true
+            if (this.listLoaded == false) {
+                this.listLoaded = true
                 this._itemService.getItemsByListId(list)
                     .subscribe(
                     data => this.handleData('getItemsByListId', data, null),
@@ -71,8 +69,8 @@ export class DropDownComponent implements OnInit {
                     );
             }
         } else {
-            if (this.parentsLoaded == false) {
-                this.parentsLoaded = true
+            if (this.listLoaded == false) {
+                this.listLoaded = true
                 this._itemService.getItemsByObjectId(this.object, list)
                     .subscribe(
                     data => this.handleData('getItemsByListId', data, null),
@@ -84,11 +82,11 @@ export class DropDownComponent implements OnInit {
 
     }
 
-    onSelect(parent) {
+    onChange(selectedItem) {
 
         debugger;
-        this.selectedParent = JSON.parse(parent);
-
+        this.selectedItem = JSON.parse(selectedItem);
+        this.OutputButtonOnChange.next(this.selectedItem);
     }
 
     handleError(process, error: any) {
@@ -101,21 +99,20 @@ export class DropDownComponent implements OnInit {
         this._errorService.handleError(error);
     }
 
-    handleData(process, data: any, parentId) {
+    handleData(process, data: any, parentListId) {
         this.dropDownLoading = false;
         console.log("handle data");
         console.log(data);
         if (process === 'getItemsByListId') {
-            this.parents = [];
+            this.items = [];
             for (let i in data) {
                 console.log(data[i].name);
-                this.parents.push(new DropDownParent(data[i].id, data[i].name, data[i].code, data[i].ruleBookId));
+                this.items.push(new DropDownItem(data[i].id, data[i].listId, data[i].parentListId,data[i].name, data[i].code, data[i].ruleBookId));
             }
-
             debugger;
             //set selected record
-            if (this.InputParentSetId != 0) {
-                this.defaultParent = JSON.stringify(_.findWhere(this.parents, { parentId: this.InputParentSetId }))
+            if (this.InputDefaultItemId != 0) {
+                this.defaultItem = JSON.stringify(_.findWhere(this.items, { id: this.InputDefaultItemId }))
             }
 
         }

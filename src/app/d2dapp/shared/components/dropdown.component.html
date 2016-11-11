@@ -1,6 +1,6 @@
 ﻿    <span *ngIf="display == true">
-        <select class="form-control"  [ngModel]="defaultParent" (focus)="loadParent(list)" (change)="onSelect($event.target.value)">
-            <option *ngFor="let parent of parents"  value='{"parentId":{{parent.parentId}},"name":"{{parent.name}}","code":"{{parent.code}}","ruleBookId":{{parent.ruleBookId}}}'>{{parent.name}}</option>
+        <select class="form-control"  [ngModel]="defaultItem" (focus)="loadList(list)" (change)="onChange($event.target.value)">
+            <option *ngFor="let item of items"  value='{"id":{{item.id}},"listId":{{item.listId}},"parentListId":{{item.parentListId}},"name":"{{item.name}}","code":"{{item.code}}","ruleBookId":{{item.ruleBookId}}}'>{{item.name}}</option>
         </select>
     </span>
  

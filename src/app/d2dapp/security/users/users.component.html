@@ -18,36 +18,38 @@
                                     <div class="panel-body">
                                         <form class="form-inline">
                                             <a *ngIf="mode === 'workwith'" [routerLink]="['/components/users/add']" class="form-control btn btn-primary active btn-md"><span class="glyphicon glyphicon-user"></span> Add User </a>
-                                            <select class="form-control" (change)="reloadUsers({ profileId: profile.value, languageId: language.value, q: q.value, orderBy: orderBy.selectedParent, orderDir: orderDir.selectedParent})" #profile>
+                                            <select class="form-control" (change)="reloadUsers({ profileId: profile.value, languageId: language.value, q: q.value, orderBy: orderBy.selectedItem, orderDir: orderDir.selectedItem})" #profile>
                                                 <option value="">Select a profile...</option>
                                                 <option *ngFor="let profile of profiles" value="{{ profile.id }}">
                                                     {{ profile.name }}
                                                 </option>
                                             </select>
-                                            <select class="form-control" (change)="reloadUsers({ profileId: profile.value, languageId: language.value, q: q.value, orderBy: orderBy.selectedParent, orderDir: orderDir.selectedParent})" #language>
+                                            <select class="form-control" (change)="reloadUsers({ profileId: profile.value, languageId: language.value, q: q.value, orderBy: orderBy.selectedItem, orderDir: orderDir.selectedItem})" #language>
                                                 <option value="">Select a language...</option>
                                                 <option *ngFor="let language of languages" value="{{ language.id }}">
                                                     {{ language.name }}
                                                 </option>
                                             </select>
-                                            <dropdownlist [InputObject]="'item'"
+                                            <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist($event)"
+                                                          [InputObject]="'item'"
                                                           [InputDisplay]="true"
                                                           [InputList]=listId_UserOrderDropDown
-                                                          [InputParentEagerLoad]="true"
-                                                          [InputParentSetId]=listId_UserOrderDropDown_InputParentSetId
-                                                          [InputParentPlaceholder]="'Order by'" #orderBy>
+                                                          [InputEagerLoad]="true"
+                                                          [InputDefaultItemId]=listId_UserOrderDropDown_InputDefaultItemId
+                                                          [InputPlaceholder]="'Order by'" #orderBy>
                                                 Loading list...
                                             </dropdownlist>
-                                            <dropdownlist [InputObject]="'item'"
+                                            <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist($event)"
+                                                          [InputObject]="'item'"
                                                           [InputDisplay]="true"
                                                           [InputList]=listId_DirectionAscDesc
-                                                          [InputParentEagerLoad]="true"
-                                                          [InputParentSetId]=listId_DirectionAscDesc_InputParentSetId
-                                                          [InputParentPlaceholder]="''" #orderDir>
+                                                          [InputEagerLoad]="true"
+                                                          [InputDefaultItemId]=listId_DirectionAscDesc_InputDefaultItemId
+                                                          [InputPlaceholder]="''" #orderDir>
                                                 Loading list...
                                             </dropdownlist>
                                             <input class="form-control" #criteria type="search" placeholder="Search criteria" #q />
-                                            <button class="form-control btn btn-primary active btn-md" (click)="reloadUsers({  profileId: profile.value, languageId: language.value, q: q.value, orderBy: orderBy.selectedParent, orderDir: orderDir.selectedParent})">
+                                            <button class="form-control btn btn-primary active btn-md" (click)="reloadUsers({  profileId: profile.value, languageId: language.value, q: q.value, orderBy: orderBy.selectedItem, orderDir: orderDir.selectedItem})">
                                                 <span class="glyphicon glyphicon-search"></span> Search
                                             </button>
                                             <button class="form-control btn btn-primary active btn-md" (click)="reLoadPage(profile,language,q ,orderBy,orderDir)">

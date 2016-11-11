@@ -41,8 +41,8 @@ export class UsersComponent implements OnInit {
 
     listId_DirectionAscDesc: number
     listId_UserOrderDropDown: number
-    listId_UserOrderDropDown_InputParentSetId: number;
-    listId_DirectionAscDesc_InputParentSetId: number;
+    listId_UserOrderDropDown_InputDefaultItemId: number;
+    listId_DirectionAscDesc_InputDefaultItemId: number;
  
 
     constructor(private _userService: UserService,
@@ -68,8 +68,8 @@ export class UsersComponent implements OnInit {
         //set up constants
         this.listId_DirectionAscDesc = this._constantsService.listId_DirectionAscDesc
         this.listId_UserOrderDropDown = this._constantsService.listId_UserOrderDropDown
-        this.listId_UserOrderDropDown_InputParentSetId = this._constantsService.listId_UserOrderDropDown_InputParentSetId
-        this.listId_DirectionAscDesc_InputParentSetId = this._constantsService.listId_DirectionAscDesc_InputParentSetId
+        this.listId_UserOrderDropDown_InputDefaultItemId = this._constantsService.listId_UserOrderDropDown_InputDefaultItemId
+        this.listId_DirectionAscDesc_InputDefaultItemId = this._constantsService.listId_DirectionAscDesc_InputDefaultItemId
 
                //set modal
         this.modalProcessing()
@@ -210,8 +210,14 @@ export class UsersComponent implements OnInit {
     }
 
     private selectandClose(selection) {
-
+        debugger;
         this.OutputButtonCloseClick.next(selection);
+    }
+
+    private outputButtonOnChangeDropdownlist(selectedItem) {
+
+        debugger;
+ 
     }
 
     private close() {

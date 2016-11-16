@@ -18,6 +18,11 @@ export class Profile {
 		 	,public active?: boolean
 		 	,public description?: string
 		 	,public hideElements?: string
+		 	,public code?: string
+		 	,public ruleBookId?: number
+		 	,public expired?: boolean
+		 	,public parent?: boolean
+		 	,public parentListId?: number
 		  ) { }
 }
     

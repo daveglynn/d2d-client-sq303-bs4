@@ -24,6 +24,15 @@
                                                     {{ profile.name }}
                                                 </option>
                                             </select>
+                                            <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist($event)"
+                                                          [InputObject]="'profile'"
+                                                          [InputDisplay]="true"
+                                                          [InputList]=0
+                                                          [InputEagerLoad]="true"
+                                                          [InputDefaultItemId]=0
+                                                          [InputPlaceholder]="'Profile'" #profile>
+                                                Loading list...
+                                            </dropdownlist>
                                             <select class="form-control"  #language>
                                                 <option value="">Select a language...</option>
                                                 <option *ngFor="let language of languages" value="{{ language.id }}">

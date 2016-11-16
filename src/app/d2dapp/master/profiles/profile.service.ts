@@ -33,9 +33,22 @@ export class ProfileService {
         if (filter && filter.q) {
             parms['q'] = filter.q;
         }
-	  		if (filter && filter.active) {
+		if (filter && filter.ruleBookId) {
+            parms['ruleBookId'] = filter.ruleBookId;
+		};
+    	if (filter && filter.parentListId) {
+            parms['parentListId'] = filter.parentListId;
+		};
+      		if (filter && filter.active) {
              parms['active'] = filter.active;
 		};
+    	if (filter && filter.expired) {
+             parms['expired'] = filter.expired;
+		};
+    	if (filter && filter.parent) {
+             parms['parent'] = filter.parent;
+		};
+    
         const headers = new Headers({ 'Content-Type': 'application/json' });
         return this._http.get(this._url + "/profile/all", { search: this._commonService.setParms(parms) })
             .map(res => res.json())
@@ -72,6 +85,49 @@ export class ProfileService {
 
     }
   	
-	
+/******************************************************************************************************
+ Get Profile records by RuleBookId 
+******************************************************************************************************/
+	getProfilesByRuleBookId = function (ruleBookId, filter?) {
+
+		var parms = {};
+		if (filter && filter.view) {
+			parms['view'] = filter.view;
+		}
+    
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this._http.get(this._url + "/profile/ruleBook/" + ruleBookId, { search: this._commonService.setParms(parms) })
+
+			.map(res => res.json())
+			.catch(error => Observable.throw(error.json()))
+	}	
+     
+
+/******************************************************************************************************
+ Get Profile records by ParentListId 
+******************************************************************************************************/
+	getProfilesByParentListId = function (parentListId, filter?) {
+
+		var parms = {};
+		if (filter && filter.view) {
+			parms['view'] = filter.view;
+		}
+    
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this._http.get(this._url + "/profile/parentList/" + parentListId, { search: this._commonService.setParms(parms) })
+
+			.map(res => res.json())
+			.catch(error => Observable.throw(error.json()))
+	}	
+     
+
+/******************************************************************************************************
+ Get Profiles for Dropdown 
+******************************************************************************************************/
+getListByObject() {
+    return this._http.get(this._url + "/profile" +"/dropdown", { search: this._commonService.getTokenAsParm() })
+        .map(res => res.json())
+        .catch(error => Observable.throw(error.json()))
+}		
 	
 }

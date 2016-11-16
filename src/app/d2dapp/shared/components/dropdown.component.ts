@@ -1,5 +1,4 @@
 ﻿import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core'
-import { ItemService } from "../../master/items/item.service";
 import { ListService } from "../../master/lists/list.service";
 import { DropDownItem } from "../../master/items/item";
 import { ErrorService } from "../errors/error.service";
@@ -8,7 +7,7 @@ import * as _ from 'underscore';
 @Component({
     selector: 'dropdownlist',
     templateUrl: 'dropdown.component.html',
-    providers: [ItemService, ListService]
+    providers: [  ListService]
 })
 export class DropDownComponent implements OnInit {
     @Input() InputObject: string;
@@ -35,7 +34,7 @@ export class DropDownComponent implements OnInit {
 
     dropDownLoading;
 
-    constructor(private _itemService: ItemService, private _listService: ListService, private _errorService: ErrorService) {
+    constructor(  private _listService: ListService, private _errorService: ErrorService) {
         this.dropDownLoading = true;
     }
 
@@ -71,11 +70,11 @@ export class DropDownComponent implements OnInit {
         } else {
             if (this.listLoaded == false) {
                 this.listLoaded = true
-                this._itemService.getItemsByObjectId(this.object, list)
+                this._listService.getListByObject(this.object, list)
                     .subscribe(
-                    data => this.handleData('getItemsByObjectId', data, null),
-                    error => this.handleError('getItemsByObjectId', error),
-                    () => this.handleSuccess('getItemsByObjectId')
+                    data => this.handleData('getListByObject', data, null),
+                    error => this.handleError('getListByObject', error),
+                    () => this.handleSuccess('getListByObject')
                     );
             }
         }
@@ -110,20 +109,24 @@ export class DropDownComponent implements OnInit {
         console.log(data);
 
         if (process === 'getListByIdItems') {
-
             this.items = [];
             this.items = data.items;
-
             //set selected record
             if (this.InputDefaultItemId != 0) {
                 this.selectedItem = _.findWhere(this.items, { id: this.InputDefaultItemId });
                 this.defaultItem = JSON.stringify(this.selectedItem)
             }
-
         }
 
-        if (process === 'getItemsByObjectId') {
+        if (process === 'getListByObject') {
             debugger;
+            this.items = [];
+            this.items = data.items;
+            //set selected record
+            if (this.InputDefaultItemId != 0) {
+                this.selectedItem = _.findWhere(this.items, { id: this.InputDefaultItemId });
+                this.defaultItem = JSON.stringify(this.selectedItem)
+            }
         }
     }
 

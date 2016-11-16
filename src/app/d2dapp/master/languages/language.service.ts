@@ -33,8 +33,20 @@ export class LanguageService {
         if (filter && filter.q) {
             parms['q'] = filter.q;
         }
-	  		if (filter && filter.active) {
+		if (filter && filter.ruleBookId) {
+            parms['ruleBookId'] = filter.ruleBookId;
+		};
+    	if (filter && filter.parentListId) {
+            parms['parentListId'] = filter.parentListId;
+		};
+      		if (filter && filter.active) {
              parms['active'] = filter.active;
+		};
+    	if (filter && filter.expired) {
+             parms['expired'] = filter.expired;
+		};
+    	if (filter && filter.parent) {
+             parms['parent'] = filter.parent;
 		};
     
         const headers = new Headers({ 'Content-Type': 'application/json' });
@@ -73,6 +85,49 @@ export class LanguageService {
 
     }
   	
-	
+/******************************************************************************************************
+ Get Language records by RuleBookId 
+******************************************************************************************************/
+	getLanguagesByRuleBookId = function (ruleBookId, filter?) {
+
+		var parms = {};
+		if (filter && filter.view) {
+			parms['view'] = filter.view;
+		}
+    
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this._http.get(this._url + "/language/ruleBook/" + ruleBookId, { search: this._commonService.setParms(parms) })
+
+			.map(res => res.json())
+			.catch(error => Observable.throw(error.json()))
+	}	
+     
+
+/******************************************************************************************************
+ Get Language records by ParentListId 
+******************************************************************************************************/
+	getLanguagesByParentListId = function (parentListId, filter?) {
+
+		var parms = {};
+		if (filter && filter.view) {
+			parms['view'] = filter.view;
+		}
+    
+		const headers = new Headers({ 'Content-Type': 'application/json' });
+		return this._http.get(this._url + "/language/parentList/" + parentListId, { search: this._commonService.setParms(parms) })
+
+			.map(res => res.json())
+			.catch(error => Observable.throw(error.json()))
+	}	
+     
+
+/******************************************************************************************************
+ Get Languages for Dropdown 
+******************************************************************************************************/
+getListByObject() {
+    return this._http.get(this._url + "/language" +"/dropdown", { search: this._commonService.getTokenAsParm() })
+        .map(res => res.json())
+        .catch(error => Observable.throw(error.json()))
+}		
 	
 }

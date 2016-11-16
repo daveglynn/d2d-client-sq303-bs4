@@ -17,6 +17,10 @@ export class Language {
 		 	,public name?: string
 		 	,public code?: string
 		 	,public active?: boolean
+		 	,public ruleBookId?: number
+		 	,public expired?: boolean
+		 	,public parent?: boolean
+		 	,public parentListId?: number
 		  ) { }
 }
     

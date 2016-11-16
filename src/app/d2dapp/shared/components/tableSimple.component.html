@@ -18,7 +18,7 @@
                 <tr *ngFor="let object of InputData | orderBy : convertSorting()">
                     <td *ngFor="let button of InputPreButtons">
                         <div *ngIf="button.action == 'select'">
-                            <a class="btn btn-primary" (click)="selectAndClose(object)">
+                            <a class="btn btn-primary" (click)="onClick(object)">
                                 <span class="glyphicon glyphicon-ok"></span>
                             </a>
                         </div>

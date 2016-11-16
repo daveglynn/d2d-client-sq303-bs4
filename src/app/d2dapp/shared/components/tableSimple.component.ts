@@ -15,7 +15,7 @@ export class TableSimpleComponent implements OnInit {
 
     modal: string
 
-    @Output() OutputButtonSelectClick = new EventEmitter();
+    @Output() OutputButtonOnClick = new EventEmitter();
 
     constructor(
  
@@ -47,9 +47,8 @@ export class TableSimpleComponent implements OnInit {
         return this.InputSort.descending ? '-' + this.InputSort.column : this.InputSort.column;
     }
 
-    selectAndClose(selection) {
-  
-        this.OutputButtonSelectClick.next(selection);
+    onClick(selection) {
+         this.OutputButtonOnClick.next(selection);
     }
 
 }

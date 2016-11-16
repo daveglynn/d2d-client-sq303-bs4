@@ -191,8 +191,8 @@ export class UsersComponent implements OnInit {
     /***************************************************************************************
      Component event section
     ***************************************************************************************/
-    private selectandClose(selection) {
-        debugger;
+    private outputButtonOnChangeTableSimpleOnClick(selection) {
+ 
         this.OutputButtonCloseClick.next(selection);
     }
 
@@ -242,7 +242,7 @@ export class UsersComponent implements OnInit {
     }
 
     private loadUsers(filter?) {
-
+        debugger;
         this.usersLoading = true;
         this._userService.getUsersAll(filter)
             .subscribe(
@@ -254,6 +254,7 @@ export class UsersComponent implements OnInit {
     }
 
     private reLoadPage(profile, language, q, orderBy, orderDir) {
+ 
         profile.value = "";
         language.value = "";
         q.value = "";
@@ -261,6 +262,7 @@ export class UsersComponent implements OnInit {
     }
 
     private reloadUsers(filter) {
+ 
         this.loadUsers(filter);
     }
 

@@ -18,20 +18,20 @@
                                     <div class="panel-body">
                                         <form class="form-inline">
                                             <a *ngIf="mode === 'workwith'" [routerLink]="['/components/users/add']" class="form-control btn btn-primary active btn-md"><span class="glyphicon glyphicon-user"></span> Add User </a>
-                                            <select class="form-control" (change)="reloadUsers({ profileId: profile.value, languageId: language.value, q: q.value, orderBy: orderBy.selectedItem, orderDir: orderDir.selectedItem})" #profile>
+                                            <select class="form-control"  #profile>
                                                 <option value="">Select a profile...</option>
                                                 <option *ngFor="let profile of profiles" value="{{ profile.id }}">
                                                     {{ profile.name }}
                                                 </option>
                                             </select>
-                                            <select class="form-control" (change)="reloadUsers({ profileId: profile.value, languageId: language.value, q: q.value, orderBy: orderBy.selectedItem, orderDir: orderDir.selectedItem})" #language>
+                                            <select class="form-control"  #language>
                                                 <option value="">Select a language...</option>
                                                 <option *ngFor="let language of languages" value="{{ language.id }}">
                                                     {{ language.name }}
                                                 </option>
                                             </select>
                                             <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist($event)"
-                                                          [InputObject]="'item'"
+                                                          [InputObject]="'list'"
                                                           [InputDisplay]="true"
                                                           [InputList]=listId_UserOrderDropDown
                                                           [InputEagerLoad]="true"
@@ -40,7 +40,7 @@
                                                 Loading list...
                                             </dropdownlist>
                                             <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist($event)"
-                                                          [InputObject]="'item'"
+                                                          [InputObject]="'list'"
                                                           [InputDisplay]="true"
                                                           [InputList]=listId_DirectionAscDesc
                                                           [InputEagerLoad]="true"
@@ -48,6 +48,7 @@
                                                           [InputPlaceholder]="'sort'" #orderDir>
                                                 Loading list...
                                             </dropdownlist>
+
                                             <input class="form-control" #criteria type="search" placeholder="Search criteria" #q />
                                             <button class="form-control btn btn-primary active btn-md" (click)="reloadUsers({  profileId: profile.value, languageId: language.value, q: q.value, orderBy: orderBy.selectedItem, orderDir: orderDir.selectedItem})">
                                                 <span class="glyphicon glyphicon-search"></span> Search
@@ -63,7 +64,7 @@
                                         <pagination [items]="users" (page-changed)="onPageChanged($event)"></pagination>
                                     </div>
                                     <div class="table-responsive ">
-                                        <table-simple (OutputButtonSelectClick)="selectandClose($event)"
+                                        <table-simple (OutputButtonOnClick)="outputButtonOnChangeTableSimpleOnClick($event)"
                                                       [InputModal]="modal"
                                                       [InputPreButtons]="preButtons"
                                                       [InputColumns]="columns"

@@ -76,6 +76,10 @@ export class ListService {
 
     }
   	
-	
+    getListByIdItems(listId) {
+        return this._http.get(this._url + "/list/" + listId +"/Items", { search: this._commonService.getTokenAsParm() })
+            .map(res => res.json())
+            .catch(error => Observable.throw(error.json()))
+    }	
 	
 }

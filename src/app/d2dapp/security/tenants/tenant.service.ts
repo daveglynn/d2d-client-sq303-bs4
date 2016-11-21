@@ -37,6 +37,13 @@ export class TenantService {
              parms['active'] = filter.active;
 		};
     
+		if (filter && filter.orderDir) {
+			parms['orderDir'] = filter.orderDir.code;
+		};
+		if (filter && filter.orderBy) {
+			parms['orderBy'] = filter.orderBy.code;
+		};
+
         const headers = new Headers({ 'Content-Type': 'application/json' });
         return this._http.get(this._url + "/tenant/all", { search: this._commonService.setParms(parms) })
             .map(res => res.json())

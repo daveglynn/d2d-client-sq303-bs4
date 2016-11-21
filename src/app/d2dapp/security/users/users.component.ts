@@ -48,11 +48,14 @@ export class UsersComponent implements OnInit {
     buttons: any[] = [];
     sorting: {};
 
-    // external control constants
-    listId_DirectionAscDesc: number
-    listId_UserOrderDropDown: number
-    listId_UserOrderDropDown_SelectedItemId: number;
-    listId_DirectionAscDesc_SelectedItemId: number;
+    //dropdown ListId
+    dropdown_UserComponentOrderBy: number
+    dropdown_UserComponentOrderDir: number
+    //dropdown ListId default selection
+    dropdown_UserComponentOrderBy_DefaultId: number;
+    dropdown_UserComponentOrderDir_DefaultId: number;
+    dropdown_UserComponentLanguage_DefaultId: number;
+    dropdown_UserComponentProfile_DefaultId: number;
 
     /***************************************************************************************
      Construtor section
@@ -82,12 +85,14 @@ export class UsersComponent implements OnInit {
      Set up section
     ***************************************************************************************/
     private setupForm() {
-
+  
         //set up external constants
-        this.listId_DirectionAscDesc = this._constantsService.listId_DirectionAscDesc
-        this.listId_UserOrderDropDown = this._constantsService.listId_UserOrderDropDown
-        this.listId_UserOrderDropDown_SelectedItemId = this._constantsService.listId_UserOrderDropDown_DefaultItemId
-        this.listId_DirectionAscDesc_SelectedItemId = this._constantsService.listId_DirectionAscDesc_DefaultItemId
+        this.dropdown_UserComponentOrderDir = this._constantsService.dropdown_UserComponentOrderDir
+        this.dropdown_UserComponentOrderBy = this._constantsService.dropdown_UserComponentOrderBy
+        this.dropdown_UserComponentOrderBy_DefaultId = this._constantsService.dropdown_UserComponentOrderBy_DefaultItemId
+        this.dropdown_UserComponentOrderDir_DefaultId = this._constantsService.dropdown_UserComponentOrderDir_DefaultItemId
+        this.dropdown_UserComponentProfile_DefaultId = this._constantsService.dropdown_UserComponentProfile_DefaultId
+        this.dropdown_UserComponentLanguage_DefaultId = this._constantsService.dropdown_UserComponentLanguage_DefaultId
 
         //set modal
         this.modalProcessing()
@@ -230,7 +235,7 @@ export class UsersComponent implements OnInit {
             () => this.handleSuccess('loadProfiles')
             );
     }
-
+      
     private loadLanguages() {
 
         this._languageService.getLanguagesAll()
@@ -242,7 +247,7 @@ export class UsersComponent implements OnInit {
     }
 
     private loadUsers(filter?) {
-        debugger;
+
         this.usersLoading = true;
         this._userService.getUsersAll(filter)
             .subscribe(

@@ -33,14 +33,14 @@ export class ItemService {
         if (filter && filter.q) {
             parms['q'] = filter.q;
         }
-		if (filter && filter.listId) {
-            parms['listId'] = filter.listId;
+		if (filter && filter.list) {
+            parms['listId'] = filter.list.id;
 		};
-    	if (filter && filter.ruleBookId) {
-            parms['ruleBookId'] = filter.ruleBookId;
+    	if (filter && filter.ruleBook) {
+            parms['ruleBookId'] = filter.ruleBook.id;
 		};
-    	if (filter && filter.parentListId) {
-            parms['parentListId'] = filter.parentListId;
+    	if (filter && filter.parentList) {
+            parms['parentListId'] = filter.parentList.id;
 		};
       		if (filter && filter.active) {
              parms['active'] = filter.active;
@@ -52,6 +52,13 @@ export class ItemService {
              parms['parent'] = filter.parent;
 		};
     
+		if (filter && filter.orderDir) {
+			parms['orderDir'] = filter.orderDir.code;
+		};
+		if (filter && filter.orderBy) {
+			parms['orderBy'] = filter.orderBy.code;
+		};
+
         const headers = new Headers({ 'Content-Type': 'application/json' });
         return this._http.get(this._url + "/item/all", { search: this._commonService.setParms(parms) })
             .map(res => res.json())
@@ -89,9 +96,9 @@ export class ItemService {
     }
   	
 /******************************************************************************************************
- Get Item records by ListId 
+ Get Item records for ListId 
 ******************************************************************************************************/
-	getItemsByListId = function (listId, filter?) {
+	getItemsForListId = function (listId, filter?) {
 
 		var parms = {};
 		if (filter && filter.view) {
@@ -107,9 +114,9 @@ export class ItemService {
      
 
 /******************************************************************************************************
- Get Item records by RuleBookId 
+ Get Item records for RuleBookId 
 ******************************************************************************************************/
-	getItemsByRuleBookId = function (ruleBookId, filter?) {
+	getItemsForRuleBookId = function (ruleBookId, filter?) {
 
 		var parms = {};
 		if (filter && filter.view) {
@@ -125,9 +132,9 @@ export class ItemService {
      
 
 /******************************************************************************************************
- Get Item records by ParentListId 
+ Get Item records for ParentListId 
 ******************************************************************************************************/
-	getItemsByParentListId = function (parentListId, filter?) {
+	getItemsForParentListId = function (parentListId, filter?) {
 
 		var parms = {};
 		if (filter && filter.view) {

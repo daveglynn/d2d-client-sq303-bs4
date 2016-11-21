@@ -29,23 +29,31 @@ export class UserService {
 	}
 
     getUsersAll(filter?) {
+
         var parms = {};
         if (filter && filter.q) {
             parms['q'] = filter.q;
         }
-		if (filter && filter.languageId) {
-            parms['languageId'] = filter.languageId;
+		if (filter && filter.language) {
+            parms['languageId'] = filter.language.id;
 		};
-    	if (filter && filter.roleId) {
-            parms['roleId'] = filter.roleId;
+    	if (filter && filter.role) {
+            parms['roleId'] = filter.role.id;
 		};
-    	if (filter && filter.profileId) {
-            parms['profileId'] = filter.profileId;
+    	if (filter && filter.profile) {
+            parms['profileId'] = filter.profile.id;
 		};
       		if (filter && filter.active) {
              parms['active'] = filter.active;
 		};
     
+		if (filter && filter.orderDir) {
+			parms['orderDir'] = filter.orderDir.code;
+		};
+		if (filter && filter.orderBy) {
+			parms['orderBy'] = filter.orderBy.code;
+		};
+
         const headers = new Headers({ 'Content-Type': 'application/json' });
         return this._http.get(this._url + "/user/all", { search: this._commonService.setParms(parms) })
             .map(res => res.json())
@@ -83,9 +91,9 @@ export class UserService {
     }
   	
 /******************************************************************************************************
- Get User records by LanguageId 
+ Get User records for LanguageId 
 ******************************************************************************************************/
-	getUsersByLanguageId = function (languageId, filter?) {
+	getUsersForLanguageId = function (languageId, filter?) {
 
 		var parms = {};
 		if (filter && filter.view) {
@@ -101,9 +109,9 @@ export class UserService {
      
 
 /******************************************************************************************************
- Get User records by RoleId 
+ Get User records for RoleId 
 ******************************************************************************************************/
-	getUsersByRoleId = function (roleId, filter?) {
+	getUsersForRoleId = function (roleId, filter?) {
 
 		var parms = {};
 		if (filter && filter.view) {
@@ -119,9 +127,9 @@ export class UserService {
      
 
 /******************************************************************************************************
- Get User records by ProfileId 
+ Get User records for ProfileId 
 ******************************************************************************************************/
-	getUsersByProfileId = function (profileId, filter?) {
+	getUsersForProfileId = function (profileId, filter?) {
 
 		var parms = {};
 		if (filter && filter.view) {

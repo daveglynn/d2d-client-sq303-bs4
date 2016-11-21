@@ -33,11 +33,11 @@ export class LanguageService {
         if (filter && filter.q) {
             parms['q'] = filter.q;
         }
-		if (filter && filter.ruleBookId) {
-            parms['ruleBookId'] = filter.ruleBookId;
+		if (filter && filter.ruleBook) {
+            parms['ruleBookId'] = filter.ruleBook.id;
 		};
-    	if (filter && filter.parentListId) {
-            parms['parentListId'] = filter.parentListId;
+    	if (filter && filter.parentList) {
+            parms['parentListId'] = filter.parentList.id;
 		};
       		if (filter && filter.active) {
              parms['active'] = filter.active;
@@ -49,6 +49,13 @@ export class LanguageService {
              parms['parent'] = filter.parent;
 		};
     
+		if (filter && filter.orderDir) {
+			parms['orderDir'] = filter.orderDir.code;
+		};
+		if (filter && filter.orderBy) {
+			parms['orderBy'] = filter.orderBy.code;
+		};
+
         const headers = new Headers({ 'Content-Type': 'application/json' });
         return this._http.get(this._url + "/language/all", { search: this._commonService.setParms(parms) })
             .map(res => res.json())
@@ -86,9 +93,9 @@ export class LanguageService {
     }
   	
 /******************************************************************************************************
- Get Language records by RuleBookId 
+ Get Language records for RuleBookId 
 ******************************************************************************************************/
-	getLanguagesByRuleBookId = function (ruleBookId, filter?) {
+	getLanguagesForRuleBookId = function (ruleBookId, filter?) {
 
 		var parms = {};
 		if (filter && filter.view) {
@@ -104,9 +111,9 @@ export class LanguageService {
      
 
 /******************************************************************************************************
- Get Language records by ParentListId 
+ Get Language records for ParentListId 
 ******************************************************************************************************/
-	getLanguagesByParentListId = function (parentListId, filter?) {
+	getLanguagesForParentListId = function (parentListId, filter?) {
 
 		var parms = {};
 		if (filter && filter.view) {

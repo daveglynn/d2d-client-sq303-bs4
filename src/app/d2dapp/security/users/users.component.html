@@ -18,48 +18,45 @@
                                     <div class="panel-body">
                                         <form class="form-inline">
                                             <a *ngIf="mode === 'workwith'" [routerLink]="['/components/users/add']" class="form-control btn btn-primary active btn-md"><span class="glyphicon glyphicon-user"></span> Add User </a>
-                                            <select class="form-control"  #profile>
-                                                <option value="">Select a profile...</option>
-                                                <option *ngFor="let profile of profiles" value="{{ profile.id }}">
-                                                    {{ profile.name }}
-                                                </option>
-                                            </select>
                                             <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist($event)"
                                                           [InputObject]="'profile'"
                                                           [InputDisplay]="true"
                                                           [InputList]=0
                                                           [InputEagerLoad]="true"
-                                                          [InputDefaultItemId]=0
+                                                          [InputDefaultItemId]=1
                                                           [InputPlaceholder]="'Profile'" #profile>
-                                                Loading list...
+                                                Loading profiles...
                                             </dropdownlist>
-                                            <select class="form-control"  #language>
-                                                <option value="">Select a language...</option>
-                                                <option *ngFor="let language of languages" value="{{ language.id }}">
-                                                    {{ language.name }}
-                                                </option>
-                                            </select>
+                                            <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist($event)"
+                                                          [InputObject]="'language'"
+                                                          [InputDisplay]="true"
+                                                          [InputList]=0
+                                                          [InputEagerLoad]="true"
+                                                          [InputDefaultItemId]=2
+                                                          [InputPlaceholder]="'language'" #language>
+                                                Loading languages...
+                                            </dropdownlist>
                                             <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist($event)"
                                                           [InputObject]="'list'"
                                                           [InputDisplay]="true"
-                                                          [InputList]=listId_UserOrderDropDown
+                                                          [InputList]=dropdown_UserComponentOrderBy
                                                           [InputEagerLoad]="true"
-                                                          [InputDefaultItemId]=listId_UserOrderDropDown_SelectedItemId
+                                                          [InputDefaultItemId]=dropdown_UserComponentOrderBy_DefaultId
                                                           [InputPlaceholder]="'Order by'" #orderBy>
-                                                Loading list...
+                                                Loading Order By...
                                             </dropdownlist>
                                             <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist($event)"
                                                           [InputObject]="'list'"
                                                           [InputDisplay]="true"
-                                                          [InputList]=listId_DirectionAscDesc
+                                                          [InputList]=dropdown_UserComponentOrderDir
                                                           [InputEagerLoad]="true"
-                                                          [InputDefaultItemId]=listId_DirectionAscDesc_SelectedItemId
+                                                          [InputDefaultItemId]=dropdown_UserComponentOrderDir_DefaultId
                                                           [InputPlaceholder]="'sort'" #orderDir>
-                                                Loading list...
+                                                Loading Sort...
                                             </dropdownlist>
 
                                             <input class="form-control" #criteria type="search" placeholder="Search criteria" #q />
-                                            <button class="form-control btn btn-primary active btn-md" (click)="reloadUsers({  profileId: profile.value, languageId: language.value, q: q.value, orderBy: orderBy.selectedItem, orderDir: orderDir.selectedItem})">
+                                            <button class="form-control btn btn-primary active btn-md" (click)="reloadUsers({  profile: profile.selectedItem, language: language.selectedItem, q: q.value, orderBy: orderBy.selectedItem, orderDir: orderDir.selectedItem})">
                                                 <span class="glyphicon glyphicon-search"></span> Search
                                             </button>
                                             <button class="form-control btn btn-primary active btn-md" (click)="reLoadPage(profile,language,q ,orderBy,orderDir)">

@@ -20,7 +20,7 @@ export class DropDownComponent implements OnInit {
 
     public defaultItem: String = "";
    
-    selectedItem: DropDownItem = new DropDownItem(0, 0, 0, '','',0);
+    selectedItem: DropDownItem = new DropDownItem(0, 0, '','',0);
   
     items: DropDownItem[];
 
@@ -56,7 +56,7 @@ export class DropDownComponent implements OnInit {
     }
 
     getList(list) {
-        debugger;
+   
         if (this.object == 'list') {
             if (this.listLoaded == false) {
                 this.listLoaded = true
@@ -114,18 +114,17 @@ export class DropDownComponent implements OnInit {
             //set selected record
             if (this.InputDefaultItemId != 0) {
                 this.selectedItem = _.findWhere(this.items, { id: this.InputDefaultItemId });
-                this.defaultItem = JSON.stringify(this.selectedItem)
+                this.defaultItem = JSON.stringify(this.selectedItem).replace(/null/i, "\"\"");
             }
         }
 
         if (process === 'getListByObject') {
-            debugger;
             this.items = [];
-            this.items = data.items;
+            this.items = data;
             //set selected record
             if (this.InputDefaultItemId != 0) {
                 this.selectedItem = _.findWhere(this.items, { id: this.InputDefaultItemId });
-                this.defaultItem = JSON.stringify(this.selectedItem)
+                this.defaultItem = JSON.stringify(this.selectedItem).replace(/null/i, "\"\"");
             }
         }
     }

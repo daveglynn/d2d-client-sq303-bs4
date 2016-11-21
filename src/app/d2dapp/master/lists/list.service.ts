@@ -40,6 +40,13 @@ export class ListService {
              parms['isMetaData'] = filter.isMetaData;
 		};
     
+		if (filter && filter.orderDir) {
+			parms['orderDir'] = filter.orderDir.code;
+		};
+		if (filter && filter.orderBy) {
+			parms['orderBy'] = filter.orderBy.code;
+		};
+
         const headers = new Headers({ 'Content-Type': 'application/json' });
         return this._http.get(this._url + "/list/all", { search: this._commonService.setParms(parms) })
             .map(res => res.json())

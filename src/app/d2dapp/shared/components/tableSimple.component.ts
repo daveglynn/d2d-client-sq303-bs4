@@ -8,6 +8,7 @@
 export class TableSimpleComponent implements OnInit {
     @Input() InputModal: string;
     @Input() InputPreButtons: any[];
+    @Input() InputLinks: any[];
     @Input() InputColumns: any[];
     @Input() InputButtons: any[];
     @Input() InputData: any[];

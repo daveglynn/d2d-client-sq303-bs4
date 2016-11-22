@@ -3,9 +3,12 @@
         <table class="table table-hover table-striped table-sortable">
             <thead>
                 <tr>
-                    <td style="width: 3%; font-weight: bold;" *ngFor="let button of InputPreButtons">
-                        {{button.display}}
+                    <td style="width: 3%; font-weight: bold;" *ngFor="let preButton of InputPreButtons">
+                        {{preButton.display}}
                     </td>
+                    <th *ngFor="let link of InputLinks" style="width: 20%;"  [class]="selectedClass(link.variable)" (click)="changeSorting(link.variable)">
+                        {{link.display}}
+                    </th>
                     <th *ngFor="let column of InputColumns" [class]="selectedClass(column.variable)" (click)="changeSorting(column.variable)">
                         {{column.display}}
                     </th>
@@ -14,18 +17,27 @@
                     </td>
                 </tr>
             </thead>
+
             <tbody>
+
                 <tr *ngFor="let object of InputData | orderBy : convertSorting()">
-                    <td *ngFor="let button of InputPreButtons">
-                        <div *ngIf="button.action == 'select'">
+
+                    <td *ngFor="let preButton of InputPreButtons">
+                        <div *ngIf="preButton.action == 'select'">
                             <a class="btn btn-primary" (click)="onClick(object)">
                                 <span class="glyphicon glyphicon-ok"></span>
                             </a>
                         </div>
                     </td>
+
+                    <td *ngFor="let link of InputLinks">
+                        <a class="btn btn-link" role="link" [routerLink]="[link.router, object.id]">{{object[link.variable]}}</a>
+                    </td>
+
                     <td *ngFor="let column of InputColumns">
                         {{object[column.variable] | format : column.filter}}
                     </td>
+
                     <td *ngFor="let button of InputButtons">
                         <div *ngIf="button.action == 'view'">
                             <div *ngIf="modal === 'true'">
@@ -51,8 +63,11 @@
                             </button>
                         </div>
                     </td>
+
                 </tr>
+
             </tbody>
+
         </table>
 
     </div>

@@ -24,7 +24,7 @@
                                                           [InputList]=0
                                                           [InputEagerLoad]="true"
                                                           [InputDefaultItemId]=1
-                                                          [InputPlaceholder]="'Profile'" #profile>
+                                                          [InputPlaceholder]="'Select Profile'" #profile>
                                                 Loading profiles...
                                             </dropdownlist>
                                             <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist($event)"
@@ -33,7 +33,7 @@
                                                           [InputList]=0
                                                           [InputEagerLoad]="true"
                                                           [InputDefaultItemId]=2
-                                                          [InputPlaceholder]="'language'" #language>
+                                                          [InputPlaceholder]="'Select language'" #language>
                                                 Loading languages...
                                             </dropdownlist>
                                             <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist($event)"
@@ -73,6 +73,7 @@
                                         <table-simple (OutputButtonOnClick)="outputButtonOnChangeTableSimpleOnClick($event)"
                                                       [InputModal]="modal"
                                                       [InputPreButtons]="preButtons"
+                                                      [InputLinks]="links"
                                                       [InputColumns]="columns"
                                                       [InputButtons]="buttons"
                                                       [InputData]="pagedUsers"

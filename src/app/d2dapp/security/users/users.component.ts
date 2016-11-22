@@ -44,6 +44,7 @@ export class UsersComponent implements OnInit {
     usersLoading;
     pageSize = 10;
     preButtons: any[] = [];
+    links: any[] = [];
     columns: any[] = [];
     buttons: any[] = [];
     sorting: {};
@@ -99,17 +100,20 @@ export class UsersComponent implements OnInit {
 
         //set default table sort
         this.sorting = {
-            column: 'firstName',
+            column: '',
             descending: false
         };
 
+        // setup links - all modes
+        this.links.push({
+            display: 'Name',
+            variable: 'recordDescription',
+            filter: 'text',
+            router: "edit"
+        });
+
         // setup columns - all modes
         this.columns.push(
-            {
-                display: 'Name',
-                variable: 'firstName',
-                filter: 'text'
-            },
             {
                 display: 'Email',
                 variable: 'email',
@@ -129,6 +133,7 @@ export class UsersComponent implements OnInit {
         //  setup left buttons - select mode
         if (this.mode === 'select') {
             this.preButtons.push({
+                width: '3%',
                 action: 'select',
                 display: 'Select',
                 router: "{ 'id' : object.id}"

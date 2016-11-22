@@ -77,7 +77,7 @@ export class UserFormComponent implements OnInit {
     constructor(
         fb: FormBuilder,
         private _router: Router,
-        private _route: ActivatedRoute,
+        private _activatedRoute: ActivatedRoute,
         private _userService: UserService,
         private _profileService: ProfileService,
         private _languageService: LanguageService,
@@ -85,7 +85,7 @@ export class UserFormComponent implements OnInit {
         private _location: Location,
         private _commonService: CommonService
     ) {
-        this.action = this._commonService.getAction(this._route.snapshot.routeConfig.path);
+        this.action = this._commonService.getAction(this._activatedRoute.snapshot.routeConfig.path);
         this.setupValidators(fb)
         this.setupForm();
     }
@@ -103,7 +103,7 @@ export class UserFormComponent implements OnInit {
 
         this.modalProcessing()
 
-        var id = this._route.snapshot.params['id'];
+        var id = this._activatedRoute.snapshot.params['id'];
 
         if (this.action === 'edit') {
             this.title = 'Edit User'
@@ -184,7 +184,7 @@ export class UserFormComponent implements OnInit {
     ***************************************************************************************/
     private modalProcessing() {
 
-        this._route.params.subscribe(params => {
+        this._activatedRoute.params.subscribe(params => {
             //this.mode = this._commonService.setMode(this.InputMode, params['mode'])
             this.modal = this._commonService.setModal(this.InputModal, params['modal'])
         });
@@ -276,6 +276,22 @@ export class UserFormComponent implements OnInit {
                 );
             this.languagesLoaded = true;
         }
+    }
+
+//    private navigateForward() {
+//        this._router.navigate(['/components/users/edit', 3]);
+//    }
+//
+//    private navigateBack() {
+//        this._router.navigate(['/components/users/edit', 2]);
+//    }
+
+    private reloadRoute(replaceUrl: boolean = false) {
+
+       // this._router.navigate(
+    //        [this._activatedRoute.routeConfig.path],
+    //        { queryParams: params, replaceUrl: replaceUrl }
+    //    );
     }
 
     /***************************************************************************************

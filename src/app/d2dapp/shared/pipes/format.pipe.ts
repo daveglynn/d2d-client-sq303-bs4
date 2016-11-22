@@ -2,10 +2,10 @@
 import {DatePipe, DecimalPipe} from '@angular/common';
 
 @Pipe({
-    name: 'format'
+    name: 'format' 
 })
 export class Format implements PipeTransform {
-
+    debugger;
     datePipe: DatePipe = new DatePipe('en-UK');
     decimalPipe: DecimalPipe = new DecimalPipe('en-UK');
 
@@ -16,8 +16,8 @@ export class Format implements PipeTransform {
         for (var i = 0; i < pipeArgs.length; i++) {
             pipeArgs[i] = pipeArgs[i].trim(' ');
         }
-
         switch (pipeArgs[0].toLowerCase()) {
+
             case 'text':
                 return input;
             case 'decimal':

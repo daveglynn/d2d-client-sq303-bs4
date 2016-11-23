@@ -5,7 +5,7 @@ import {DatePipe, DecimalPipe} from '@angular/common';
     name: 'format' 
 })
 export class Format implements PipeTransform {
-    debugger;
+ 
     datePipe: DatePipe = new DatePipe('en-UK');
     decimalPipe: DecimalPipe = new DecimalPipe('en-UK');
 

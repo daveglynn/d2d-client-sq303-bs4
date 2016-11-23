@@ -1,7 +1,7 @@
 /***************************************************************************************
  Import section
 ***************************************************************************************/
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup  }  from '@angular/forms';
 import { FormControl, Validators }  from '@angular/forms';
 import { Router, ActivatedRoute }   from '@angular/router';
@@ -14,12 +14,13 @@ import { CommonService }            from   '../../shared/helpers/common.service'
 import { ProfileService }           from '../../master/profiles/profile.service';
 import { LanguageService }          from '../../master/languages/language.service';
 import { ErrorService }             from "../.././shared/errors/error.service";
+import { Subscription }             from "rxjs/Subscription";
 
 @Component({
     templateUrl: 'user-form.component.html'
 })
 
-export class UserFormComponent implements OnInit {
+export class UserFormComponent implements OnInit, OnDestroy {
 
     /***************************************************************************************
      Parameter section
@@ -51,6 +52,8 @@ export class UserFormComponent implements OnInit {
     languages = [];
 
     userLoading;
+    userId: number;
+    parmsSubscription: Subscription;
 
     // disablers
     active_disabled: boolean = false;
@@ -75,7 +78,7 @@ export class UserFormComponent implements OnInit {
      Construtor section
     ***************************************************************************************/
     constructor(
-        fb: FormBuilder,
+        private _fb: FormBuilder,
         private _router: Router,
         private _activatedRoute: ActivatedRoute,
         private _userService: UserService,
@@ -84,18 +87,44 @@ export class UserFormComponent implements OnInit {
         private _errorService: ErrorService,
         private _location: Location,
         private _commonService: CommonService
-    ) {
-        this.action = this._commonService.getAction(this._activatedRoute.snapshot.routeConfig.path);
-        this.setupValidators(fb)
-        this.setupForm();
+    ) { 
+
+
     }
 
     /***************************************************************************************
      Initialisation section
     ***************************************************************************************/
     ngOnInit() {
-    }
 
+        debugger;
+        this.parmsSubscription = this._activatedRoute.params.subscribe(parms => {
+            this.userId = parms['id'];
+            if (!this.userId) return;
+            this.userLoading = true;
+            this._userService.getUserById(this.userId)
+                .subscribe(
+                data => this.handleData('getUserById', data),
+                error => this.handleError('getUserById', error),
+                () => this.handleSuccess('getUserById')
+                );
+
+            this.action = this._commonService.getAction(this._activatedRoute.snapshot.routeConfig.path);
+            this.setupValidators(this._fb)
+            this.setupForm();
+
+
+        });
+        debugger;
+
+
+    }
+    /***************************************************************************************
+     destroy section
+    ***************************************************************************************/
+    ngOnDestroy() {
+        this.parmsSubscription.unsubscribe();
+    }
     /***************************************************************************************
      Set up section
     ***************************************************************************************/
@@ -103,7 +132,7 @@ export class UserFormComponent implements OnInit {
 
         this.modalProcessing()
 
-        var id = this._activatedRoute.snapshot.params['id'];
+        //var id = this._activatedRoute.snapshot.params['id'];
 
         if (this.action === 'edit') {
             this.title = 'Edit User'
@@ -127,15 +156,16 @@ export class UserFormComponent implements OnInit {
         //this. addressLine4_disabled: boolean = false;
 
         //get data if requested
-        if (!id)
-            return;
-        this.userLoading = true;
-        this._userService.getUserById(id)
-            .subscribe(
-            data => this.handleData('getUserById', data),
-            error => this.handleError('getUserById', error),
-            () => this.handleSuccess('getUserById')
-            );
+  //      debugger;
+  //      if (!this.userId)
+  //          return;
+  //      this.userLoading = true;
+  //      this._userService.getUserById(this.userId)
+  //          .subscribe(
+  //          data => this.handleData('getUserById', data),
+  ////          error => this.handleError('getUserById', error),
+   //         () => this.handleSuccess('getUserById')
+   //         );
 
     }
 
@@ -278,13 +308,15 @@ export class UserFormComponent implements OnInit {
         }
     }
 
-//    private navigateForward() {
-//        this._router.navigate(['/components/users/edit', 3]);
-//    }
-//
-//    private navigateBack() {
-//        this._router.navigate(['/components/users/edit', 2]);
-//    }
+    private navigateForward() {
+        debugger;
+        this._router.navigate(['/components/users/edit', 3]);
+     }
+ 
+     private navigateBack() {
+         debugger;
+         this._router.navigate(['/components/users/edit', 2]);
+     }
 
     private reloadRoute(replaceUrl: boolean = false) {
 

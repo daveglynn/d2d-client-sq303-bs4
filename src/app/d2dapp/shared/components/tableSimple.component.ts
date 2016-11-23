@@ -25,7 +25,7 @@ export class TableSimpleComponent implements OnInit {
     }
 
     ngOnInit() {
-        debugger;
+      
           this.modal = this.InputModal;
     }
 
@@ -35,7 +35,7 @@ export class TableSimpleComponent implements OnInit {
     }
 
     changeSorting(columnName): void {
-        debugger;
+ 
         var sort = this.InputSort;
         if (sort.column == columnName) {
             sort.descending = !sort.descending;
@@ -53,4 +53,7 @@ export class TableSimpleComponent implements OnInit {
          this.OutputButtonOnClick.next(selection);
     }
 
+    navnumber(ids) {
+        return 10;
+    }
 }

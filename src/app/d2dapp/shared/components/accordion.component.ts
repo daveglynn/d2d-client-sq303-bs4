@@ -1,4 +1,4 @@
-﻿import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+﻿import {Component, Input, Output, EventEmitter, OnDestroy, OnInit} from '@angular/core';
 
 @Component({
     selector: 'accordion',
@@ -9,9 +9,13 @@
                 <div class="card-header card-info" role="tablist">
                     <i class="fa fa-edit"></i><strong>{{InputTitle}}</strong>
                     <div class="card-actions">
-                        <a (click)="openAllGroups()" class="btn-close"><i class="icon-arrow-down"></i></a>
-                        <a (click)="closeAllGroups()" class="btn-close"><i class="icon-arrow-up"></i></a>
-                        <a href="javascript: window.history.back()" class="btn-close"><i class="icon-close"></i></a>
+                      <ul class="nav navbar-nav pull-right hidden-md-down">
+			                <a class="nav-link" (click)="navigatePrevious()"><i class="icon-arrow-left "></i></a>
+                            <a class="nav-link" (click)="navigateNext()"><i class="icon-arrow-right"></i></a>
+                            <a class="nav-link" (click)="openAllGroups()"><i class="icon-arrow-down "></i></a>
+                            <a class="nav-link" (click)="closeAllGroups()" ><i class="icon-arrow-up "></i></a>
+                            <a href="javascript: window.history.back()" class="btn-close"><i class="icon-logout icons font-2l"></i></a>
+                       </ul>
                     </div>
                 </div>   
  
@@ -21,11 +25,13 @@
     </div>
 </div>     `
 })
-export class Accordion implements OnInit{
+export class Accordion implements OnInit {
 
     @Input() InputTitle: string;
     @Input() InputKeepOpenMode: boolean;
     @Input() InputOpenGroup: number;
+    @Output() outputButtonPreviousOnClick = new EventEmitter();
+    @Output() outputButtonNextOnClick = new EventEmitter();
 
     groups: Array<AccordionGroup> = [];
 
@@ -38,7 +44,7 @@ export class Accordion implements OnInit{
     closeOthers(openGroup: AccordionGroup): void {
         this.groups.forEach((group: AccordionGroup) => {
             if (group !== openGroup) {
-                 group.isOpen = false;
+                group.isOpen = false;
             }
         });
     }
@@ -46,9 +52,9 @@ export class Accordion implements OnInit{
     openGroup(groupToOpen: number): void {
         var count = 0;
         this.groups.forEach((group: AccordionGroup) => {
-            count = count + 1; 
+            count = count + 1;
             if (groupToOpen == count) {
-                 group.isOpen = true;
+                group.isOpen = true;
             }
         });
     }
@@ -68,7 +74,7 @@ export class Accordion implements OnInit{
         });
     }
 
-    
+
     toggleGroupMode(): void {
         this.groups.forEach((group: AccordionGroup) => {
             if (this.groupMode == false) {
@@ -78,6 +84,14 @@ export class Accordion implements OnInit{
         });
     }
 
+
+    navigatePrevious() {
+        this.outputButtonPreviousOnClick.next();
+    }
+
+    navigateNext() {
+        this.outputButtonNextOnClick.next();
+    }
 
     ngOnInit() {
 
@@ -133,7 +147,7 @@ export class AccordionGroup implements OnDestroy {
     }
 
     ngOnDestroy() {
-       // this.accordion.removeGroup(this);
+        // this.accordion.removeGroup(this);
     }
 
     toggleOpen(event: MouseEvent): void {

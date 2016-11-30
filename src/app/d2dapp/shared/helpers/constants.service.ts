@@ -17,10 +17,10 @@ export class ConstantsService {
 
      dropdown_UserComponentOrderDir: number = 1
      dropdown_UserComponentOrderBy: number = 2
+
      dropdown_UserComponentOrderBy_DefaultItemId: number = 15
      dropdown_UserComponentOrderDir_DefaultItemId: number = 16
-
-     dropdown_UserComponentLanguage_DefaultId: number = 1
+     dropdown_UserComponentLanguage_DefaultId: number = 2
      dropdown_UserComponentProfile_DefaultId: number = 1
 
 }

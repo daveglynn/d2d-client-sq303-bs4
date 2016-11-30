@@ -1,7 +1,7 @@
     <!-- these two lines are required for Select Modal view-->
 <div *ngIf="modal === 'true'" class="backdrop" [ngStyle]="{'display': modalDisplay}"></div>
 <div class={{modalClass}} [ngStyle]="{'display': allDisplay}">
-
+     
     <div class="container">
         <div class="myaccordion">
             <div class="panel-group" id="accordion">
@@ -23,7 +23,7 @@
                                                           [InputDisplay]="true"
                                                           [InputList]=0
                                                           [InputEagerLoad]="true"
-                                                          [InputDefaultItemId]=1
+                                                          [InputDefaultItemId]=dropdown_UserComponentProfile_DefaultId
                                                           [InputPlaceholder]="'Select Profile'" #profile>
                                                 Loading profiles...
                                             </dropdownlist>
@@ -32,7 +32,7 @@
                                                           [InputDisplay]="true"
                                                           [InputList]=0
                                                           [InputEagerLoad]="true"
-                                                          [InputDefaultItemId]=2
+                                                          [InputDefaultItemId]=dropdown_UserComponentLanguage_DefaultId
                                                           [InputPlaceholder]="'Select language'" #language>
                                                 Loading languages...
                                             </dropdownlist>
@@ -77,6 +77,7 @@
                                                       [InputColumns]="columns"
                                                       [InputButtons]="buttons"
                                                       [InputData]="pagedUsers"
+                                                      [InputIds]="userIds"
                                                       [InputSort]="sorting">
                                             Loading table...
                                         </table-simple>

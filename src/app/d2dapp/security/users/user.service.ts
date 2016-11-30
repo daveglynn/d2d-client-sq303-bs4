@@ -24,7 +24,7 @@ import { CommonService } from   '../../shared/helpers/common.service';
 export class UserService {
 
     private _url = this._cs.serverUrl;
-
+ 
     constructor(private _cs: ConstantsService, private _commonService: CommonService,private _http: Http){
 	}
 

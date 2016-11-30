@@ -127,4 +127,19 @@ export class CommonService {
         
     }
 
+    getPrevId(current: number) {
+        if (current == 0)
+            return current;
+        else
+            current--;
+            return current    }
+
+    getNextId(current: number, length: number) {
+        if (current == length - 1)
+            return current
+        else
+            current++;
+            return current;
+    }
+
 }

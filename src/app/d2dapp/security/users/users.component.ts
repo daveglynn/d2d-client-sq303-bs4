@@ -10,6 +10,8 @@ import { CommonService } from   '../../shared/helpers/common.service';
 import { Router, ActivatedRoute }                from '@angular/router';
 import { Location } from '@angular/common';
 import { ConstantsService } from   '../../shared/helpers/constants.service';
+import { DropDownItem } from "./../../master/items/item";
+import { Search }                     from './user';
 import * as _ from 'underscore';
 
 @Component({
@@ -28,6 +30,8 @@ export class UsersComponent implements OnInit {
      Definition section
     ***************************************************************************************/
     users = [];
+    userIds = [];
+    userIdsList: string = "";
 
     // control template modal
     modalClass: string = "";
@@ -76,10 +80,24 @@ export class UsersComponent implements OnInit {
      Initialisation section
     ***************************************************************************************/
     ngOnInit() {
+
+        //initial form setup
         this.setupForm();
+
+        //load search dropdowns
         this.loadProfiles();
         this.loadLanguages();
-        this.loadUsers();
+
+        //set up initial search parameters
+        this.dropdown_UserComponentOrderBy, this.dropdown_UserComponentOrderDir
+        var profile = new DropDownItem(this.dropdown_UserComponentProfile_DefaultId, 0, "", "", 0);
+        var language = new DropDownItem(this.dropdown_UserComponentLanguage_DefaultId, 0, "", "", 0)
+        var orderBy = new DropDownItem(this.dropdown_UserComponentOrderBy_DefaultId, 0, "", "", 0)
+        var orderDir = new DropDownItem(this.dropdown_UserComponentOrderDir_DefaultId, 0, "", "", 0)
+        var search = new Search(profile,  language, '',  orderBy, orderDir);
+
+        //load main data
+        this.loadUsers(search);
     }
 
     /***************************************************************************************
@@ -202,12 +220,17 @@ export class UsersComponent implements OnInit {
      Component event section
     ***************************************************************************************/
     private outputButtonOnChangeTableSimpleOnClick(selection) {
- 
-        this.OutputButtonCloseClick.next(selection);
+        debugger;
+        if (selection.router == "select") {
+            this.OutputButtonCloseClick.next(selection);
+        } else {
+            this._router.navigate(['/components/users/' + selection.router, selection.id,this.userIdsList]);
+        }
+        
     }
 
     private outputButtonOnChangeDropdownlist(selectedItem) {
-        debugger;
+        
     }
 
     private close() {
@@ -252,7 +275,7 @@ export class UsersComponent implements OnInit {
     }
 
     private loadUsers(filter?) {
-
+        debugger;
         this.usersLoading = true;
         this._userService.getUsersAll(filter)
             .subscribe(
@@ -292,6 +315,8 @@ export class UsersComponent implements OnInit {
         console.log(data);
         if (process === 'getUsersAll') {
             this.users = data;
+            this.userIds = data.map(function (users) { return users.id; });
+            this.userIdsList = this.userIds.join(",")
             this.pagedUsers = _.take(this.users, this.pageSize);
         }
         if (process === 'loadProfiles') {

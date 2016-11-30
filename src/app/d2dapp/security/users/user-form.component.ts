@@ -53,7 +53,12 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
     userLoading;
     userId: number;
+    ids: string;
+    previousUserId: number;
+    nextUserId: number;
+
     parmsSubscription: Subscription;
+    parmsQuerySubscription: Subscription;
 
     // disablers
     active_disabled: boolean = false;
@@ -87,7 +92,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         private _errorService: ErrorService,
         private _location: Location,
         private _commonService: CommonService
-    ) { 
+    ) {
 
 
     }
@@ -97,9 +102,13 @@ export class UserFormComponent implements OnInit, OnDestroy {
     ***************************************************************************************/
     ngOnInit() {
 
-        debugger;
+        this.parmsQuerySubscription = this._activatedRoute.params.subscribe(params => {
+            this.ids = params['ids'];
+        });
+
         this.parmsSubscription = this._activatedRoute.params.subscribe(parms => {
             this.userId = parms['id'];
+
             if (!this.userId) return;
             this.userLoading = true;
             this._userService.getUserById(this.userId)
@@ -115,8 +124,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
 
         });
-        debugger;
-
 
     }
     /***************************************************************************************
@@ -124,6 +131,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     ***************************************************************************************/
     ngOnDestroy() {
         this.parmsSubscription.unsubscribe();
+        this.parmsQuerySubscription.unsubscribe();
     }
     /***************************************************************************************
      Set up section
@@ -156,16 +164,16 @@ export class UserFormComponent implements OnInit, OnDestroy {
         //this. addressLine4_disabled: boolean = false;
 
         //get data if requested
-  //      debugger;
-  //      if (!this.userId)
-  //          return;
-  //      this.userLoading = true;
-  //      this._userService.getUserById(this.userId)
-  //          .subscribe(
-  //          data => this.handleData('getUserById', data),
-  ////          error => this.handleError('getUserById', error),
-   //         () => this.handleSuccess('getUserById')
-   //         );
+        //      debugger;
+        //      if (!this.userId)
+        //          return;
+        //      this.userLoading = true;
+        //      this._userService.getUserById(this.userId)
+        //          .subscribe(
+        //          data => this.handleData('getUserById', data),
+        ////          error => this.handleError('getUserById', error),
+        //         () => this.handleSuccess('getUserById')
+        //         );
 
     }
 
@@ -277,8 +285,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
 
     cancel() {
-        this._location.back();
-
+        this._router.navigate(['/components/users'], { queryParams: { mode: 'workwith', modal: 'false' } });
     }
 
     /***************************************************************************************
@@ -308,22 +315,31 @@ export class UserFormComponent implements OnInit, OnDestroy {
         }
     }
 
-    private navigateForward() {
+
+    private outputButtonAccordionPreviousOnClick() {
         debugger;
-        this._router.navigate(['/components/users/edit', 3]);
-     }
- 
-     private navigateBack() {
-         debugger;
-         this._router.navigate(['/components/users/edit', 2]);
-     }
+        var userIdIndex = this.ids.split(",").map((item, index) => parseInt(item)).indexOf(parseInt(this.userId.toString()));
+        userIdIndex = this._commonService.getPrevId(userIdIndex)
+        this.previousUserId = this.ids.split(",").map((item, index) => parseInt(item))[userIdIndex]
+        this._router.navigate(['/components/users/edit', this.previousUserId, this.ids]);
+    }
+
+    private outputButtonAccordionNextOnClick() {
+        debugger;
+        var userIdIndex = this.ids.split(",").map((item, index) => parseInt(item)).indexOf(parseInt(this.userId.toString()));
+        userIdIndex = this._commonService.getNextId(userIdIndex, this.ids.split(",").map((item, index) => parseInt(item)).length)
+        this.nextUserId = this.ids.split(",").map((item, index) => parseInt(item))[userIdIndex]
+        this._router.navigate(['/components/users/edit', this.nextUserId, this.ids]);
+    }
+
+
 
     private reloadRoute(replaceUrl: boolean = false) {
 
-       // this._router.navigate(
-    //        [this._activatedRoute.routeConfig.path],
-    //        { queryParams: params, replaceUrl: replaceUrl }
-    //    );
+        // this._router.navigate(
+        //        [this._activatedRoute.routeConfig.path],
+        //        { queryParams: params, replaceUrl: replaceUrl }
+        //    );
     }
 
     /***************************************************************************************

@@ -4,14 +4,9 @@
 
     <div class="container">
         <form [formGroup]="form" (ngSubmit)="save()">
-             <button class="form-control btn btn-primary active btn-md" routerLinkActive="active" [routerLink]="['/components/users/edit/3']" >
-                <span class="glyphicon glyphicon-search"></span> Forward
-            </button> 
-            <button class="form-control btn btn-primary active btn-md"  routerLinkActive="active" [routerLink]="['/components/users/edit/2']" >
-                <span class="glyphicon glyphicon-search"></span> Back
-            </button>
-         
-            <accordion [InputTitle]=[user.recordDescription]
+            <accordion (outputButtonPreviousOnClick)="outputButtonAccordionPreviousOnClick($event)"
+                       (outputButtonNextOnClick)="outputButtonAccordionNextOnClick($event)"
+                       [InputTitle]=[user.recordDescription]
                        [InputKeepOpenMode]="false"
                        [InputOpenGroup] ="1">
 

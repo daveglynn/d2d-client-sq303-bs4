@@ -95,25 +95,19 @@ const appRoutes: Routes = [
                         canActivate: [AuthGuard],
                     },
                     {
-                        path: 'users/edit/:id',
+                        path: 'users/view/:id/:ids',
                         component: UserFormComponent,
                         canDeactivate: [PreventUnsavedChangesGuard],
                         canActivate: [AuthGuard],
                     },
                     {
-                        path: 'users/view/:id',
+                        path: 'users/edit/:id/:ids',
                         component: UserFormComponent,
                         canDeactivate: [PreventUnsavedChangesGuard],
                         canActivate: [AuthGuard],
                     },
                     {
-                        path: 'users/edit/:id',
-                        component: UserFormComponent,
-                        canDeactivate: [PreventUnsavedChangesGuard],
-                        canActivate: [AuthGuard],
-                    },
-                    {
-                        path: 'users/delete/:id',
+                        path: 'users/delete/:id/:ids',
                         component: UserFormComponent,
                         canDeactivate: [PreventUnsavedChangesGuard],
                         canActivate: [AuthGuard],

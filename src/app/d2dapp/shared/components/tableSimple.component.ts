@@ -12,6 +12,7 @@ export class TableSimpleComponent implements OnInit {
     @Input() InputColumns: any[];
     @Input() InputButtons: any[];
     @Input() InputData: any[];
+    @Input() InputIds: any[];
     @Input() InputSort: any;
 
     modal: string
@@ -53,7 +54,4 @@ export class TableSimpleComponent implements OnInit {
          this.OutputButtonOnClick.next(selection);
     }
 
-    navnumber(ids) {
-        return 10;
-    }
 }

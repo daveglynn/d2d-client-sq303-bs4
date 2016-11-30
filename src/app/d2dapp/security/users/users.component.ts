@@ -29,34 +29,37 @@ export class UsersComponent implements OnInit {
     /***************************************************************************************
      Definition section
     ***************************************************************************************/
+
+    //form
+    title: string;
+    mode: string;
+    modal: string;
+    usersLoading;
+    pageSize = 10;
     users = [];
     userIds = [];
+    pagedUsers = [];
+    profiles = [];
+    languages = [];
     userIdsList: string = "";
 
-    // control template modal
+    //modal
     modalClass: string = "";
     modalDisplay: string = "";
     allDisplay: string = "";
 
-    // this control
-    title: string;
-    mode: string;
-    modal: string;
-    pagedUsers = [];
-    profiles = [];
-    languages = [];
-    usersLoading;
-    pageSize = 10;
+    //table arrays
     preButtons: any[] = [];
     links: any[] = [];
     columns: any[] = [];
     buttons: any[] = [];
     sorting: {};
 
-    //dropdown ListId
+    //constants dropdown ListId definitions
     dropdown_UserComponentOrderBy: number
     dropdown_UserComponentOrderDir: number
-    //dropdown ListId default selection
+
+    //constants dropdown ListId defaults
     dropdown_UserComponentOrderBy_DefaultId: number;
     dropdown_UserComponentOrderDir_DefaultId: number;
     dropdown_UserComponentLanguage_DefaultId: number;
@@ -88,16 +91,24 @@ export class UsersComponent implements OnInit {
         this.loadProfiles();
         this.loadLanguages();
 
+        //load main data
+        debugger;
+        this.loadUsers(this.setupSearch());
+    }
+
+    /***************************************************************************************
+     Set up search
+    ***************************************************************************************/
+    private setupSearch() {
+
         //set up initial search parameters
         this.dropdown_UserComponentOrderBy, this.dropdown_UserComponentOrderDir
         var profile = new DropDownItem(this.dropdown_UserComponentProfile_DefaultId, 0, "", "", 0);
         var language = new DropDownItem(this.dropdown_UserComponentLanguage_DefaultId, 0, "", "", 0)
         var orderBy = new DropDownItem(this.dropdown_UserComponentOrderBy_DefaultId, 0, "", "", 0)
         var orderDir = new DropDownItem(this.dropdown_UserComponentOrderDir_DefaultId, 0, "", "", 0)
-        var search = new Search(profile,  language, '',  orderBy, orderDir);
-
-        //load main data
-        this.loadUsers(search);
+        var search = new Search(profile, language, '', orderBy, orderDir);
+        return search
     }
 
     /***************************************************************************************
@@ -105,16 +116,35 @@ export class UsersComponent implements OnInit {
     ***************************************************************************************/
     private setupForm() {
   
-        //set up external constants
+        this.setupConstant()
+
+        //set modal
+        this.modalProcessing()
+
+        //set table
+        this.setupTable()
+
+    }
+
+
+    /***************************************************************************************
+    setup constants
+    ***************************************************************************************/
+    private setupConstant() {
+
+ 
         this.dropdown_UserComponentOrderDir = this._constantsService.dropdown_UserComponentOrderDir
         this.dropdown_UserComponentOrderBy = this._constantsService.dropdown_UserComponentOrderBy
         this.dropdown_UserComponentOrderBy_DefaultId = this._constantsService.dropdown_UserComponentOrderBy_DefaultItemId
         this.dropdown_UserComponentOrderDir_DefaultId = this._constantsService.dropdown_UserComponentOrderDir_DefaultItemId
         this.dropdown_UserComponentProfile_DefaultId = this._constantsService.dropdown_UserComponentProfile_DefaultId
         this.dropdown_UserComponentLanguage_DefaultId = this._constantsService.dropdown_UserComponentLanguage_DefaultId
+    }
 
-        //set modal
-        this.modalProcessing()
+    /***************************************************************************************
+     setup Table
+    ***************************************************************************************/
+    private setupTable() {
 
         //set default table sort
         this.sorting = {
@@ -192,7 +222,6 @@ export class UsersComponent implements OnInit {
         if (this.mode === 'workwith') {
             this.title = "Work With Users"
         }
-
     }
 
     /***************************************************************************************
@@ -239,11 +268,6 @@ export class UsersComponent implements OnInit {
         } else {
             this._location.back();
         }
-        // if (this.modal.indexOf("true")) {
-        //     this.OutputButtonCloseClick.next(null);
-        // } else {
-        //     this._location.back();
-        // }
     }
 
     private onPageChanged(page) {

@@ -59,7 +59,7 @@
                                             <button class="form-control btn btn-primary active btn-md" (click)="reloadUsers({  profile: profile.selectedItem, language: language.selectedItem, q: q.value, orderBy: orderBy.selectedItem, orderDir: orderDir.selectedItem})">
                                                 <span class="glyphicon glyphicon-search"></span> Search
                                             </button>
-                                            <button class="form-control btn btn-primary active btn-md" (click)="reLoadPage(profile,language,q ,orderBy,orderDir)">
+                                            <button class="form-control btn btn-primary active btn-md" (click)="reLoadPage({  profile: dropdown_UserComponentProfile_Default, language: dropdown_UserComponentLanguage_Default, q: '' , orderBy: dropdown_UserComponentOrderBy_Default,  orderDir: dropdown_UserComponentOrderDir_Default})">
                                                 <span class="glyphicon glyphicon-refresh"></span> Reset
                                             </button>
                                             <button class="form-control btn btn-primary active btn-md" data-dismiss="modal" (click)="close()">

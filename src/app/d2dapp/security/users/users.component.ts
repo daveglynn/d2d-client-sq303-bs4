@@ -2,17 +2,19 @@
  Import section
 ***************************************************************************************/
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { UserService }       from './user.service';
 import { ErrorService } from "../.././shared/errors/error.service";
-import { ProfileService } from '../../master/profiles/profile.service';
-import { LanguageService } from '../../master/languages/language.service';
 import { CommonService } from   '../../shared/helpers/common.service';
 import { Router, ActivatedRoute }                from '@angular/router';
 import { Location } from '@angular/common';
 import { ConstantsService } from   '../../shared/helpers/constants.service';
 import { DropDownItem } from "./../../master/items/item";
-import { Search }                     from './user';
 import * as _ from 'underscore';
+
+import { UserService }       from './user.service';
+
+import { ProfileService } from '../../master/profiles/profile.service';
+import { LanguageService } from '../../master/languages/language.service';
+import { Search }                     from './user';
 
 @Component({
     templateUrl: 'users.component.html'
@@ -55,6 +57,7 @@ export class UsersComponent implements OnInit {
     buttons: any[] = [];
     sorting: {};
     dd: DropDownItem[] = [];
+
     //constants dropdown ListId definitions
     dropdown_UserComponentOrderBy: number
     dropdown_UserComponentOrderDir: number
@@ -63,8 +66,7 @@ export class UsersComponent implements OnInit {
     dropdown_UserComponentOrderBy_Default = new DropDownItem(null, null, null, null, null);
     dropdown_UserComponentOrderDir_Default = new DropDownItem(null, null, null, null, null);
     dropdown_UserComponentLanguage_Default = new DropDownItem(null, null, null, null, null);
-    dropdown_UserComponentProfile_Default = new DropDownItem(null, null, null, null,null );
-
+    dropdown_UserComponentProfile_Default = new DropDownItem(null, null, null, null, null);
 
     /***************************************************************************************
      Construtor section
@@ -84,13 +86,9 @@ export class UsersComponent implements OnInit {
      Initialisation section
     ***************************************************************************************/
     ngOnInit() {
- 
+
         //initial form setup
         this.setupForm();
-
-        //load search dropdowns
-        //this.loadProfiles();
-       // this.loadLanguages();
 
         //load main data
         this.loadUsers(this.setupSearch());
@@ -101,20 +99,11 @@ export class UsersComponent implements OnInit {
     ***************************************************************************************/
     private setupSearch() {
 
-        //set up initial search parameters
-       // this.dropdown_UserComponentOrderBy, this.dropdown_UserComponentOrderDir
-
-        //var profile = JSON.parse('{"id":1,"parentListId":0,"name":"Email","code":"email","ruleBookId":1}')
         this.dropdown_UserComponentOrderBy_Default = this.dropdown_UserComponentOrderBy_Default
         this.dropdown_UserComponentOrderDir_Default = this.dropdown_UserComponentOrderDir_Default
         this.dropdown_UserComponentLanguage_Default = this.dropdown_UserComponentLanguage_Default
         this.dropdown_UserComponentProfile_Default = this.dropdown_UserComponentProfile_Default
- 
-        //var language = this.dropdown_UserComponentLanguage_Default;
-       // this.dropdown_UserComponentLanguage_Default
 
-        //var orderBy = this.dropdown_UserComponentOrderBy_Default
-       // var orderDir = this.dropdown_UserComponentOrderDir_Default
         var search = new Search(this.dropdown_UserComponentProfile_Default, this.dropdown_UserComponentLanguage_Default, "", this.dropdown_UserComponentOrderBy_Default, this.dropdown_UserComponentOrderDir_Default);
         return search
     }
@@ -123,7 +112,7 @@ export class UsersComponent implements OnInit {
      Set up section
     ***************************************************************************************/
     private setupForm() {
-  
+
         this.setupConstant()
 
         //set modal
@@ -134,20 +123,17 @@ export class UsersComponent implements OnInit {
 
     }
 
-
     /***************************************************************************************
-    setup constants
+     setup constants
     ***************************************************************************************/
     private setupConstant() {
 
-  
         this.dropdown_UserComponentOrderDir = this._constantsService.dropdown_UserComponentOrderDir
         this.dropdown_UserComponentOrderBy = this._constantsService.dropdown_UserComponentOrderBy
-          this.dropdown_UserComponentOrderBy_Default =  this._constantsService.dropdown_UserComponentOrderBy_Default
-        this.dropdown_UserComponentOrderDir_Default =  this._constantsService.dropdown_UserComponentOrderDir_Default
-        this.dropdown_UserComponentLanguage_Default =  this._constantsService.dropdown_UserComponentLanguage_Default
-  
-        this.dropdown_UserComponentProfile_Default = this._constantsService.dropdown_UserComponentProfile_Default  
+        this.dropdown_UserComponentOrderBy_Default = this._constantsService.dropdown_UserComponentOrderBy_Default
+        this.dropdown_UserComponentOrderDir_Default = this._constantsService.dropdown_UserComponentOrderDir_Default
+        this.dropdown_UserComponentLanguage_Default = this._constantsService.dropdown_UserComponentLanguage_Default
+        this.dropdown_UserComponentProfile_Default = this._constantsService.dropdown_UserComponentProfile_Default
 
     }
 
@@ -218,8 +204,7 @@ export class UsersComponent implements OnInit {
                 action: 'delete',
                 display: 'Delete',
                 router: 'delete'
-            }
-            );
+            });
         }
 
         //set title
@@ -263,13 +248,13 @@ export class UsersComponent implements OnInit {
         if (selection.router == "select") {
             this.OutputButtonCloseClick.next(selection);
         } else {
-            this._router.navigate(['/components/users/' + selection.router, selection.id,this.userIdsList]);
+            this._router.navigate(['/components/users/' + selection.router, selection.id, this.userIdsList]);
         }
-        
+
     }
 
     private outputButtonOnChangeDropdownlist(selectedItem) {
-        
+
     }
 
     private close() {
@@ -297,7 +282,7 @@ export class UsersComponent implements OnInit {
             () => this.handleSuccess('loadProfiles')
             );
     }
-      
+
     private loadLanguages() {
 
         this._languageService.getLanguagesAll()
@@ -317,22 +302,15 @@ export class UsersComponent implements OnInit {
             error => this.handleError('getUsersAll', error, 0, null),
             () => this.handleSuccess('getUsersAll')
             )
-
     }
 
-    private reLoadPage(profile, language, q, orderBy, orderDir) {
- 
-        profile.value = "";
-        language.value = "";
-        q.value = "";
-        this.loadUsers();
-    }
-
-    private reloadUsers(filter) {
- 
+    private reLoadPage(filter) {
         this.loadUsers(filter);
     }
 
+    private reloadUsers(filter) {
+        this.loadUsers(filter);
+    }
 
     /***************************************************************************************
      Api results section

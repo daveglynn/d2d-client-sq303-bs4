@@ -6,15 +6,17 @@ import { FormBuilder, FormGroup  }  from '@angular/forms';
 import { FormControl, Validators }  from '@angular/forms';
 import { Router, ActivatedRoute }   from '@angular/router';
 import { ClientValidators }         from '../../shared/validators/client.validators';
-import { UserService }              from './user.service';
-import { User }                     from './user';
 import { DropDown}                  from "../../shared/helpers/dropdown";
 import { Location }                 from '@angular/common';
 import { CommonService }            from   '../../shared/helpers/common.service';
-import { ProfileService }           from '../../master/profiles/profile.service';
-import { LanguageService }          from '../../master/languages/language.service';
 import { ErrorService }             from "../.././shared/errors/error.service";
 import { Subscription }             from "rxjs/Subscription";
+
+import { UserService }              from './user.service';
+import { User }                     from './user';
+
+import { ProfileService }           from '../../master/profiles/profile.service';
+import { LanguageService }          from '../../master/languages/language.service';
 
 @Component({
     templateUrl: 'user-form.component.html'
@@ -38,11 +40,9 @@ export class UserFormComponent implements OnInit, OnDestroy {
     dropdownProfileName = '';
 
     // this control
-    //mode: string;
     modal: string;
     form: FormGroup;
     title: string;
-    //form: ControlGroup;
     action: string;
 
     profilesLoaded: boolean = false;
@@ -86,16 +86,13 @@ export class UserFormComponent implements OnInit, OnDestroy {
         private _fb: FormBuilder,
         private _router: Router,
         private _activatedRoute: ActivatedRoute,
-        private _userService: UserService,
-        private _profileService: ProfileService,
-        private _languageService: LanguageService,
         private _errorService: ErrorService,
         private _location: Location,
-        private _commonService: CommonService
-    ) {
-
-
-    }
+        private _commonService: CommonService,
+        private _userService: UserService,
+        private _profileService: ProfileService,
+        private _languageService: LanguageService
+    ) { }
 
     /***************************************************************************************
      Initialisation section
@@ -161,18 +158,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
         //this.addressLine3_disabled: boolean = false;
         //this. addressLine4_disabled: boolean = false;
 
-        //get data if requested
-        //      debugger;
-        //      if (!this.userId)
-        //          return;
-        //      this.userLoading = true;
-        //      this._userService.getUserById(this.userId)
-        //          .subscribe(
-        //          data => this.handleData('getUserById', data),
-        ////          error => this.handleError('getUserById', error),
-        //         () => this.handleSuccess('getUserById')
-        //         );
-
     }
 
     private setupValidators(fb) {
@@ -221,7 +206,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
     private modalProcessing() {
 
         this._activatedRoute.params.subscribe(params => {
-            //this.mode = this._commonService.setMode(this.InputMode, params['mode'])
             this.modal = this._commonService.setModal(this.InputModal, params['modal'])
         });
 
@@ -278,10 +262,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
     }
 
-    goTo(location: string): void {
-        window.location.hash = location;
-    }
-
     cancel() {
         this._router.navigate(['/components/users'], { queryParams: { mode: 'workwith', modal: 'false' } });
     }
@@ -313,7 +293,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
         }
     }
 
-
     private outputButtonAccordionPreviousOnClick() {
         var userIdIndex = this.ids.split(",").map((item, index) => parseInt(item)).indexOf(parseInt(this.userId.toString()));
         userIdIndex = this._commonService.getPrevId(userIdIndex)
@@ -328,15 +307,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
         this._router.navigate(['/components/users/edit', this.nextUserId, this.ids]);
     }
 
-
-
-    private reloadRoute(replaceUrl: boolean = false) {
-
-        // this._router.navigate(
-        //        [this._activatedRoute.routeConfig.path],
-        //        { queryParams: params, replaceUrl: replaceUrl }
-        //    );
-    }
 
     /***************************************************************************************
      Api results section

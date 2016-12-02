@@ -13,7 +13,7 @@ export class DropDownComponent implements OnInit {
     @Input() InputObject: string;
     @Input() InputDisplay: boolean;
     @Input() InputList: number;
-    @Input() InputDefaultItemId: number;
+    @Input() InputDefault: number;
     @Input() InputPlaceholder: string;
     @Input() InputEagerLoad: boolean;
     @Output() OutputButtonOnChange = new EventEmitter(); 
@@ -112,8 +112,8 @@ export class DropDownComponent implements OnInit {
             this.items = [];
             this.items = data.items;
             //set selected record
-            if (this.InputDefaultItemId != 0) {
-                this.selectedItem = _.findWhere(this.items, { id: this.InputDefaultItemId });
+            if (this.InputDefault != 0) {
+                this.selectedItem = _.findWhere(this.items, { id: this.InputDefault });
                 this.defaultItem = JSON.stringify(this.selectedItem).replace(/null/i, "\"\"");
             }
         }
@@ -122,9 +122,10 @@ export class DropDownComponent implements OnInit {
             this.items = [];
             this.items = data;
             //set selected record
-            if (this.InputDefaultItemId != 0) {
-                this.selectedItem = _.findWhere(this.items, { id: this.InputDefaultItemId });
+            if (this.InputDefault != 0) {
+                this.selectedItem = _.findWhere(this.items, { id: this.InputDefault});
                 this.defaultItem = JSON.stringify(this.selectedItem).replace(/null/i, "\"\"");
+ 
             }
         }
     }

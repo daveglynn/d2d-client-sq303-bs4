@@ -29,7 +29,6 @@ export class UserService {
 	}
 
     getUsersAll(filter?) {
-
         var parms = {};
         if (filter && filter.q) {
             parms['q'] = filter.q;

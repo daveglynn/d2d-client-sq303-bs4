@@ -101,7 +101,6 @@ getListByObject = function (object, filter?) {
     if (filter && filter.view) {
         parms['view'] = filter.view;
     }
-
     const headers = new Headers({ 'Content-Type': 'application/json' });
     return this._http.get(this._url + "/" + object + "/dropdown", { search: this._commonService.setParms(parms) })
         .map(res => res.json())

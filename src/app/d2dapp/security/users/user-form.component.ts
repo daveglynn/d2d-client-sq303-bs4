@@ -101,7 +101,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
      Initialisation section
     ***************************************************************************************/
     ngOnInit() {
-
+  
         this.parmsQuerySubscription = this._activatedRoute.params.subscribe(params => {
             this.ids = params['ids'];
         });
@@ -117,13 +117,11 @@ export class UserFormComponent implements OnInit, OnDestroy {
                 error => this.handleError('getUserById', error),
                 () => this.handleSuccess('getUserById')
                 );
-
-            this.action = this._commonService.getAction(this._activatedRoute.snapshot.routeConfig.path);
-            this.setupValidators(this._fb)
-            this.setupForm();
-
-
         });
+
+        this.action = this._commonService.getAction(this._activatedRoute.snapshot.routeConfig.path);
+        this.setupValidators(this._fb)
+        this.setupForm();
 
     }
     /***************************************************************************************
@@ -317,7 +315,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
 
     private outputButtonAccordionPreviousOnClick() {
-        debugger;
         var userIdIndex = this.ids.split(",").map((item, index) => parseInt(item)).indexOf(parseInt(this.userId.toString()));
         userIdIndex = this._commonService.getPrevId(userIdIndex)
         this.previousUserId = this.ids.split(",").map((item, index) => parseInt(item))[userIdIndex]
@@ -325,7 +322,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
 
     private outputButtonAccordionNextOnClick() {
-        debugger;
         var userIdIndex = this.ids.split(",").map((item, index) => parseInt(item)).indexOf(parseInt(this.userId.toString()));
         userIdIndex = this._commonService.getNextId(userIdIndex, this.ids.split(",").map((item, index) => parseInt(item)).length)
         this.nextUserId = this.ids.split(",").map((item, index) => parseInt(item))[userIdIndex]

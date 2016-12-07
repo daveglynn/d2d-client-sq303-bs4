@@ -46,6 +46,7 @@ import { DropDownComponent } from "./shared/components/dropdown.component";
 
  
 import { UserService }                           from './security/users/user.service';
+import { UserCode }                           from './security/users/user.code';
  
 @NgModule({
     imports: [
@@ -92,7 +93,8 @@ import { UserService }                           from './security/users/user.ser
         UserService,
         CommonService,
         ConstantsService,
-        AuthGuard        
+        AuthGuard,
+        UserCode               
     ]
 })
 export class D2DAppModule {

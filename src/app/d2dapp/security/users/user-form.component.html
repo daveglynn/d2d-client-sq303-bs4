@@ -8,7 +8,7 @@
                        (outputButtonNextOnClick)="outputButtonAccordionNextOnClick($event)"
                        [InputTitle]=[user.recordDescription]
                        [InputKeepOpenMode]="false"
-                       [InputOpenGroup] ="1">
+                       [InputOpenGroup]="1">
 
                 <label></label>
                 <accordion-group heading="Details ">
@@ -94,36 +94,37 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label>Language</label>
-                                <select [(ngModel)]="user.languageId" #languageId formControlName="languageId" type="text" name="languageId" class="form-control" id="languageId" placeholder="Required" [disabled]="languageId_disabled" (focus)="loadLanguages()" focus>
-                                    <option *ngFor="let language of languages" value="{{ language.id }}">
-                                        {{ language.name }}
-                                    </option>
-                                </select>
-                                <div *ngIf="(languageId.touched || languageId.dirty  || !languageId.pristine ) && languageId.errors" class="alert alert-danger">
-                                    <div *ngIf="form.controls.languageId.touched  && form.controls.languageId.errors">
-                                        <div *ngIf="languageId.errors.required || languageId.errors.isEmpty" class="alert alert-danger">
-                                            Language is required
-                                        </div>
-                                        <div *ngIf="form.controls.languageId.errors.dropDownNotSelected" class="alert alert-danger">
-                                            Language cannot be (None).
-                                        </div>
-                                    </div>
+                                <label>language</label>
+                                <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist('language',$event)"
+                                              [InputObject]="'language'"
+                                              [InputDisplay]="true"
+                                              [InputList]=0
+                                              [InputEagerLoad]="true"
+                                              [InputDefault]=user.languageId
+                                              [InputPlaceholder]="'Select language'" #language>
+                                    Loading languages...
+                                </dropdownlist>
+                                <div *ngIf="userErrorCode ===1000"  class="alert alert-danger">
+                                        Language is now required
+                                 </div>
+                                <div *ngIf="userErrorCode ===2000" class="alert alert-danger">
+                                    Language must be selected
                                 </div>
+     
                             </div>
+                        </div>
+                        <div class="form-group row">
                             <div class="col-md-6">
                                 <label>Phone</label>
-                                <input [(ngModel)]="user.phone" #lastName formControlName="phone" type="text" name="phone" class="form-control" id="phone" placeholder="Required" [disabled]="phone_disabled" focus>
+                                <input [(ngModel)]="user.phone" #phone formControlName="phone" type="text" name="phone" class="form-control" id="phone" placeholder="Required" [disabled]="phone_disabled" focus>
                                 <div *ngIf="form.controls.phone.touched  && form.controls.phone.errors">
                                     <div *ngIf="form.controls.phone.errors.outOfRange50" class="alert alert-danger">
                                         Last name must not be greater than 50 characters.
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="form-group row">
@@ -196,7 +197,7 @@
 
                 <div class="card-footer">
                     <div *ngIf="(action === 'add')">
-                        <button [disabled]="!form.valid" type="submit" class="btn btn-primary">
+                        <button [disabled]="!form.valid || userErrors" type="submit" class="btn btn-primary">
                             <span class="glyphicon glyphicon-ok-circle"></span> Create User
                         </button>
                         <button type="button" class="btn btn-primary"
@@ -206,7 +207,7 @@
                         <spinner [visible]="userLoading"></spinner>
                     </div>
                     <div *ngIf="(action === 'edit')">
-                        <button [disabled]="!form.valid" type="submit" class="btn btn-primary">
+                        <button [disabled]="!form.valid || userErrors" type="submit" class="btn btn-primary">
                             <span class="glyphicon glyphicon-ok-circle"></span> Update User
                         </button>
                         <button type="button" class="btn btn-primary"

@@ -37,6 +37,7 @@
     <Content Include="src\favicon.ico" />
     <Content Include="src\tsconfig.json" />
     <TypeScriptCompile Include="src\app\d2dapp\security\auth\auth.guard.ts" />
+    <TypeScriptCompile Include="src\app\d2dapp\security\users\user.code.ts" />
     <TypeScriptCompile Include="src\app\d2dapp\shared\components\accordion.component.ts" />
     <TypeScriptCompile Include="src\app\d2dapp\shared\components\dropdown.component.ts" />
     <TypeScriptCompile Include="src\main.ts" />

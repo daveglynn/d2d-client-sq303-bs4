@@ -60,7 +60,7 @@ export class ClientValidators {
 
 
     static outOfRange50(control: FormControl): { [s: string]: boolean } {
-
+      
         if ((control.dirty == true) || (control.touched == true) || (control.pristine == false)) {
             if (control.value != "") {
                 if (control.value.length > 50) {

@@ -16,6 +16,8 @@ import { ProfileService } from '../../master/profiles/profile.service';
 import { LanguageService } from '../../master/languages/language.service';
 import { Search }                     from './user';
 
+
+
 @Component({
     templateUrl: 'users.component.html'
 })
@@ -56,7 +58,6 @@ export class UsersComponent implements OnInit {
     columns: any[] = [];
     buttons: any[] = [];
     sorting: {};
-    dd: DropDownItem[] = [];
 
     //constants dropdown ListId definitions
     dropdown_UserComponentOrderBy: number
@@ -261,7 +262,8 @@ export class UsersComponent implements OnInit {
         if (_.contains(['true'], this.modal)) {
             this.OutputButtonCloseClick.next(null);
         } else {
-            this._location.back();
+            this._router.navigate(['/dashboard/']);
+
         }
     }
 

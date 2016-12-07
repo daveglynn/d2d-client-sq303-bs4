@@ -14,7 +14,9 @@ import { Subscription }             from "rxjs/Subscription";
 
 import { UserService }              from './user.service';
 import { User }                     from './user';
+import { UserCode }                 from './user.code';
 
+import { DropDownItem } from "./../../master/items/item";
 import { ProfileService }           from '../../master/profiles/profile.service';
 import { LanguageService }          from '../../master/languages/language.service';
 
@@ -67,7 +69,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     email_disabled: boolean = false;
     password_disabled: boolean = false;
     profileId_disabled: boolean = false;
-    languageId_disabled: boolean = false;
+    language_disabled: boolean = false;
     phone_disabled: boolean = false;
     addressLine1_disabled: boolean = false;
     addressLine2_disabled: boolean = false;
@@ -78,6 +80,9 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
     // create a new instance 
     user = new User(null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null);
+
+    userErrors: boolean = false;
+    userErrorCode: number = 0;
 
     /***************************************************************************************
      Construtor section
@@ -90,6 +95,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         private _location: Location,
         private _commonService: CommonService,
         private _userService: UserService,
+        private _userCode: UserCode,
         private _profileService: ProfileService,
         private _languageService: LanguageService
     ) { }
@@ -98,7 +104,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
      Initialisation section
     ***************************************************************************************/
     ngOnInit() {
-  
+
         this.parmsQuerySubscription = this._activatedRoute.params.subscribe(params => {
             this.ids = params['ids'];
         });
@@ -119,6 +125,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         this.action = this._commonService.getAction(this._activatedRoute.snapshot.routeConfig.path);
         this.setupValidators(this._fb)
         this.setupForm();
+        this.setupInitialFormValid(this._fb);
 
     }
     /***************************************************************************************
@@ -170,7 +177,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
                 email: ['', [Validators.required, ClientValidators.containsSpace, ClientValidators.invalidEmailAddress]],
                 password: ['', [Validators.required, ClientValidators.outOfRange50, ClientValidators.containsSpace, ClientValidators.invalidPassword]],
                 profileId: [''],
-                languageId: [''],
                 phone: ['', [ClientValidators.outOfRange50]],
                 enabledFrom: [''],
                 enabledTo: [''],
@@ -188,7 +194,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
                 email: ['', [Validators.required, ClientValidators.containsSpace, ClientValidators.invalidEmailAddress]],
                 password: [''],
                 profileId: [''],
-                languageId: [''],
                 phone: ['', [ClientValidators.outOfRange50]],
                 enabledFrom: [''],
                 enabledTo: [''],
@@ -198,6 +203,15 @@ export class UserFormComponent implements OnInit, OnDestroy {
                 addressLine4: ['', [ClientValidators.outOfRange50]]
             });
         };
+    }
+
+    private setupInitialFormValid(fb) {
+
+        if (this.action === "add") {
+
+                this.userErrors = true
+             }
+ 
     }
 
     /***************************************************************************************
@@ -266,6 +280,31 @@ export class UserFormComponent implements OnInit, OnDestroy {
         this._router.navigate(['/components/users'], { queryParams: { mode: 'workwith', modal: 'false' } });
     }
 
+    private outputButtonOnChangeDropdownlist(list, selectedItem) {
+        debugger;
+
+        this.userErrors = false;
+        this.userErrorCode = 0;
+        var validate = [];
+
+        validate['action'] = this.action;
+        validate['object'] = 'language';
+        validate['selectedItem'] = selectedItem;
+
+        this.userErrorCode = this._userCode.validate(validate);
+
+        if (this.userErrorCode > 0) {
+            this.userErrors = true
+            return
+        }
+
+        if (list == 'language') {
+            this.user.languageId = selectedItem.id
+        }
+        if (list == 'profile') {
+            this.user.profileId = selectedItem.id
+        }
+    }
     /***************************************************************************************
      Data loading section
     ***************************************************************************************/

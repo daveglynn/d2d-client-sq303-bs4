@@ -1,7 +1,8 @@
-﻿    <span *ngIf="display == true">
-        <select class="form-control"  [ngModel]="defaultItem" (focus)="loadList(list)" (change)="onChange($event.target.value)">
+﻿<div class="form-group">
+    <span *ngIf="display == true">
+        <select class="form-control" [ngModel]="defaultItem"  (focus)="loadList(list)" (blur)="onChange($event.target.value)"  (change)="onChange($event.target.value)" #item focus>
             <option ng-show="!model" value="">{{placeHolder}}</option>
-            <option *ngFor="let item of items"  value='{"id":{{item.id}},"parentListId":{{item.parentListId}},"name":"{{item.name}}","code":"{{item.code}}","ruleBookId":{{item.ruleBookId}}}'>{{item.name}}</option>
+            <option *ngFor="let item of items" value='{"id":{{item.id}},"parentListId":{{item.parentListId}},"name":"{{item.name}}","code":"{{item.code}}","ruleBookId":{{item.ruleBookId}}}'>{{item.name}}</option>
         </select>
     </span>
- 
+</div> 

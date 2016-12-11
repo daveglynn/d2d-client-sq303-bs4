@@ -1,5 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { ConstantsService } from   '../../shared/helpers/constants.service';
+
 import * as _ from 'underscore';
 
 @Injectable()
@@ -16,7 +17,7 @@ export class UserCode {
     //validation
     validate(validate: string[]  ) {
 
-        if (validate.selectedItem === "") {
+        if (validate['selectedItem'] === "") {
             return 1000
         }
 

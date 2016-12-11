@@ -113,3 +113,12 @@ div[data-toggle="buttons"] label:active, div[data-toggle="buttons"] label.active
 -webkit-box-shadow: none;
 box-shadow: none;
 }
+
+
+
+/**********************************************************************************
+Red Boarder around invalid inputs
+**********************************************************************************/
+.form-control.ng-dirty.ng-touched.ng-invalid {
+    border: 1px solid red;
+} 

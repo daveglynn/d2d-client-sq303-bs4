@@ -22,6 +22,8 @@
     <Content Include="angular-cli.json" />
     <Content Include="package.json" />
     <Content Include="src\app\d2dapp\shared\components\dropdown.component.html" />
+    <Content Include="src\assets\custom\css\carousel.css" />
+    <Content Include="src\assets\custom\css\override.css" />
     <Content Include="tslint.json" />
     <Content Include="README.md" />
     <Compile Include="karma.conf.js" />
@@ -381,7 +383,6 @@
     <Compile Include="src\app\shared\sidebar.directive.js" />
     <Content Include="src\app\widgets\widgets.component.html" />
     <TypeScriptCompile Include="src\app\widgets\widgets.component.ts" />
-    <Content Include="src\app\d2dapp\assets\custom\stylesheets\override.css" />
     <TypeScriptCompile Include="src\app\d2dapp\master\items\item.service.ts" />
     <TypeScriptCompile Include="src\app\d2dapp\master\items\item.ts" />
     <TypeScriptCompile Include="src\app\d2dapp\master\languages\language.service.ts" />
@@ -734,9 +735,6 @@
     <Folder Include="src\app\charts" />
     <Folder Include="src\app\components" />
     <Folder Include="src\app\d2dapp" />
-    <Folder Include="src\app\d2dapp\assets" />
-    <Folder Include="src\app\d2dapp\assets\custom" />
-    <Folder Include="src\app\d2dapp\assets\custom\stylesheets" />
     <Folder Include="src\app\d2dapp\master" />
     <Folder Include="src\app\d2dapp\master\items" />
     <Folder Include="src\app\d2dapp\master\languages" />
@@ -763,10 +761,12 @@
     <Folder Include="src\app\widgets" />
     <Folder Include="src\assets" />
     <Folder Include="src\assets\css" />
+    <Folder Include="src\assets\custom\css\" />
     <Folder Include="src\assets\fonts" />
     <Folder Include="src\assets\img" />
     <Folder Include="src\assets\img\avatars" />
     <Folder Include="src\assets\img\flags" />
+    <Folder Include="src\assets\custom\" />
     <Folder Include="src\environments" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />

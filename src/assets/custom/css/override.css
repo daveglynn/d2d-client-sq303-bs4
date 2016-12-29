@@ -1,0 +1,124 @@
+﻿ 
+ 
+/* simple table  */ 
+ .table-sortable > thead > tr > th {
+    cursor: pointer;
+    position: relative;
+    background-image: none;
+}
+.table-sortable > thead > tr > th {
+    cursor: pointer;
+    position: relative;
+    background-image: none;
+}
+.table-sortable > thead > tr > th:after,
+.table-sortable > thead > tr > th.sort-false:after,
+.table-sortable > thead > tr > th.sort-true:after {
+    font-family: FontAwesome;
+    padding-left: 5px;
+}
+.table-sortable > thead > tr > th:after {
+    content: "\f0dc";
+    color: #ddd;
+}
+.table-sortable > thead > tr > th.sort-false:after {
+    content: "\f0de";
+    color: #767676;
+}
+.table-sortable > thead > tr > th.sort-true:after {
+    content: "\f0dd";
+    color: #767676;
+}
+
+/* modal  */ 
+ .backdrop {
+            background-color: rgba(0,0,0,0.6) !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100vh !important;
+        }
+
+/* Radio Buttons  http://codepen.io/BrianSassaman/pen/iLrpC */ 
+
+label.btn span {
+  font-size: 14px ;
+}
+
+label input[type="radio"] ~ i.fa.fa-circle-o{
+    color: #c8c8c8;    display: inline;
+}
+label input[type="radio"] ~ i.fa.fa-dot-circle-o{
+    display: none;
+}
+label input[type="radio"]:checked ~ i.fa.fa-circle-o{
+    display: none;
+}
+label input[type="radio"]:checked ~ i.fa.fa-dot-circle-o{
+    color: #7AA3CC;    display: inline;
+}
+label:hover input[type="radio"] ~ i.fa {
+color: #7AA3CC;
+}
+
+label input[type="checkbox"] ~ i.fa.fa-square-o{
+    color: #c8c8c8;    display: inline;
+}
+label input[type="checkbox"] ~ i.fa.fa-check-square-o{
+    display: none;
+}
+label input[type="checkbox"]:checked ~ i.fa.fa-square-o{
+    display: none;
+}
+label input[type="checkbox"]:checked ~ i.fa.fa-check-square-o{
+    color: #7AA3CC;    display: inline;
+}
+label:hover input[type="checkbox"] ~ i.fa {
+color: #7AA3CC;
+}
+
+div[data-toggle="buttons"] label.active{
+    color: #555;
+}
+
+div[data-toggle="buttons"] label {
+display: inline-block;
+padding: 6px 12px;
+margin-bottom: 0;
+font-size: 14px;
+font-weight: normal;
+line-height: 2em;
+text-align: left;
+white-space: nowrap;
+vertical-align: top;
+cursor: pointer;
+background-color: none;
+border: 0px solid 
+#c8c8c8;
+border-radius: 3px;
+color: #c8c8c8;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+-o-user-select: none;
+user-select: none;
+}
+
+div[data-toggle="buttons"] label:hover {
+color: #7AA3CC;
+}
+
+div[data-toggle="buttons"] label:active, div[data-toggle="buttons"] label.active {
+-webkit-box-shadow: none;
+box-shadow: none;
+}
+
+
+
+/**********************************************************************************
+Red Boarder around invalid inputs
+**********************************************************************************/
+.form-control.ng-dirty.ng-touched.ng-invalid {
+    border: 1px solid red;
+} 

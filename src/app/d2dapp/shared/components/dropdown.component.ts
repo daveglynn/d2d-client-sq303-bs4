@@ -56,7 +56,7 @@ export class DropDownComponent implements OnInit {
     }
 
     getList(list) {
-   
+        debugger;
         if (this.object == 'list') {
             if (this.listLoaded == false) {
                 this.listLoaded = true

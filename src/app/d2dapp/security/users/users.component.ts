@@ -296,7 +296,7 @@ export class UsersComponent implements OnInit {
     }
 
     private loadUsers(filter?) {
-        debugger;
+
         this.usersLoading = true;
         this._userService.getUsersAll(filter)
             .subscribe(

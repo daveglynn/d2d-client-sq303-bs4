@@ -18,13 +18,15 @@
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <label>User Status</label>
-                                <div class="btn-group btn-group-horizontal" data-toggle="buttons">
-                                    <label class="btn active">
-                                        <input type="radio" [checked]="user.active == '1'" formControlName='active' value="true" (change)="user.active=$event.target.value"><i class="fa fa-circle-o fa-1.75x"></i><i class="fa fa-dot-circle-o fa-1.75x"></i> <span>  Active</span>
-                                    </label>
-                                    <label class="btn active ">
-                                        <input type="radio" [checked]="user.active == '0'" formControlName='active' value="false" (change)="user.active=$event.target.value"><i class="fa fa-circle-o fa-1.75x"></i><i class="fa fa-dot-circle-o fa-1.75x"></i><span> Disabled</span>
-                                    </label>
+                                <div class="input-group m-b-1">
+                                    <div class="btn-group btn-group-horizontal" data-toggle="buttons">
+                                        <label class="btn active">
+                                            <input type="radio" [checked]="user.active == '1'" formControlName='active' value="true" (change)="user.active=$event.target.value"><i class="fa fa-circle-o fa-1.75x"></i><i class="fa fa-dot-circle-o fa-1.75x"></i> <span>  Active</span>
+                                        </label>
+                                        <label class="btn active ">
+                                            <input type="radio" [checked]="user.active == '0'" formControlName='active' value="false" (change)="user.active=$event.target.value"><i class="fa fa-circle-o fa-1.75x"></i><i class="fa fa-dot-circle-o fa-1.75x"></i><span> Disabled</span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -33,7 +35,7 @@
                             <div class="col-md-6">
                                 <label for="firstName">First Name</label>
                                 <div class="input-group m-b-1">
-                                    <span class="input-group-addon"><i class="icon-user"></i></span>
+                                    <span class="input-group-addon"><i class="icon-user" ></i></span>
                                     <input [(ngModel)]="user.firstName" #firstName formControlName="firstName" type="text" name="firstName" class="form-control" id="firstName" placeholder="Required" [disabled]="firstName_disabled" focus>
                                 </div>
                                 <div *ngIf="form.controls.firstName.touched  && form.controls.firstName.errors">
@@ -60,7 +62,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="form-group row">
@@ -84,7 +85,6 @@
                                         Invalid Email Address
                                     </div>
                                 </div>
-
                             </div>
                             <div class="col-md-6">
                                 <div *ngIf="action === 'add'">
@@ -108,14 +108,16 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="language">Language</label>
                                 <div class="input-group m-b-1">
                                     <span class="input-group-addon"><i class="icon-list"></i></span>
-                                    <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist('language',$event)"
+                                    <dropdownlist *ngIf="dataLoaded"  (OutputButtonOnChange)="outputButtonOnChangeDropdownlist('language',$event)"
                                                   [InputObject]="'language'"
                                                   [InputDisplay]="true"
+                                                  [InputAction]="action"
                                                   [InputList]=0
                                                   [InputEagerLoad]="true"
                                                   [InputDefault]=user.languageId
@@ -123,15 +125,37 @@
                                         Loading languages...
                                     </dropdownlist>
                                 </div>
-                                <div *ngIf="userErrorCode ===1000" class="alert alert-danger">
+                                <div *ngIf="languageErrorCode === 1000" class="alert alert-danger">
                                     Language is now required
                                 </div>
-                                <div *ngIf="userErrorCode ===2000" class="alert alert-danger">
+                                <div *ngIf="languageErrorCode === 2000" class="alert alert-danger">
                                     Language must be selected
                                 </div>
-
                             </div>
+                            <div class="col-md-6">
+                                <label for="profile">Profile</label>
+                                <div class="input-group m-b-1">
+                                    <span class="input-group-addon"><i class="icon-list"></i></span>
+                                    <dropdownlist *ngIf="dataLoaded" (OutputButtonOnChange)="outputButtonOnChangeDropdownlist('profile',$event)"
+                                                  [InputObject]="'profile'"
+                                                  [InputDisplay]="true"
+                                                  [InputAction]="action"
+                                                  [InputList]=0
+                                                  [InputEagerLoad]="true"
+                                                  [InputDefault]=user.profileId
+                                                  [InputPlaceholder]="'Select profile'" #profile>
+                                        Loading profiles...
+                                    </dropdownlist>
+                                </div>
+                                <div *ngIf="profileErrorCode === 1000" class="alert alert-danger">
+                                    Profile is now required
+                                </div>
+                                <div *ngIf="profileErrorCode === 2000" class="alert alert-danger">
+                                    Profile must be selected
+                                </div>
+                            </div>		
                         </div>
+
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="phone">Phone</label>
@@ -236,41 +260,41 @@
 
                 <div class="card-footer">
                     <div *ngIf="(action === 'add')">
-                        <button [disabled]="!form.valid || userErrors" type="submit" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-ok-circle"></span> Create User
+                        <button [disabled]="!form.valid || userErrors" type="submit" class="btn btn-success">
+                            <span class="glyphicon glyphicon-ok-circle"></span> <i class="fa fa-dot-circle-o"></i> Create User
                         </button>
                         <button type="button" class="btn btn-primary"
                                 (click)="cancel()">
-                            <span class="glyphicon glyphicon-remove-circle"></span> Cancel
+                            <span class="glyphicon glyphicon-remove-circle"></span><i class="fa fa-ban"></i> Cancel
                         </button>
-                        <spinner [visible]="userLoading"></spinner>
+                        <spinner [visible]="dataIsProcessing"></spinner>
                     </div>
                     <div *ngIf="(action === 'edit')">
-                        <button [disabled]="!form.valid || userErrors" type="submit" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-ok-circle"></span> Update User
+                        <button [disabled]="!form.valid || userErrors" type="submit" class="btn btn-success">
+                            <span class="glyphicon glyphicon-ok-circle"></span> <i class="fa fa-dot-circle-o"></i> Update User
                         </button>
                         <button type="button" class="btn btn-primary"
                                 (click)="cancel()">
-                            <span class="glyphicon glyphicon-remove-circle"></span> Cancel
+                            <span class="glyphicon glyphicon-remove-circle"></span><i class="fa fa-ban"></i > Cancel
                         </button>
-                        <spinner [visible]="userLoading"></spinner>
+                        <spinner [visible]="dataIsProcessing"></spinner>
                     </div>
                     <div *ngIf="(action === 'delete')">
-                        <button type="submit" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-ok-circle"></span> Delete User
+                        <button type="submit" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-ok-circle"></span> <i class="fa fa-dot-circle-o"></i> Delete User
                         </button>
                         <button type="button" class="btn btn-primary"
                                 (click)="cancel()">
-                            <span class="glyphicon glyphicon-remove-circle"></span> Cancel
+                            <span class="glyphicon glyphicon-remove-circle"></span><i class="fa fa-ban"></i> Cancel
                         </button>
-                        <spinner [visible]="userLoading"></spinner>
+                        <spinner [visible]="dataIsProcessing"></spinner>
                     </div>
                     <div *ngIf="(action === 'view')">
                         <button type="button" class="btn btn-primary"
                                 (click)="cancel()">
-                            <span class="glyphicon glyphicon-remove-circle"></span> Cancel
+                            <span class="glyphicon glyphicon-remove-circle"></span><i class="fa fa-ban"></i> Cancel
                         </button>
-                        <spinner [visible]="userLoading"></spinner>
+                        <spinner [visible]="dataIsProcessing"></spinner>
                     </div>
                 </div>
 

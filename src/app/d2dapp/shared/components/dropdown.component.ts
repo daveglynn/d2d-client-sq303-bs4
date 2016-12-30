@@ -12,6 +12,7 @@ import * as _ from 'underscore';
 export class DropDownComponent implements OnInit {
     @Input() InputObject: string;
     @Input() InputDisplay: boolean;
+    @Input() InputAction: string;
     @Input() InputList: number;
     @Input() InputDefault: number;
     @Input() InputPlaceholder: string;
@@ -25,7 +26,8 @@ export class DropDownComponent implements OnInit {
     items: DropDownItem[];
 
     object: string;
-    display: boolean;
+    display: boolean
+    action: string;
     list: number;
 
     placeHolder: string
@@ -40,6 +42,7 @@ export class DropDownComponent implements OnInit {
 
     ngOnInit() {
         this.display = this.InputDisplay;
+        this.action = this.InputAction;
         this.list = this.InputList;
         this.object = this.InputObject;
         this.placeHolder = this.InputPlaceholder
@@ -56,10 +59,11 @@ export class DropDownComponent implements OnInit {
     }
 
     getList(list) {
-        debugger;
+
         if (this.object == 'list') {
             if (this.listLoaded == false) {
                 this.listLoaded = true
+                debugger;
                 this._listService.getListByIdItems(list)
                     .subscribe(
                     data => this.handleData('getListByIdItems', data, null),

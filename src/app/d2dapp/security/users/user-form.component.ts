@@ -17,8 +17,7 @@ import { User }                     from './user';
 import { UserCode }                 from './user.code';
 
 import { DropDownItem } from "./../../master/items/item";
-import { ProfileService }           from '../../master/profiles/profile.service';
-import { LanguageService }          from '../../master/languages/language.service';
+
 
 @Component({
     templateUrl: 'user-form.component.html'
@@ -38,27 +37,19 @@ export class UserFormComponent implements OnInit, OnDestroy {
     modalDisplay: string = "";
     allDisplay: string = "";
 
-    dropdownProfileId = 0;
-    dropdownProfileName = '';
-
     // this control
     modal: string;
     form: FormGroup;
     title: string;
     action: string;
-
-    profilesLoaded: boolean = false;
-    languagesLoaded: boolean = false;
-
-    profiles = [];
-    languages = [];
-
-    userLoading;
+    dataIsProcessing;
+    dataLoaded;
+    languageInvalid: boolean = false;
+    profileInvalid: boolean = false;
     userId: number;
     ids: string;
     previousUserId: number;
     nextUserId: number;
-
     parmsSubscription: Subscription;
     parmsQuerySubscription: Subscription;
 
@@ -82,7 +73,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
     user = new User(null, null, null, null, true, null, null, null, null, null, null, null, null, null, null, null);
 
     userErrors: boolean = false;
-    userErrorCode: number = 0;
+    languageErrorCode: number = 0;
+    profileErrorCode: number = 0;
 
     /***************************************************************************************
      Construtor section
@@ -95,15 +87,15 @@ export class UserFormComponent implements OnInit, OnDestroy {
         private _location: Location,
         private _commonService: CommonService,
         private _userService: UserService,
-        private _userCode: UserCode,
-        private _profileService: ProfileService,
-        private _languageService: LanguageService
+        private _userCode: UserCode
     ) { }
 
     /***************************************************************************************
      Initialisation section
     ***************************************************************************************/
     ngOnInit() {
+
+        this.dataLoaded = false;
 
         this.parmsQuerySubscription = this._activatedRoute.params.subscribe(params => {
             this.ids = params['ids'];
@@ -113,7 +105,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
             this.userId = parms['id'];
 
             if (!this.userId) return;
-            this.userLoading = true;
+            this.dataIsProcessing = true;
+
             this._userService.getUserById(this.userId)
                 .subscribe(
                 data => this.handleData('getUserById', data),
@@ -150,6 +143,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
             this.title = 'View User'
         } else if (this.action === 'add') {
             this.title = 'Add User'
+            this.dataLoaded = true;
         } else if (this.action === 'delete') {
             this.title = 'Delete User'
         }
@@ -208,10 +202,9 @@ export class UserFormComponent implements OnInit, OnDestroy {
     private setupInitialFormValid(fb) {
 
         if (this.action === "add") {
+            this.userErrors = true
+        }
 
-                this.userErrors = true
-             }
- 
     }
 
     /***************************************************************************************
@@ -246,7 +239,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
     save() {
 
-        this.userLoading = true;
+        this.dataIsProcessing = true;
         if (this.user.id) {
             if (this.action === 'edit') {
                 this._userService.updateUser(this.user)
@@ -281,56 +274,39 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
 
     private outputButtonOnChangeDropdownlist(list, selectedItem) {
-        debugger;
 
-        this.userErrors = false;
-        this.userErrorCode = 0;
-        var validate = [];
+         var validate = [];
 
         validate['action'] = this.action;
-        validate['object'] = 'language';
+        validate['object'] = list;
         validate['selectedItem'] = selectedItem;
+ 
+        if (list == 'language') {
+            this.languageErrorCode = this._userCode.validate(validate);
+        }
 
-        this.userErrorCode = this._userCode.validate(validate);
+        if (list == 'profile') {
+            this.profileErrorCode = this._userCode.validate(validate);
+        }
 
-        if (this.userErrorCode > 0) {
+        if (this.languageErrorCode > 0 || this.profileErrorCode > 0) {
             this.userErrors = true
             return
+        }
+
+        this.userErrors = false
+
+        if (list == 'profile') {
+            this.user.profileId = selectedItem.id
         }
 
         if (list == 'language') {
             this.user.languageId = selectedItem.id
         }
-        if (list == 'profile') {
-            this.user.profileId = selectedItem.id
-        }
     }
     /***************************************************************************************
      Data loading section
     ***************************************************************************************/
-    private loadProfiles() {
-        if (this.profilesLoaded == false) {
-            this._profileService.getProfilesAll()
-                .subscribe(
-                data => this.handleData('loadProfiles', data),
-                error => this.handleError('loadProfiles', error),
-                () => this.handleSuccess('loadProfiles')
-                );
-            this.profilesLoaded = true;
-        }
-    }
-
-    private loadLanguages() {
-        if (this.languagesLoaded == false) {
-            this._languageService.getLanguagesAll()
-                .subscribe(
-                data => this.handleData('loadLanguages', data),
-                error => this.handleError('loadLanguages', error),
-                () => this.handleSuccess('loadLanguages')
-                );
-            this.languagesLoaded = true;
-        }
-    }
 
     private outputButtonAccordionPreviousOnClick() {
         var userIdIndex = this.ids.split(",").map((item, index) => parseInt(item)).indexOf(parseInt(this.userId.toString()));
@@ -352,7 +328,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     ***************************************************************************************/
     handleError(process, error: any) {
 
-        this.userLoading = false;
+        this.dataIsProcessing = false;
         // this is not an error , but delete request is throwing it. Angular bug
         // therefore treat it as a success
         if (error.message != "error.json is not a function") {
@@ -369,7 +345,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
     handleData(process, data: any) {
 
-        this.userLoading = false;
+        this.dataIsProcessing = false;
         console.log("handle data");
         console.log(data);
 
@@ -377,25 +353,18 @@ export class UserFormComponent implements OnInit, OnDestroy {
             this.user = data;
             this.user.enabledFrom = this._commonService.getLocalDate(this.user.enabledFrom);
             this.user.enabledTo = this._commonService.getLocalDate(this.user.enabledTo);
-            this.languages.push(new DropDown(data.languageId, data.language.name));
+            this.dataLoaded = true;
 
-        }
-        if (process === 'loadProfiles') {
-            this.profiles = data;
-        }
-        if (process === 'loadLanguages') {
-            this.languages = data;
         }
     }
 
     handleSuccess(process) {
 
-        this.userLoading = false;
+        this.dataIsProcessing = false;
         console.log("handle success");
         // Ideally, here we'd want:
         // this.form.markAsPristine();
-        this.languages = this.languages;
-        if ((process != 'getUserById') && (process != 'loadLanguages') && (process != 'loadProfiles')) {
+        if (process != 'getUserById') {
             this._location.back();
         }
     }

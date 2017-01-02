@@ -1,5 +1,5 @@
 ﻿import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core'
-import { ListService } from "../../master/lists/list.service";
+import { ItemService } from "../../master/items/item.service";
 import { DropDownItem } from "../../master/items/item";
 import { ErrorService } from "../errors/error.service";
 import * as _ from 'underscore';
@@ -7,7 +7,7 @@ import * as _ from 'underscore';
 @Component({
     selector: 'dropdownlist',
     templateUrl: 'dropdown.component.html',
-    providers: [  ListService]
+    providers: [  ItemService]
 })
 export class DropDownComponent implements OnInit {
     @Input() InputObject: string;
@@ -36,7 +36,7 @@ export class DropDownComponent implements OnInit {
 
     dropDownLoading;
 
-    constructor(  private _listService: ListService, private _errorService: ErrorService) {
+    constructor(  private _itemService: ItemService, private _errorService: ErrorService) {
         this.dropDownLoading = true;
     }
 
@@ -60,11 +60,16 @@ export class DropDownComponent implements OnInit {
 
     getList(list) {
 
+        var filter = {};
+        if (this.action == "add") {
+            filter['expired'] = false;
+        }
+
         if (this.object == 'list') {
             if (this.listLoaded == false) {
                 this.listLoaded = true
                 debugger;
-                this._listService.getListByIdItems(list)
+                this._itemService.getListByIdItems(list, filter)
                     .subscribe(
                     data => this.handleData('getListByIdItems', data, null),
                     error => this.handleError('getListByIdItems', error),
@@ -74,7 +79,8 @@ export class DropDownComponent implements OnInit {
         } else {
             if (this.listLoaded == false) {
                 this.listLoaded = true
-                this._listService.getListByObject(this.object, list)
+                debugger;
+                this._itemService.getListByObject(this.object, filter)
                     .subscribe(
                     data => this.handleData('getListByObject', data, null),
                     error => this.handleError('getListByObject', error),
@@ -114,7 +120,7 @@ export class DropDownComponent implements OnInit {
 
         if (process === 'getListByIdItems') {
             this.items = [];
-            this.items = data.items;
+            this.items = data;
             //set selected record
             if (this.InputDefault != 0) {
                 this.selectedItem = _.findWhere(this.items, { id: this.InputDefault });

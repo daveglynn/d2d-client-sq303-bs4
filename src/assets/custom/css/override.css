@@ -1,5 +1,8 @@
-﻿ 
- 
+﻿/* bootstrap */ 
+ .input-group-addon {
+   background-color: hsla(200, 74%, 45%, 0.13);
+   }
+
 /* simple table  */ 
  .table-sortable > thead > tr > th {
     cursor: pointer;

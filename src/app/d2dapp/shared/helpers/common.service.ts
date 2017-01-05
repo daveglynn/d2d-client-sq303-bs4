@@ -1,5 +1,5 @@
 ﻿"use strict";
- 
+
 import {Injectable} from "@angular/core";
 import {URLSearchParams} from '@angular/http';
 import { LocalData } from './common';
@@ -11,52 +11,65 @@ export class CommonService {
 
     getTokenAsParm() {
         let params: URLSearchParams = new URLSearchParams();
-        params.set('Auth', localStorage.getItem('token'));
+        params.set('Auth', localStorage.getItem('signin' + '-' + 'token'));
         return params;
     }
 
     setParms(urlParms) {
 
         let params: URLSearchParams = new URLSearchParams();
-        params.set('Auth', localStorage.getItem('token'));
+        params.set('Auth', localStorage.getItem('signin' + '-' + 'token'));
 
-          _.each(urlParms, function (element, index, list) {
-              params.append(String(index), String(element));
-          });
+        _.each(urlParms, function (element, index, list) {
+            params.append(String(index), String(element));
+        });
 
-         //for (var key in urlParms) {
-         //    if (urlParms.hasOwnProperty(key)) {
-         //        var obj = urlParms[key];
-         //        for (var prop in obj) {
-         //            if (obj.hasOwnProperty(prop)) {
-         //                console.log(key + " = " + obj[prop]);
-         //                 params.append(prop, obj[prop]);
-         //            }
-         //         }
-         //    }
-         // }
+        //for (var key in urlParms) {
+        //    if (urlParms.hasOwnProperty(key)) {
+        //        var obj = urlParms[key];
+        //        for (var prop in obj) {
+        //            if (obj.hasOwnProperty(prop)) {
+        //                console.log(key + " = " + obj[prop]);
+        //                 params.append(prop, obj[prop]);
+        //            }
+        //         }
+        //    }
+        // }
 
 
         return params;
     }
 
-   
-    
+
+
     getToken() {
-        return localStorage.getItem('token');
+        return localStorage.getItem('signin' + '-' + 'token');
     }
 
+    getLocalStorageJsonStringToObject(name) {
+        return JSON.parse(localStorage.getItem(name));
+    }
+
+    getLocalStorageString(name) {
+        return localStorage.getItem(name);
+    }
 
     clearLocalStorage() {
         localStorage.clear();
     }
 
-    setLocalStorage(localData: LocalData) {
-        localStorage.setItem('token', localData.token);
-        localStorage.setItem('userId', localData.userId);
-        localStorage.setItem('firstName', localData.firstName);
-        localStorage.setItem('lastName', localData.lastName);
-        localStorage.setItem('email', localData.email);
+    saveSigninToLocalStorage(name, localData) {
+        _.each(localData, function (element, index, list) {
+            localStorage.setItem(name + "-" + String(index), String(element));
+        });
+    }
+
+    saveJsonStringToLocalStorage(name, localData) {
+        localStorage.setItem(name, JSON.stringify(localData));
+    }
+
+    saveStringToLocalStorage(name, localData) {
+        localStorage.setItem(name, localData);
     }
 
 
@@ -64,12 +77,12 @@ export class CommonService {
 
         var runMode = 'display';
 
-       // if ((componentMode == 'workwith') || (componentMode == 'display') || (componentMode == 'select')) {
-       //     runMode = componentMode;
-       //} else {
-       //     runMode = componentMode;
-       //     runMode = 'display';
-       // }
+        // if ((componentMode == 'workwith') || (componentMode == 'display') || (componentMode == 'select')) {
+        //     runMode = componentMode;
+        //} else {
+        //     runMode = componentMode;
+        //     runMode = 'display';
+        // }
 
         if (_.contains(['workwith', 'display', 'select'], componentMode)) {
             runMode = componentMode;
@@ -86,21 +99,21 @@ export class CommonService {
     setModal(componentModal: string, urlModal: string) {
 
         var runModal = 'false';
-      //  if ((componentModal == 'true') || (componentModal == 'false')) {
-      //      runModal = componentModal;
-      //  } else {
-      //      runModal = urlModal;
-      //      runModal = 'false';
-      //  }
+        //  if ((componentModal == 'true') || (componentModal == 'false')) {
+        //      runModal = componentModal;
+        //  } else {
+        //      runModal = urlModal;
+        //      runModal = 'false';
+        //  }
 
-      if (_.contains(['true', 'false'], componentModal)) {
-          runModal = componentModal;
-      } else {
-          runModal = urlModal;
-          if (!_.contains(['true', 'false'], runModal)) {
-              runModal = 'false';
-          }
-      }
+        if (_.contains(['true', 'false'], componentModal)) {
+            runModal = componentModal;
+        } else {
+            runModal = urlModal;
+            if (!_.contains(['true', 'false'], runModal)) {
+                runModal = 'false';
+            }
+        }
         return runModal;
 
     }
@@ -110,21 +123,21 @@ export class CommonService {
         return d.toISOString().split('.')[0].toString();
     }
 
-    getAction(path:string) {
+    getAction(path: string) {
 
 
-        if (path.indexOf("add") > 0 ) {
+        if (path.indexOf("add") > 0) {
             return "add";
-        } else if (path.indexOf("edit") > 0 ) {
+        } else if (path.indexOf("edit") > 0) {
             return "edit";
-        } else if (path.indexOf("delete") > 0 ) {
+        } else if (path.indexOf("delete") > 0) {
             return "delete";
-        } else if (path.indexOf("view") > 0 ) {
+        } else if (path.indexOf("view") > 0) {
             return "view";
-        } else  {
+        } else {
             return "";
         }
-        
+
     }
 
     getPrevId(current: number) {
@@ -132,14 +145,15 @@ export class CommonService {
             return current;
         else
             current--;
-            return current    }
+        return current
+    }
 
     getNextId(current: number, length: number) {
         if (current == length - 1)
             return current
         else
             current++;
-            return current;
+        return current;
     }
 
 }

@@ -68,7 +68,6 @@ export class DropDownComponent implements OnInit {
         if (this.object == 'list') {
             if (this.listLoaded == false) {
                 this.listLoaded = true
-                debugger;
                 this._itemService.getListByIdItems(list, filter)
                     .subscribe(
                     data => this.handleData('getListByIdItems', data, null),
@@ -79,7 +78,6 @@ export class DropDownComponent implements OnInit {
         } else {
             if (this.listLoaded == false) {
                 this.listLoaded = true
-                debugger;
                 this._itemService.getListByObject(this.object, filter)
                     .subscribe(
                     data => this.handleData('getListByObject', data, null),

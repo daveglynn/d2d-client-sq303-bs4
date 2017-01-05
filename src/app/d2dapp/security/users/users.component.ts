@@ -60,8 +60,8 @@ export class UsersComponent implements OnInit {
     sorting: {};
 
     //constants dropdown ListId definitions
-    dropdown_UserComponentOrderBy: number
-    dropdown_UserComponentOrderDir: number
+    dropdown_UserComponentOrderById: number
+    dropdown_UserComponentOrderDirId: number
 
     //constants dropdown ListId defaults
     dropdown_UserComponentOrderBy_Default = new DropDownItem(null, null, null, null, null);
@@ -87,7 +87,7 @@ export class UsersComponent implements OnInit {
      Initialisation section
     ***************************************************************************************/
     ngOnInit() {
-
+  
         //initial form setup
         this.setupForm();
 
@@ -100,15 +100,29 @@ export class UsersComponent implements OnInit {
     ***************************************************************************************/
     private setupSearch() {
 
-        this.dropdown_UserComponentOrderBy_Default = this.dropdown_UserComponentOrderBy_Default
-        this.dropdown_UserComponentOrderDir_Default = this.dropdown_UserComponentOrderDir_Default
-        this.dropdown_UserComponentLanguage_Default = this.dropdown_UserComponentLanguage_Default
-        this.dropdown_UserComponentProfile_Default = this.dropdown_UserComponentProfile_Default
-
+        this.dropdown_UserComponentProfile_Default = this._commonService.getLocalStorageJsonStringToObject('dropdown_UserComponentProfile_Default')
+        this.dropdown_UserComponentLanguage_Default = this._commonService.getLocalStorageJsonStringToObject('dropdown_UserComponentLanguage_Default')
+        this.dropdown_UserComponentOrderBy_Default = this._commonService.getLocalStorageJsonStringToObject('dropdown_UserComponentOrderBy_Default')
+        this.dropdown_UserComponentOrderDir_Default = this._commonService.getLocalStorageJsonStringToObject('dropdown_UserComponentOrderDir_Default')
+   
         var search = new Search(this.dropdown_UserComponentProfile_Default, this.dropdown_UserComponentLanguage_Default, "", this.dropdown_UserComponentOrderBy_Default, this.dropdown_UserComponentOrderDir_Default);
+
         return search
+
     }
 
+    /***************************************************************************************
+     Save search
+    ***************************************************************************************/
+    private saveSearch(filter) {
+
+        this._commonService.saveJsonStringToLocalStorage('dropdown_UserComponentProfile_Default', filter.profile);
+        this._commonService.saveJsonStringToLocalStorage('dropdown_UserComponentLanguage_Default', filter.language);
+        this._commonService.saveJsonStringToLocalStorage('dropdown_UserComponentOrderBy_Default', filter.orderBy);
+        this._commonService.saveJsonStringToLocalStorage('dropdown_UserComponentOrderDir_Default',filter.orderDir);
+        this._commonService.saveStringToLocalStorage('text_UserComponentQ_Default', filter.q);
+        
+    }
     /***************************************************************************************
      Set up section
     ***************************************************************************************/
@@ -129,13 +143,8 @@ export class UsersComponent implements OnInit {
     ***************************************************************************************/
     private setupConstant() {
 
-        this.dropdown_UserComponentOrderDir = this._constantsService.dropdown_UserComponentOrderDir
-        this.dropdown_UserComponentOrderBy = this._constantsService.dropdown_UserComponentOrderBy
-        this.dropdown_UserComponentOrderBy_Default = this._constantsService.dropdown_UserComponentOrderBy_Default
-        this.dropdown_UserComponentOrderDir_Default = this._constantsService.dropdown_UserComponentOrderDir_Default
-        this.dropdown_UserComponentLanguage_Default = this._constantsService.dropdown_UserComponentLanguage_Default
-        this.dropdown_UserComponentProfile_Default = this._constantsService.dropdown_UserComponentProfile_Default
-
+        this.dropdown_UserComponentOrderDirId = this._constantsService.dropdown_UserComponentOrderDirId
+        this.dropdown_UserComponentOrderById = this._constantsService.dropdown_UserComponentOrderById
     }
 
     /***************************************************************************************
@@ -296,7 +305,7 @@ export class UsersComponent implements OnInit {
     }
 
     private loadUsers(filter?) {
-
+ 
         this.usersLoading = true;
         this._userService.getUsersAll(filter)
             .subscribe(
@@ -311,6 +320,7 @@ export class UsersComponent implements OnInit {
     }
 
     private reloadUsers(filter) {
+        this.saveSearch(filter)
         this.loadUsers(filter);
     }
 

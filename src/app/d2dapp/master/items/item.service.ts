@@ -33,29 +33,29 @@ export class ItemService {
         if (filter && filter.q) {
             parms['q'] = filter.q;
         }
-		if (filter && filter.list) {
+		if (filter && filter.list && filter.list.id != 0) {
             parms['listId'] = filter.list.id;
 		};
-    	if (filter && filter.ruleBook) {
+    	if (filter && filter.ruleBook && filter.ruleBook.id != 0) {
             parms['ruleBookId'] = filter.ruleBook.id;
 		};
-    	if (filter && filter.parentList) {
+    	if (filter && filter.parentList && filter.parentList.id != 0) {
             parms['parentListId'] = filter.parentList.id;
 		};
-      		if (filter && filter.active) {
+      	if (filter && filter.active) {
              parms['active'] = filter.active;
 		};
-    	if (filter && filter.expired) {
+    if (filter && filter.expired) {
              parms['expired'] = filter.expired;
 		};
-    	if (filter && filter.parent) {
+    if (filter && filter.parent) {
              parms['parent'] = filter.parent;
 		};
     
-		if (filter && filter.orderDir) {
+		if (filter && filter.orderDir && filter.orderDir.code != "") {
 			parms['orderDir'] = filter.orderDir.code;
 		};
-		if (filter && filter.orderBy) {
+		if (filter && filter.orderBy && filter.orderBy.code != "") {
 			parms['orderBy'] = filter.orderBy.code;
 		};
 

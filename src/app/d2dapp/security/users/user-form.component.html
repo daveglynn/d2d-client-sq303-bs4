@@ -245,22 +245,14 @@
                     <fieldset [disabled]="(action === 'view' || action === 'delete')">
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label>Status</label>
-                                <div class="btn-group" data-toggle="buttons">
-                                    <span class="input-group-addon">
-                                        <label class="btn btn-primary active">
-                                            <input type="radio" [checked]="user.active == '1'" formControlName='active' value="true" (change)="user.active=$event.target.value">  <span>  Active</span>
-                                        </label>
-                                    </span>
-                                    <span class="input-group-addon">
-                                        <label class="btn btn-primary">
-                                            <input type="radio" [checked]="user.active == '0'" formControlName='active' value="false" (change)="user.active=$event.target.value"> <span> Disabled</span>
-                                        </label>
-                                    </span>
-                                </div>
+                                <label>Active</label>
+                                <label class="switch switch-3d switch-success">
+                                    <input type="checkbox" class="switch-input"  [checked]="user.active=='1'" formControlName='active'  value="false"  (change)="user.active = $event.target.checked"> 
+                                    <span class="switch-label" data-on="Active" data-off="Disabled"></span>
+                                    <span class="switch-handle"></span>
+                                </label>
                             </div>
                         </div>
-
                     </fieldset>
 
                 </accordion-group>

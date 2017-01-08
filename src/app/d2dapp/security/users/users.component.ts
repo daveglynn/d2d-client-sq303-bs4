@@ -100,6 +100,7 @@ export class UsersComponent implements OnInit {
     ***************************************************************************************/
     private setupSearch() {
 
+
         this.dropdown_UserComponentProfile_Default = this._commonService.getLocalStorageJsonStringToObject('dropdown_UserComponentProfile_Default')
         this.dropdown_UserComponentLanguage_Default = this._commonService.getLocalStorageJsonStringToObject('dropdown_UserComponentLanguage_Default')
         this.dropdown_UserComponentOrderBy_Default = this._commonService.getLocalStorageJsonStringToObject('dropdown_UserComponentOrderBy_Default')

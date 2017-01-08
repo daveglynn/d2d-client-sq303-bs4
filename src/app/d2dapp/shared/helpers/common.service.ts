@@ -9,6 +9,8 @@ import * as _ from 'underscore';
 
 export class CommonService {
 
+    blankDropDownItem: string = '{"id":0,"parentListId":0,"name":"","code":"","ruleBookId":0}'
+
     getTokenAsParm() {
         let params: URLSearchParams = new URLSearchParams();
         params.set('Auth', localStorage.getItem('signin' + '-' + 'token'));
@@ -47,11 +49,17 @@ export class CommonService {
     }
 
     getLocalStorageJsonStringToObject(name) {
-        return JSON.parse(localStorage.getItem(name));
+        var storageValue = localStorage.getItem(name);
+        if (!_.isEmpty(storageValue) && (storageValue != "undefined")) {
+            return JSON.parse(localStorage.getItem(name));
+        } else { return "" }
     }
 
     getLocalStorageString(name) {
-        return localStorage.getItem(name);
+        var storageValue = localStorage.getItem(name);
+        if (!_.isEmpty(storageValue) && (storageValue != "undefined")) {
+            return localStorage.getItem(name);
+        } else { return "" }
     }
 
     clearLocalStorage() {
@@ -65,7 +73,9 @@ export class CommonService {
     }
 
     saveJsonStringToLocalStorage(name, localData) {
-        localStorage.setItem(name, JSON.stringify(localData));
+        if (!_.isEmpty(localData) && (localData != "undefined")) {
+            localStorage.setItem(name, JSON.stringify(localData));
+        } else { localStorage.setItem(name, ""); }
     }
 
     saveStringToLocalStorage(name, localData) {
@@ -124,8 +134,6 @@ export class CommonService {
     }
 
     getAction(path: string) {
-
-
         if (path.indexOf("add") > 0) {
             return "add";
         } else if (path.indexOf("edit") > 0) {

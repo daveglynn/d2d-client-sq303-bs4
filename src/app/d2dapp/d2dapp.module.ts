@@ -36,6 +36,8 @@ import {Format} from "./shared/pipes/format.pipe"
 import { PaginationComponent } from './shared/components/pagination.component';
 import { SpinnerComponent }    from './shared/components/spinner.component';
 import { FocusDirective }    from './shared/directives/focus.directive';
+import { DisableDirective }    from './shared/directives/disable.directive';
+import { AppShadowDirective }    from './shared/directives/appshadow.directive';
 import { CommonService }    from './shared/helpers/common.service';
 import { ConstantsService }    from './shared/helpers/constants.service';
 
@@ -69,6 +71,8 @@ import { UserCode }                           from './security/users/user.code';
         PaginationComponent,
         SpinnerComponent,
         FocusDirective,
+        DisableDirective,
+        AppShadowDirective,
         ErrorComponent,
         Accordion,
         AccordionGroup,
@@ -82,6 +86,8 @@ import { UserCode }                           from './security/users/user.code';
         PaginationComponent,
         SpinnerComponent,
         FocusDirective,
+        DisableDirective,
+        AppShadowDirective,
         ErrorComponent
     ],
     providers: [

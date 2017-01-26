@@ -11,16 +11,40 @@
                        [InputOpenGroup]="1">
 
                 <label></label>
+<span [appShadow]="'hotpink'"
+      [appShadowX]="'12px'"
+      [appShadowY]="'6px'"
+      [appShadowBlur]="'30px'">Alligator</span>                
                 <accordion-group heading="Details ">
 
                     <fieldset [disabled]="(action === 'view' || action === 'delete')">
+ 
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="aliasName">Alias Name</label>
+                                <div class="input-group m-b-1">
+                                    <span class="input-group-addon"><i class="icon-user"></i></span>
+                                    <input [(ngModel)]="user.aliasName" #aliasName formControlName="aliasName"   type="text" name="aliasName" class="form-control" id="aliasName" placeholder="Required"  disableCond="true" focus>
+                                </div>
+                                <div *ngIf="form.controls.aliasName.touched  && form.controls.aliasName.errors">
+                                    <div *ngIf="form.controls.aliasName.errors.required" class="alert alert-danger">
+                                        First name is required
+                                    </div>
+                                    <div *ngIf="form.controls.aliasName.errors.outOfRange50" class="alert alert-danger">
+                                        Cannot be greater than 50 characters.
+                                    </div>
+                                </div>
+ 
+ 
+                        </div>
+                     </div> 
 
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="firstName">First Name</label>
                                 <div class="input-group m-b-1">
                                     <span class="input-group-addon"><i class="icon-user"></i></span>
-                                    <input [(ngModel)]="user.firstName" #firstName formControlName="firstName" type="text" name="firstName" class="form-control" id="firstName" placeholder="Required" [disabled]="firstName_disabled" focus>
+                                    <input [(ngModel)]="user.firstName" #firstName formControlName="firstName" type="text" name="firstName" class="form-control" id="firstName" placeholder="Required"  focus>
                                 </div>
                                 <div *ngIf="form.controls.firstName.touched  && form.controls.firstName.errors">
                                     <div *ngIf="form.controls.firstName.errors.required" class="alert alert-danger">

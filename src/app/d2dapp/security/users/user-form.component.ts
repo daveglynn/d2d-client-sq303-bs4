@@ -54,9 +54,11 @@ export class UserFormComponent implements OnInit, OnDestroy {
     parmsQuerySubscription: Subscription;
 
     // disablers
+    aliasName_disabled: boolean = true;
+    otherName_disabled: boolean = true;
     active_disabled: boolean = false;
-    firstName_disabled: boolean = false;
-    lastName_disabled: boolean = false;
+    firstName_disabled: boolean = true;
+    lastName_disabled: boolean = true;
     email_disabled: boolean = false;
     password_disabled: boolean = false;
     profileId_disabled: boolean = false;
@@ -147,11 +149,12 @@ export class UserFormComponent implements OnInit, OnDestroy {
         } else if (this.action === 'delete') {
             this.title = 'Delete User'
         }
-
+        this.aliasName_disabled = true; 
+        this.otherName_disabled = true; 
         // set disablers as required
         //this.firstName_disabled: boolean = false;
-        //this.lastName_disabled: boolean = false;
-        //this.email_disabled: boolean = false;
+        this.lastName_disabled = false;
+        this.email_disabled = false;
         //this.password_disabled: boolean = false;
         //this.phone_disabled: boolean = false;
         //this.addressLine1_disabled: boolean = false;

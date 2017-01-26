@@ -13,11 +13,15 @@ export class FocusDirective {
     constructor(private cs:  ConstantsService,private el: ElementRef,private renderer: Renderer) { }
 
     onFocus() {
-        this.renderer.setElementStyle(this.el.nativeElement, "background-color", this.cs.onFocusInputBackColor);
+        if (this.el.nativeElement.disabled === false) {
+            this.renderer.setElementStyle(this.el.nativeElement, "background-color", this.cs.onFocusInputBackColor);
+        }
     }
 
     onBlur() {
-        this.renderer.setElementStyle(this.el.nativeElement, "background-color", this.cs.defaultInputBackColor);
+        if (this.el.nativeElement.disabled === false) {
+            this.renderer.setElementStyle(this.el.nativeElement, "background-color", this.cs.defaultInputBackColor);
+        }
     }
 }
  

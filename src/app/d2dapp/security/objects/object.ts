@@ -11,7 +11,7 @@
  class layer
 ******************************************************************************************************/
 "use strict";
-export class Language {
+export class Object {
 	constructor( 
 		public id?: number
 		 	,public active?: boolean
@@ -21,6 +21,7 @@ export class Language {
 		 	,public expired?: boolean
 		 	,public parent?: boolean
 		 	,public parentListId?: number
+		 	,public description?: string
 		  ) { }
 }
     

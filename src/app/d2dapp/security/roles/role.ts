@@ -11,10 +11,9 @@
  class layer
 ******************************************************************************************************/
 "use strict";
-export class Item {
+export class Role {
 	constructor( 
 		public id?: number
-		 	,public listId?: number
 		 	,public active?: boolean
 		 	,public name?: string
 		 	,public code?: string
@@ -25,7 +24,5 @@ export class Item {
 		  ) { }
 }
     
-export class DropDownItem {
-    constructor(public id: number, public idCode: string, public parentListId: number, public name: string, public code: string, public ruleBookId: number) { }
-}	
+	
 	

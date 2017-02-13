@@ -14,14 +14,15 @@ export class DropDownComponent implements OnInit {
     @Input() InputDisplay: boolean;
     @Input() InputAction: string;
     @Input() InputList: number;
-    @Input() InputDefault: number;
+    @Input() InputDefault: DropDownItem;
     @Input() InputPlaceholder: string;
     @Input() InputEagerLoad: boolean;
     @Output() OutputButtonOnChange = new EventEmitter(); 
 
     public defaultItem: String = "";
    
-    selectedItem: DropDownItem = new DropDownItem(0, 0, '','',0);
+    selectedItem: DropDownItem = new DropDownItem(0,"", 0, "", "", 0);
+    selectedIdCode: string;
   
     items: DropDownItem[];
 
@@ -90,14 +91,10 @@ export class DropDownComponent implements OnInit {
     }
 
     onChange(selectedItem) {
- 
-        if (selectedItem.trim() != "") {
-            this.selectedItem = JSON.parse(selectedItem);
-        } else {
-            this.selectedItem = selectedItem;
-        }
-
+        debugger;
+        this.selectedItem = _.findWhere(this.items, { idCode: selectedItem });
         this.OutputButtonOnChange.next(this.selectedItem);
+
     }
 
     handleError(process, error: any) {
@@ -120,9 +117,10 @@ export class DropDownComponent implements OnInit {
             this.items = [];
             this.items = data;
             //set selected record
-            if (this.InputDefault != 0) {
-                this.selectedItem = _.findWhere(this.items, { id: this.InputDefault });
-                this.defaultItem = JSON.stringify(this.selectedItem).replace(/null/i, "\"\"");
+            debugger;
+            if ((this.InputDefault.idCode != "") && (this.InputDefault.idCode != undefined)) {
+                this.selectedItem = _.findWhere(this.items, { id: 2 });
+                this.defaultItem = JSON.stringify(this.selectedItem.id).replace(/null/i, "\"\"");
             }
         }
 
@@ -130,10 +128,10 @@ export class DropDownComponent implements OnInit {
             this.items = [];
             this.items = data;
             //set selected record
-            if (this.InputDefault != 0) {
-                this.selectedItem = _.findWhere(this.items, { id: this.InputDefault});
-                this.defaultItem = JSON.stringify(this.selectedItem).replace(/null/i, "\"\"");
- 
+            debugger;
+            if ((this.InputDefault.idCode != "") && (this.InputDefault.idCode != undefined)) {
+                this.selectedItem = _.findWhere(this.items, { id: 2 });
+                this.defaultItem = JSON.stringify(this.selectedItem.id).replace(/null/i, "\"\"");
             }
         }
     }

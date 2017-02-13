@@ -62,6 +62,13 @@ export class CommonService {
         } else { return "" }
     }
 
+    getLocalStorageNumber(name) {
+        var storageValue = localStorage.getItem(name);
+        if (!_.isEmpty(storageValue) && (storageValue != "undefined")) {
+            return parseInt(localStorage.getItem(name));
+        } else { return 0 }
+    }
+
     clearLocalStorage() {
         localStorage.clear();
     }

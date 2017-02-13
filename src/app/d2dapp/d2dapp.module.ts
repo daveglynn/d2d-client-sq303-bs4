@@ -13,7 +13,12 @@ import { Accordion, AccordionGroup }    from './shared/components/accordion.comp
  
 import { ErrorService } from "./shared/errors/error.service";
 import { ProfileService } from './master/profiles/profile.service';
+import { CompanyService } from './master/companies/company.service';
+import { DivisionService } from './master/divisions/division.service';
 import { LanguageService } from './master/languages/language.service';
+import { AccessService } from './security/access/access.service';
+import { ObjectService } from './security/objects/object.service';
+import { RoleService } from './security/roles/role.service';
 import { AuthService } from "./security/auth/auth.service";
 
 import { AuthenticationComponent }      from './security/auth/auth.component';
@@ -94,7 +99,12 @@ import { UserCode }                           from './security/users/user.code';
         PreventUnsavedChangesGuard,
         ErrorService,
         ProfileService,
+        CompanyService,
+        DivisionService,
         LanguageService,
+        AccessService,
+        ObjectService,
+        RoleService,
         AuthService,
         UserService,
         CommonService,

@@ -24,7 +24,7 @@
                                                           [InputAction]="action"
                                                           [InputList]=0
                                                           [InputEagerLoad]="true"
-                                                          [InputDefault]=dropdown_UserComponentProfile_Default.id
+                                                          [InputDefault]=dropdown_UserComponentProfile_Default
                                                           [InputPlaceholder]="'Select Profile'" #profile>
                                                 Loading profiles...
                                             </dropdownlist>
@@ -34,17 +34,27 @@
                                                           [InputAction]="action"
                                                           [InputList]=0
                                                           [InputEagerLoad]="true"
-                                                          [InputDefault]=dropdown_UserComponentLanguage_Default.id
+                                                          [InputDefault]=dropdown_UserComponentLanguage_Default
                                                           [InputPlaceholder]="'Select language'" #language   >
                                                 Loading languages...
+                                            </dropdownlist>
+                                            <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist($event)"
+                                                          [InputObject]="'role'"
+                                                          [InputDisplay]="true"
+                                                          [InputAction]="action"
+                                                          [InputList]=0
+                                                          [InputEagerLoad]="true"
+                                                          [InputDefault]=dropdown_UserComponentRole_Default
+                                                          [InputPlaceholder]="'Select language'" #role>
+                                                Loading Roles...
                                             </dropdownlist>
                                             <dropdownlist (OutputButtonOnChange)="outputButtonOnChangeDropdownlist($event)"
                                                           [InputObject]="'list'"
                                                           [InputDisplay]="true"
                                                           [InputAction]="action"
-                                                          [InputList]=dropdown_UserComponentOrderById
+                                                          [InputList]=dropdown_UserComponentOrderBy
                                                           [InputEagerLoad]="true"
-                                                          [InputDefault]=dropdown_UserComponentOrderBy_Default.id
+                                                          [InputDefault]=dropdown_UserComponentOrderBy_Default
                                                           [InputPlaceholder]="'Order by'" #orderBy>
                                                 Loading Order By...
                                             </dropdownlist>
@@ -52,18 +62,18 @@
                                                           [InputObject]="'list'"
                                                           [InputDisplay]="true"
                                                           [InputAction]="action"
-                                                          [InputList]=dropdown_UserComponentOrderDirId
+                                                          [InputList]=dropdown_UserComponentOrderDir
                                                           [InputEagerLoad]="true"
-                                                          [InputDefault]=dropdown_UserComponentOrderDir_Default.id
+                                                          [InputDefault]=dropdown_UserComponentOrderDir_Default
                                                           [InputPlaceholder]="'sort'" #orderDir>
                                                 Loading Sort...
                                             </dropdownlist>
 
                                             <input class="form-control" #criteria type="search" placeholder="Search criteria" #q />
-                                            <button class="form-control btn btn-primary active btn-md" (click)="reloadUsers({  profile: profile.selectedItem, language: language.selectedItem, q: q.value, orderBy: orderBy.selectedItem, orderDir: orderDir.selectedItem})">
+                                            <button class="form-control btn btn-primary active btn-md" (click)="reloadUsers({  profile: profile.selectedItem, language: language.selectedItem,  role: role.selectedItem, q: q.value, orderBy: orderBy.selectedItem, orderDir: orderDir.selectedItem})">
                                                 <span class="glyphicon glyphicon-search"></span> Search
                                             </button>
-                                            <button class="form-control btn btn-primary active btn-md" (click)="reLoadPage({  profile: dropdown_UserComponentProfile_Default, language: dropdown_UserComponentLanguage_Default, q: '' , orderBy: dropdown_UserComponentOrderBy_Default,  orderDir: dropdown_UserComponentOrderDir_Default})">
+                                            <button class="form-control btn btn-primary active btn-md" (click)="reLoadPage({  profile: dropdown_UserComponentProfile_Default, language: dropdown_UserComponentLanguage_Default, role: dropdown_UserComponentRole_Default, q: '' , orderBy: dropdown_UserComponentOrderBy_Default,  orderDir: dropdown_UserComponentOrderDir_Default})">
                                                 <span class="glyphicon glyphicon-refresh"></span> Reset
                                             </button>
                                             <button class="form-control btn btn-primary active btn-md" data-dismiss="modal" (click)="close()">

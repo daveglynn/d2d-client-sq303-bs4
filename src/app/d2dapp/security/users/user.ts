@@ -40,7 +40,7 @@ export class Login {
 import { DropDownItem } from "./../../master/items/item";
 
 export class Search {
-    constructor(public profile: DropDownItem, public language: DropDownItem, public q: string, public orderBy: DropDownItem, public orderDir: DropDownItem) { }
+    constructor(public profile: DropDownItem, public language: DropDownItem, public role: DropDownItem, public q: string, public orderBy: DropDownItem, public orderDir: DropDownItem) { }
 }
 
 	

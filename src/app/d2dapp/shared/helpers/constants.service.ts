@@ -8,16 +8,17 @@ export class ConstantsService {
 
      transferProtocol: string = "http://"
 
-     serverUrl: string = this.transferProtocol + "d2d-demo.herokuapp.com";
-
+     //serverUrl: string = this.transferProtocol + "d2d-demo.herokuapp.com";
+     serverUrl: string = this.transferProtocol + "localhost:3000";
+    
      defaultInputBackColor: string = 'white';
      onFocusInputBackColor: string = '#efffea';
 
      redirectAfterSignup: string = "/security/auth/signin";
      redirectAfterSignin: string = "/"
 
-     dropdown_UserComponentOrderDirId: number = 1
-     dropdown_UserComponentOrderById: number = 2
+     dropdown_UserComponentOrderDir: number = 1
+     dropdown_UserComponentOrderBy: number = 2
  
      //dropdown_UserComponentOrderBy_Default = JSON.parse('{"id":1,"parentListId":0,"name":"Email","code":"email","ruleBookId":1}')
      //dropdown_UserComponentOrderDir_Default = JSON.parse('{"id":16,"parentListId":0,"name":"ASC","code":"ASC","ruleBookId":1}')

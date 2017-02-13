@@ -14,6 +14,7 @@ import { UserService }       from './user.service';
 
 import { ProfileService } from '../../master/profiles/profile.service';
 import { LanguageService } from '../../master/languages/language.service';
+import { RoleService } from '../../security/roles/role.service';
 import { Search }                     from './user';
 
 
@@ -45,6 +46,7 @@ export class UsersComponent implements OnInit {
     pagedUsers = [];
     profiles = [];
     languages = [];
+    roles = [];
     userIdsList: string = "";
 
     //modal
@@ -60,14 +62,14 @@ export class UsersComponent implements OnInit {
     sorting: {};
 
     //constants dropdown ListId definitions
-    dropdown_UserComponentOrderById: number
-    dropdown_UserComponentOrderDirId: number
+    dropdown_UserComponentOrderBy: number
+    dropdown_UserComponentOrderDir: number
 
-    //constants dropdown ListId defaults
-    dropdown_UserComponentOrderBy_Default = new DropDownItem(null, null, null, null, null);
-    dropdown_UserComponentOrderDir_Default = new DropDownItem(null, null, null, null, null);
-    dropdown_UserComponentLanguage_Default = new DropDownItem(null, null, null, null, null);
-    dropdown_UserComponentProfile_Default = new DropDownItem(null, null, null, null, null);
+    dropdown_UserComponentOrderBy_Default = new DropDownItem(0,"1-email", 0, "", "", 0);
+    dropdown_UserComponentOrderDir_Default = new DropDownItem(0, "2-DESC", 0, "", "", 0);
+    dropdown_UserComponentLanguage_Default = new DropDownItem(0, "2-en", 0, "", "", 0);
+    dropdown_UserComponentRole_Default = new DropDownItem(0, "3-user", 0, "", "", 0);
+    dropdown_UserComponentProfile_Default = new DropDownItem(0, "1-profile1", 0, "", "", 0);
 
     /***************************************************************************************
      Construtor section
@@ -76,13 +78,14 @@ export class UsersComponent implements OnInit {
         private _errorService: ErrorService,
         private _profileService: ProfileService,
         private _languageService: LanguageService,
+        private _roleService: RoleService,
         private _commonService: CommonService,
         private _router: Router,
         private _route: ActivatedRoute,
         private _location: Location,
         private _constantsService: ConstantsService) {
     }
-
+    
     /***************************************************************************************
      Initialisation section
     ***************************************************************************************/
@@ -93,21 +96,20 @@ export class UsersComponent implements OnInit {
 
         //load main data
         this.loadUsers(this.setupSearch());
+       
     }
 
     /***************************************************************************************
      Set up search
     ***************************************************************************************/
     private setupSearch() {
-
-
-        this.dropdown_UserComponentProfile_Default = this._commonService.getLocalStorageJsonStringToObject('dropdown_UserComponentProfile_Default')
-        this.dropdown_UserComponentLanguage_Default = this._commonService.getLocalStorageJsonStringToObject('dropdown_UserComponentLanguage_Default')
-        this.dropdown_UserComponentOrderBy_Default = this._commonService.getLocalStorageJsonStringToObject('dropdown_UserComponentOrderBy_Default')
-        this.dropdown_UserComponentOrderDir_Default = this._commonService.getLocalStorageJsonStringToObject('dropdown_UserComponentOrderDir_Default')
-   
-        var search = new Search(this.dropdown_UserComponentProfile_Default, this.dropdown_UserComponentLanguage_Default, "", this.dropdown_UserComponentOrderBy_Default, this.dropdown_UserComponentOrderDir_Default);
-
+ 
+        this.dropdown_UserComponentProfile_Default.idCode = this._commonService.getLocalStorageString('dropdown_UserComponentProfile_Default.idCode')
+        this.dropdown_UserComponentLanguage_Default.idCode = this._commonService.getLocalStorageString('dropdown_UserComponentLanguage_Default.idCode')
+        this.dropdown_UserComponentRole_Default.idCode = this._commonService.getLocalStorageString('dropdown_UserComponentRole_Default.idCode')
+        this.dropdown_UserComponentOrderBy_Default.idCode = this._commonService.getLocalStorageString('dropdown_UserComponentOrderBy_Default.idCode')
+        this.dropdown_UserComponentOrderDir_Default.idCode = this._commonService.getLocalStorageString('dropdown_UserComponentOrderDir_Default.idCode')
+        var search = new Search(this.dropdown_UserComponentProfile_Default, this.dropdown_UserComponentLanguage_Default, this.dropdown_UserComponentRole_Default, "", this.dropdown_UserComponentOrderBy_Default, this.dropdown_UserComponentOrderDir_Default);
         return search
 
     }
@@ -116,11 +118,12 @@ export class UsersComponent implements OnInit {
      Save search
     ***************************************************************************************/
     private saveSearch(filter) {
-
-        this._commonService.saveJsonStringToLocalStorage('dropdown_UserComponentProfile_Default', filter.profile);
-        this._commonService.saveJsonStringToLocalStorage('dropdown_UserComponentLanguage_Default', filter.language);
-        this._commonService.saveJsonStringToLocalStorage('dropdown_UserComponentOrderBy_Default', filter.orderBy);
-        this._commonService.saveJsonStringToLocalStorage('dropdown_UserComponentOrderDir_Default',filter.orderDir);
+ 
+        this._commonService.saveStringToLocalStorage('dropdown_UserComponentProfile_Default.idCode', filter.profile.idCode);
+        this._commonService.saveStringToLocalStorage('dropdown_UserComponentLanguage_Default.idCode', filter.language.idCode);
+        this._commonService.saveStringToLocalStorage('dropdown_UserComponentRole_Default.idCode', filter.role.idCode);
+        this._commonService.saveStringToLocalStorage('dropdown_UserComponentOrderBy_Default.idCode', filter.orderBy.idCode);
+        this._commonService.saveStringToLocalStorage('dropdown_UserComponentOrderDir_Default.idCode', filter.orderDir.idCode);
         this._commonService.saveStringToLocalStorage('text_UserComponentQ_Default', filter.q);
         
     }
@@ -144,8 +147,8 @@ export class UsersComponent implements OnInit {
     ***************************************************************************************/
     private setupConstant() {
 
-        this.dropdown_UserComponentOrderDirId = this._constantsService.dropdown_UserComponentOrderDirId
-        this.dropdown_UserComponentOrderById = this._constantsService.dropdown_UserComponentOrderById
+        this.dropdown_UserComponentOrderDir = this._constantsService.dropdown_UserComponentOrderDir
+        this.dropdown_UserComponentOrderBy = this._constantsService.dropdown_UserComponentOrderBy
     }
 
     /***************************************************************************************
@@ -265,7 +268,7 @@ export class UsersComponent implements OnInit {
     }
 
     private outputButtonOnChangeDropdownlist(selectedItem) {
-
+       
     }
 
     private close() {
@@ -302,6 +305,16 @@ export class UsersComponent implements OnInit {
             data => this.handleData('loadLanguages', data),
             error => this.handleError('loadLanguages', error, 0, null),
             () => this.handleSuccess('loadLanguages')
+            );
+    }
+
+    private loadRoles() {
+
+        this._roleService.getRolesAll()
+            .subscribe(
+            data => this.handleData('loadRoles', data),
+            error => this.handleError('loadRoles', error, 0, null),
+            () => this.handleSuccess('loadRoles')
             );
     }
 
@@ -349,6 +362,9 @@ export class UsersComponent implements OnInit {
         }
         if (process === 'loadLanguages') {
             this.languages = data;
+        }
+        if (process === 'loadRoles') {
+            this.roles = data;
         }
     }
 

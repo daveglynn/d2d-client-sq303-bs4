@@ -241,7 +241,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
 
     save() {
-        debugger;
+     
         this.dataIsProcessing = true;
         if (this.user.id) {
             if (this.action === 'edit') {

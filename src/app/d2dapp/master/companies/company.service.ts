@@ -30,14 +30,17 @@ export class CompanyService {
 
     getCompaniesAll(filter?) {
         var parms = {};
+		var idCode = "";
         if (filter && filter.q) {
             parms['q'] = filter.q;
         }
-		if (filter && filter.ruleBook && filter.ruleBook.id != 0) {
-            parms['ruleBookId'] = filter.ruleBook.id;
+		if (filter && filter.ruleBook && filter.ruleBook.idCode.trim() != "") {
+			idCode = filter.ruleBook.idCode.split(":")
+            parms['ruleBookId'] = idCode[0];
 		};
-    	if (filter && filter.parentList && filter.parentList.id != 0) {
-            parms['parentListId'] = filter.parentList.id;
+    	if (filter && filter.parentList && filter.parentList.idCode.trim() != "") {
+			idCode = filter.parentList.idCode.split(":")
+            parms['parentListId'] = idCode[0];
 		};
       	if (filter && filter.active) {
              parms['active'] = filter.active;
@@ -49,11 +52,13 @@ export class CompanyService {
              parms['parent'] = filter.parent;
 		};
     
-		if (filter && filter.orderDir && filter.orderDir.code != "") {
-			parms['orderDir'] = filter.orderDir.code;
+		if (filter && filter.orderDir && filter.orderDir.idCode.trim() != "") {
+			idCode = filter.orderDir.idCode.split(":")
+			parms['orderDir'] = idCode[1];
 		};
-		if (filter && filter.orderBy && filter.orderBy.code != "") {
-			parms['orderBy'] = filter.orderBy.code;
+		if (filter && filter.orderBy && filter.orderBy.idCode.trim() != "") {
+			idCode = filter.orderBy.idCode.split(":")
+			parms['orderBy'] = idCode[1];
 		};
 
         const headers = new Headers({ 'Content-Type': 'application/json' });

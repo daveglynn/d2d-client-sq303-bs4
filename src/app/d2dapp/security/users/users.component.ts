@@ -65,11 +65,11 @@ export class UsersComponent implements OnInit {
     dropdown_UserComponentOrderBy: number
     dropdown_UserComponentOrderDir: number
 
-    dropdown_UserComponentOrderBy_Default = new DropDownItem(0,"1-email", 0, "", "", 0);
-    dropdown_UserComponentOrderDir_Default = new DropDownItem(0, "2-DESC", 0, "", "", 0);
-    dropdown_UserComponentLanguage_Default = new DropDownItem(0, "2-en", 0, "", "", 0);
-    dropdown_UserComponentRole_Default = new DropDownItem(0, "3-user", 0, "", "", 0);
-    dropdown_UserComponentProfile_Default = new DropDownItem(0, "1-profile1", 0, "", "", 0);
+    dropdown_UserComponentOrderBy_Default = new DropDownItem(0,"", 0, "", "", 0);
+    dropdown_UserComponentOrderDir_Default = new DropDownItem(0, "", 0, "", "", 0);
+    dropdown_UserComponentLanguage_Default = new DropDownItem(0, "", 0, "", "", 0);
+    dropdown_UserComponentRole_Default = new DropDownItem(0, "", 0, "", "", 0);
+    dropdown_UserComponentProfile_Default = new DropDownItem(0, "", 0, "", "", 0);
 
     /***************************************************************************************
      Construtor section
@@ -103,12 +103,13 @@ export class UsersComponent implements OnInit {
      Set up search
     ***************************************************************************************/
     private setupSearch() {
- 
-        this.dropdown_UserComponentProfile_Default.idCode = this._commonService.getLocalStorageString('dropdown_UserComponentProfile_Default.idCode')
-        this.dropdown_UserComponentLanguage_Default.idCode = this._commonService.getLocalStorageString('dropdown_UserComponentLanguage_Default.idCode')
-        this.dropdown_UserComponentRole_Default.idCode = this._commonService.getLocalStorageString('dropdown_UserComponentRole_Default.idCode')
-        this.dropdown_UserComponentOrderBy_Default.idCode = this._commonService.getLocalStorageString('dropdown_UserComponentOrderBy_Default.idCode')
-        this.dropdown_UserComponentOrderDir_Default.idCode = this._commonService.getLocalStorageString('dropdown_UserComponentOrderDir_Default.idCode')
+
+        this.dropdown_UserComponentProfile_Default.idCode = this._commonService.getLocalStorageString("dropdown_UserComponentProfile_Default.idCode");
+        this.dropdown_UserComponentLanguage_Default.idCode = this._commonService.getLocalStorageString("dropdown_UserComponentLanguage_Default.idCode");
+        this.dropdown_UserComponentRole_Default.idCode = this._commonService.getLocalStorageString("dropdown_UserComponentRole_Default.idCode");
+        this.dropdown_UserComponentOrderBy_Default.idCode = this._commonService.getLocalStorageString("dropdown_UserComponentOrderBy_Default.idCode");
+        this.dropdown_UserComponentOrderDir_Default.idCode = this._commonService.getLocalStorageString("dropdown_UserComponentOrderDir_Default.idCode");
+
         var search = new Search(this.dropdown_UserComponentProfile_Default, this.dropdown_UserComponentLanguage_Default, this.dropdown_UserComponentRole_Default, "", this.dropdown_UserComponentOrderBy_Default, this.dropdown_UserComponentOrderDir_Default);
         return search
 
@@ -118,13 +119,19 @@ export class UsersComponent implements OnInit {
      Save search
     ***************************************************************************************/
     private saveSearch(filter) {
- 
         this._commonService.saveStringToLocalStorage('dropdown_UserComponentProfile_Default.idCode', filter.profile.idCode);
         this._commonService.saveStringToLocalStorage('dropdown_UserComponentLanguage_Default.idCode', filter.language.idCode);
         this._commonService.saveStringToLocalStorage('dropdown_UserComponentRole_Default.idCode', filter.role.idCode);
         this._commonService.saveStringToLocalStorage('dropdown_UserComponentOrderBy_Default.idCode', filter.orderBy.idCode);
         this._commonService.saveStringToLocalStorage('dropdown_UserComponentOrderDir_Default.idCode', filter.orderDir.idCode);
         this._commonService.saveStringToLocalStorage('text_UserComponentQ_Default', filter.q);
+
+        //this._commonService.saveStringToLocalStorage('dropdown_UserComponentProfile_Default.idCode', filter.profile.idCode);
+        //this._commonService.saveStringToLocalStorage('dropdown_UserComponentLanguage_Default.idCode', filter.language.idCode);
+        //this._commonService.saveStringToLocalStorage('dropdown_UserComponentRole_Default.idCode', filter.role.idCode);
+        //this._commonService.saveStringToLocalStorage('dropdown_UserComponentOrderBy_Default.idCode', filter.orderBy.idCode);
+        //this._commonService.saveStringToLocalStorage('dropdown_UserComponentOrderDir_Default.idCode', filter.orderDir.idCode);
+        //this._commonService.saveStringToLocalStorage('text_UserComponentQ_Default', filter.q);
         
     }
     /***************************************************************************************

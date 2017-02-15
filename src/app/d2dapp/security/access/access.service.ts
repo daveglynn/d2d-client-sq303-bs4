@@ -30,26 +30,33 @@ export class AccessService {
 
     getAccessAll(filter?) {
         var parms = {};
+		var idCode = "";
         if (filter && filter.q) {
             parms['q'] = filter.q;
         }
-		if (filter && filter.profile && filter.profile.id != 0) {
-            parms['profileId'] = filter.profile.id;
+		if (filter && filter.profile && filter.profile.idCode.trim() != "") {
+			idCode = filter.profile.idCode.split(":")
+            parms['profileId'] = idCode[0];
 		};
-    	if (filter && filter.company && filter.company.id != 0) {
-            parms['companyId'] = filter.company.id;
+    	if (filter && filter.company && filter.company.idCode.trim() != "") {
+			idCode = filter.company.idCode.split(":")
+            parms['companyId'] = idCode[0];
 		};
-    	if (filter && filter.division && filter.division.id != 0) {
-            parms['divisionId'] = filter.division.id;
+    	if (filter && filter.division && filter.division.idCode.trim() != "") {
+			idCode = filter.division.idCode.split(":")
+            parms['divisionId'] = idCode[0];
 		};
-    	if (filter && filter.object && filter.object.id != 0) {
-            parms['objectId'] = filter.object.id;
+    	if (filter && filter.object && filter.object.idCode.trim() != "") {
+			idCode = filter.object.idCode.split(":")
+            parms['objectId'] = idCode[0];
 		};
-    	if (filter && filter.ruleBook && filter.ruleBook.id != 0) {
-            parms['ruleBookId'] = filter.ruleBook.id;
+    	if (filter && filter.ruleBook && filter.ruleBook.idCode.trim() != "") {
+			idCode = filter.ruleBook.idCode.split(":")
+            parms['ruleBookId'] = idCode[0];
 		};
-    	if (filter && filter.parentList && filter.parentList.id != 0) {
-            parms['parentListId'] = filter.parentList.id;
+    	if (filter && filter.parentList && filter.parentList.idCode.trim() != "") {
+			idCode = filter.parentList.idCode.split(":")
+            parms['parentListId'] = idCode[0];
 		};
       	if (filter && filter.active) {
              parms['active'] = filter.active;
@@ -73,11 +80,13 @@ export class AccessService {
              parms['canDelete'] = filter.canDelete;
 		};
     
-		if (filter && filter.orderDir && filter.orderDir.code != "") {
-			parms['orderDir'] = filter.orderDir.code;
+		if (filter && filter.orderDir && filter.orderDir.idCode.trim() != "") {
+			idCode = filter.orderDir.idCode.split(":")
+			parms['orderDir'] = idCode[1];
 		};
-		if (filter && filter.orderBy && filter.orderBy.code != "") {
-			parms['orderBy'] = filter.orderBy.code;
+		if (filter && filter.orderBy && filter.orderBy.idCode.trim() != "") {
+			idCode = filter.orderBy.idCode.split(":")
+			parms['orderBy'] = idCode[1];
 		};
 
         const headers = new Headers({ 'Content-Type': 'application/json' });

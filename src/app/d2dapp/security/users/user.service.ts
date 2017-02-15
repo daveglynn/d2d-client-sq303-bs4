@@ -30,27 +30,33 @@ export class UserService {
 
     getUsersAll(filter?) {
         var parms = {};
+		var idCode = "";
         if (filter && filter.q) {
             parms['q'] = filter.q;
         }
-		if (filter && filter.language && filter.language.id != 0) {
-            parms['languageId'] = filter.language.id;
+		if (filter && filter.language && filter.language.idCode.trim() != "") {
+			idCode = filter.language.idCode.split(":")
+            parms['languageId'] = idCode[0];
 		};
-    	if (filter && filter.role && filter.role.id != 0) {
-            parms['roleId'] = filter.role.id;
+    	if (filter && filter.role && filter.role.idCode.trim() != "") {
+			idCode = filter.role.idCode.split(":")
+            parms['roleId'] = idCode[0];
 		};
-    	if (filter && filter.profile && filter.profile.id != 0) {
-            parms['profileId'] = filter.profile.id;
+    	if (filter && filter.profile && filter.profile.idCode.trim() != "") {
+			idCode = filter.profile.idCode.split(":")
+            parms['profileId'] = idCode[0];
 		};
       	if (filter && filter.active) {
              parms['active'] = filter.active;
 		};
     
-		if (filter && filter.orderDir && filter.orderDir.code != "") {
-			parms['orderDir'] = filter.orderDir.code;
+		if (filter && filter.orderDir && filter.orderDir.idCode.trim() != "") {
+			idCode = filter.orderDir.idCode.split(":")
+			parms['orderDir'] = idCode[1];
 		};
-		if (filter && filter.orderBy && filter.orderBy.code != "") {
-			parms['orderBy'] = filter.orderBy.code;
+		if (filter && filter.orderBy && filter.orderBy.idCode.trim() != "") {
+			idCode = filter.orderBy.idCode.split(":")
+			parms['orderBy'] = idCode[1];
 		};
 
         const headers = new Headers({ 'Content-Type': 'application/json' });

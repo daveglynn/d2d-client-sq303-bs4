@@ -30,6 +30,7 @@ export class ListService {
 
     getListsAll(filter?) {
         var parms = {};
+		var idCode = "";
         if (filter && filter.q) {
             parms['q'] = filter.q;
         }
@@ -40,11 +41,13 @@ export class ListService {
              parms['isMetaData'] = filter.isMetaData;
 		};
     
-		if (filter && filter.orderDir && filter.orderDir.code != "") {
-			parms['orderDir'] = filter.orderDir.code;
+		if (filter && filter.orderDir && filter.orderDir.idCode.trim() != "") {
+			idCode = filter.orderDir.idCode.split(":")
+			parms['orderDir'] = idCode[1];
 		};
-		if (filter && filter.orderBy && filter.orderBy.code != "") {
-			parms['orderBy'] = filter.orderBy.code;
+		if (filter && filter.orderBy && filter.orderBy.idCode.trim() != "") {
+			idCode = filter.orderBy.idCode.split(":")
+			parms['orderBy'] = idCode[1];
 		};
 
         const headers = new Headers({ 'Content-Type': 'application/json' });
